@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Recommend</string>
+    <string name="fragment_title_choose_movies">Select the movies you watched</string>
+    <string name="fragment_title_favorite_movies">Select favorite movies</string>
+    <string name="fragment_title_genre">Select favorite genres</string>
+    <string name="action_remove">Remove</string>
+    <string name="selected_count">%1$d selected of %2$d</string>
+</resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="java.lang.String" />
+        <import type="android.view.View"/>
+
+        <variable
+            name="movie"
+            type="com.sadi.toor.recommend.model.data.movie.Movie" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_main_movie_pic"
+            android:layout_width="45dp"
+            android:layout_height="60dp"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop"
+            android:scaleX="@{movie.selected ? 0.95f : 1.0f}"
+            android:scaleY="@{movie.selected ? 0.95f : 1.0f}"
+            app:glideBinding="@{movie.link}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholder="@{@drawable/ic_launcher_background}"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:text="@{movie.name}"
+            android:textColor="@color/text_favorite_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/iv_main_movie_pic"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_favorite_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:visibility="@{movie.liked ? View.VISIBLE : View.INVISIBLE}"
+            android:layout_marginRight="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_check" />
+    </android.support.constraint.ConstraintLayout>
+</layout>

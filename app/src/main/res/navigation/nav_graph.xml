@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.sadi.toor.recommend.view.ui.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_rateSwipeFragment"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.sadi.toor.recommend.view.ui.FavoriteMovieFragment"
+        android:label="fragment_rate_swipe"
+        tools:layout="@layout/favorite_movies_fragment" >
+        <action
+            android:id="@+id/action_rateSwipeFragment_to_genreFragment"
+            app:destination="@+id/genreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/genreFragment"
+        android:name="com.sadi.toor.recommend.view.ui.GenreFragment"
+        android:label="GenreFragment" />
+</navigation>
