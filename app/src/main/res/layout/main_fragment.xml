@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.constraint.ConstraintLayout
@@ -10,14 +9,13 @@
         tools:context=".view.ui.MainFragment">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/movie_item" />
+            android:id="@+id/rv_movie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:focusable="false"
+            android:overScrollMode="never" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>
+
