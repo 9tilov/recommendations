@@ -2,10 +2,6 @@ package com.sadi.toor.recommend.model.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sadi.toor.recommend.model.data.genre.Genres;
-import com.sadi.toor.recommend.model.data.movie.Movies;
-
-import java.util.Arrays;
 
 public class Wish {
 

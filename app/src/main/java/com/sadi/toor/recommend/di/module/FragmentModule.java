@@ -1,8 +1,8 @@
 package com.sadi.toor.recommend.di.module;
 
 import com.sadi.toor.recommend.view.ui.GenreFragment;
-import com.sadi.toor.recommend.view.ui.FavoriteMovieFragment;
 import com.sadi.toor.recommend.view.ui.MainFragment;
+import com.sadi.toor.recommend.view.ui.MovieFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -18,9 +18,9 @@ public abstract class FragmentModule {
     abstract MainFragment contributeMainFragment();
 
     @ContributesAndroidInjector
-    abstract FavoriteMovieFragment contributeRateSwipeFragment();
+    abstract GenreFragment contributeGenreFragment();
 
     @ContributesAndroidInjector
-    abstract GenreFragment contributeGenreFragment();
+    abstract MovieFragment contibuMovieFragment();
 
 }

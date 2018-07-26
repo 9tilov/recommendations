@@ -1,17 +1,12 @@
 package com.sadi.toor.recommend.model.data.movie;
 
-import android.databinding.BindingAdapter;
-import android.graphics.drawable.Drawable;
-import android.widget.ImageView;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     @SerializedName("movie_id")
     @Expose
@@ -26,27 +21,10 @@ public class Movie {
     @Expose
     private int year;
 
-    private boolean isSelected = false;
-    private boolean isLiked = false;
+    private float rate;
 
     public long getMovieId() {
         return movieId;
-    }
-
-    public void setSelected(boolean selected) {
-        this.isSelected = selected;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public boolean isLiked() {
-        return isLiked;
-    }
-
-    public void setLiked(boolean liked) {
-        isLiked = liked;
     }
 
     public String getLink() {
@@ -61,14 +39,48 @@ public class Movie {
         return year;
     }
 
-    @BindingAdapter({"app:glideBinding", "app:placeholder"})
-    public static void bindImage(ImageView imageView, String url, Drawable placeHolder) {
-        Glide.with(imageView)
-                .setDefaultRequestOptions(RequestOptions.placeholderOf(placeHolder))
-                .asBitmap()
-                .load(url)
-                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))
-                .into(imageView);
+    public float getRate() {
+        return rate;
     }
 
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.movieId);
+        dest.writeString(this.link);
+        dest.writeString(this.name);
+        dest.writeInt(this.year);
+        dest.writeFloat(this.rate);
+    }
+
+    public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        this.movieId = in.readLong();
+        this.link = in.readString();
+        this.name = in.readString();
+        this.year = in.readInt();
+        this.rate = in.readFloat();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }

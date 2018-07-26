@@ -5,8 +5,6 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -25,7 +23,7 @@ import javax.inject.Inject;
 import androidx.navigation.Navigation;
 import dagger.android.support.AndroidSupportInjection;
 
-public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBinding> extends Fragment {
+public abstract class BaseFragment<M extends ViewModel> extends Fragment {
 
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
@@ -44,9 +42,7 @@ public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBindin
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        ViewDataBinding binding = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
-        getBinding((B) binding);
-        return binding.getRoot();
+        return inflater.inflate(getLayoutResId(), container, false);
     }
 
     @SuppressWarnings("unchecked")
@@ -74,8 +70,6 @@ public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBindin
     private void configureDagger() {
         AndroidSupportInjection.inject(this);
     }
-
-    protected abstract void getBinding(B binding);
 
     protected abstract Class<M> getViewModel();
 

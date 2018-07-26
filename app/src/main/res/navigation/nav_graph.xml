@@ -10,17 +10,8 @@
         android:name="com.sadi.toor.recommend.view.ui.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_rateSwipeFragment"
-            app:destination="@id/favoritesFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/favoritesFragment"
-        android:name="com.sadi.toor.recommend.view.ui.FavoriteMovieFragment"
-        android:label="fragment_rate_swipe"
-        tools:layout="@layout/favorite_movies_fragment" >
-        <action
-            android:id="@+id/action_rateSwipeFragment_to_genreFragment"
-            app:destination="@+id/genreFragment" />
+            android:id="@+id/action_mainFragment_to_genreFragment"
+            app:destination="@id/genreFragment" />
     </fragment>
     <fragment
         android:id="@+id/genreFragment"

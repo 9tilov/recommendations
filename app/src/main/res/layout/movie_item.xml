@@ -1,44 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="java.lang.String" />
-
-        <variable
-            name="movie"
-            type="com.sadi.toor.recommend.model.data.movie.Movie" />
-
-    </data>
-
-    <android.support.constraint.ConstraintLayout
+    <android.support.constraint.ConstraintLayout android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
         <ImageView
             android:id="@+id/iv_main_movie_pic"
-            android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_width="0dp"
             android:scaleType="centerCrop"
-            android:scaleX="@{movie.selected ? 0.95f : 1.0f}"
-            android:scaleY="@{movie.selected ? 0.95f : 1.0f}"
-            app:glideBinding="@{movie.link}"
             app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintHeight_percent="0.7"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:placeholder="@{@drawable/ic_launcher_background}"
             tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/tv_movie_title"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{movie.name}"
+            android:layout_width="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_main_movie_pic"
@@ -46,45 +28,24 @@
 
         <TextView
             android:id="@+id/tv_movie_year"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{String.valueOf(movie.year)}"
+            android:layout_width="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
             tools:text="@tools:sample/full_names" />
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_movie_year"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:srcCompat="@drawable/ic_undo" />
 
         <android.support.v7.widget.AppCompatRatingBar
             android:id="@+id/rate_fragment_bar"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
             android:numStars="5"
             android:stepSize="1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_movie_year" />
 
-        <TextView
-            android:id="@+id/btn_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/havent_seen"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rate_fragment_bar" />
-
     </android.support.constraint.ConstraintLayout>
-</layout>
