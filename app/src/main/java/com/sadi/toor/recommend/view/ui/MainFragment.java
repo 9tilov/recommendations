@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -19,15 +18,12 @@ import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.view.adapter.CustomLayoutManager;
-import com.sadi.toor.recommend.view.adapter.movie.GridItemDecorator;
 import com.sadi.toor.recommend.view.adapter.movie.MovieAdapter;
 import com.sadi.toor.recommend.viewmodel.MainViewModel;
 
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import timber.log.Timber;
-
-import static android.support.v7.widget.DividerItemDecoration.HORIZONTAL;
 
 public class MainFragment extends BaseFragment<MainViewModel> implements MovieAdapter.OnViewClickLister {
 
@@ -82,8 +78,6 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         snapHelper.attachToRecyclerView(rvMovie);
 
         rvMovie.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration decoration = new GridItemDecorator(getContext(), HORIZONTAL);
-        rvMovie.addItemDecoration(decoration);
     }
 
     @Override

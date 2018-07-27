@@ -9,8 +9,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.TransitionOptions;
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.model.data.movie.Movie;
@@ -79,9 +82,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         void bind(Movie data) {
             Glide.with(imageView)
-                    .asBitmap()
                     .load(data.getLink())
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     .into(imageView);
             tvTitle.setText(data.getName());
             tvYear.setText(String.valueOf(data.getYear()));

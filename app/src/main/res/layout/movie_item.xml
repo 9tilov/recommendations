@@ -9,11 +9,13 @@
         android:id="@+id/iv_main_movie_pic"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="32dp"
         android:scaleType="centerCrop"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_movie_title"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
@@ -31,7 +33,7 @@
         android:id="@+id/tv_movie_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
@@ -41,11 +43,11 @@
         android:id="@+id/rate_fragment_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:numStars="5"
         android:stepSize="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_year" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_year"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
