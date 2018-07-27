@@ -27,7 +27,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
         textView = (TextView) view.findViewById(R.id.tv_genre_name);
         ivCheck = (AppCompatImageView) view.findViewById(R.id.iv_genre_check);
         view.setOnClickListener(view1 -> {
-            setChecked(item.isSelected() || getItemViewType() != MULTI_SELECTION);
+            setChecked(!item.isSelected() || getItemViewType() != MULTI_SELECTION);
             itemSelectedListener.onItemSelected(item);
 
         });
