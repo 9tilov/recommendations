@@ -15,9 +15,9 @@ import java.util.List;
 
 public class SelectableAdapter extends RecyclerView.Adapter implements SelectableViewHolder.OnItemSelectedListener {
 
-    private final List<SelectableGenre> mValues;
-    private boolean isMultiSelectionEnabled = false;
-    private SelectableViewHolder.OnItemSelectedListener listener;
+    private final List<SelectableGenre> values;
+    private final boolean isMultiSelectionEnabled;
+    private final SelectableViewHolder.OnItemSelectedListener listener;
 
 
     public SelectableAdapter(SelectableViewHolder.OnItemSelectedListener listener,
@@ -25,9 +25,9 @@ public class SelectableAdapter extends RecyclerView.Adapter implements Selectabl
         this.listener = listener;
         this.isMultiSelectionEnabled = isMultiSelectionEnabled;
 
-        mValues = new ArrayList<>();
+        values = new ArrayList<>();
         for (Genre item : items) {
-            mValues.add(new SelectableGenre(item, false));
+            values.add(new SelectableGenre(item, false));
         }
     }
 
@@ -43,7 +43,7 @@ public class SelectableAdapter extends RecyclerView.Adapter implements Selectabl
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
         SelectableViewHolder holder = (SelectableViewHolder) viewHolder;
-        SelectableGenre selectableItem = mValues.get(position);
+        SelectableGenre selectableItem = values.get(position);
         String name = selectableItem.getGenreName();
         holder.textView.setText(name);
         if (isMultiSelectionEnabled) {
@@ -60,13 +60,13 @@ public class SelectableAdapter extends RecyclerView.Adapter implements Selectabl
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return values.size();
     }
 
     public List<Genre> getSelectedItems() {
 
         List<Genre> selectedItems = new ArrayList<>();
-        for (SelectableGenre item : mValues) {
+        for (SelectableGenre item : values) {
             if (item.isSelected()) {
                 selectedItems.add(item);
             }
@@ -87,7 +87,7 @@ public class SelectableAdapter extends RecyclerView.Adapter implements Selectabl
     public void onItemSelected(SelectableGenre item) {
         if (!isMultiSelectionEnabled) {
 
-            for (SelectableGenre selectableItem : mValues) {
+            for (SelectableGenre selectableItem : values) {
                 if (!selectableItem.equals(item)
                         && selectableItem.isSelected()) {
                     selectableItem.setSelected(false);

@@ -16,9 +16,9 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
     public static final int MULTI_SELECTION = 2;
     public static final int SINGLE_SELECTION = 1;
     TextView textView;
-    private AppCompatImageView ivCheck;
     SelectableGenre item;
-    private OnItemSelectedListener itemSelectedListener;
+    private final AppCompatImageView ivCheck;
+    private final OnItemSelectedListener itemSelectedListener;
 
 
     public SelectableViewHolder(View view, OnItemSelectedListener listener) {
@@ -27,11 +27,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
         textView = (TextView) view.findViewById(R.id.tv_genre_name);
         ivCheck = (AppCompatImageView) view.findViewById(R.id.iv_genre_check);
         view.setOnClickListener(view1 -> {
-            if (item.isSelected() && getItemViewType() == MULTI_SELECTION) {
-                setChecked(false);
-            } else {
-                setChecked(true);
-            }
+            setChecked(item.isSelected() || getItemViewType() != MULTI_SELECTION);
             itemSelectedListener.onItemSelected(item);
 
         });

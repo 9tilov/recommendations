@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sadi.toor.recommend">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".App"
@@ -21,8 +21,7 @@
         </activity>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="623c25e275154d77c79e34c25f30e8fd4f7685da"
-            />
+            android:value="623c25e275154d77c79e34c25f30e8fd4f7685da" />
     </application>
 
 </manifest>

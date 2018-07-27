@@ -2,8 +2,8 @@ package com.sadi.toor.recommend.core.wrapper;
 
 public class DataWrapper<T> {
 
-    private T data;
-    private ErrorObject error;
+    private final T data;
+    private final ErrorObject error;
 
     public DataWrapper(T data, ErrorObject error) {
         this.data = data;

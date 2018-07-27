@@ -23,8 +23,8 @@ import io.reactivex.annotations.NonNull;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Movie> movies;
-    private OnViewClickLister clickLister;
+    private final List<Movie> movies;
+    private final OnViewClickLister clickLister;
 
     public MovieAdapter(@NonNull List<Movie> movies, OnViewClickLister clickLister) {
         this.movies = movies;

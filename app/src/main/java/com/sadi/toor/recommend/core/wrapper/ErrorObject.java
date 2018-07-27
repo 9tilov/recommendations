@@ -2,8 +2,8 @@ package com.sadi.toor.recommend.core.wrapper;
 
 public class ErrorObject {
 
-    private Status status;
-    private String message;
+    private final Status status;
+    private final String message;
 
     public ErrorObject(Status status, String message) {
         this.status = status;

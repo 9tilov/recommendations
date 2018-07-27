@@ -36,14 +36,14 @@ public class MainViewModel extends ViewModel {
 
     private void loadMovies() {
         compositeDisposable.add(repository.getMovieLiveList()
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(value -> {
-                                            movies.setValue(new DataWrapper<>(value, null));
-                                        }, t -> {
-                                            movies.setValue(new DataWrapper<>(null, new ErrorObject(t.getMessage())));
-                                            Timber.d("moggot = " + t.getMessage());
-                                        }));
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(value -> {
+                    movies.setValue(new DataWrapper<>(value, null));
+                }, t -> {
+                    movies.setValue(new DataWrapper<>(null, new ErrorObject(t.getMessage())));
+                    Timber.d("moggot = " + t.getMessage());
+                }));
     }
 
     public MutableLiveData<DataWrapper<Movies>> getMovieList() {

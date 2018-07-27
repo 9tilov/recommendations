@@ -34,13 +34,26 @@ public class Genre {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Genre)) {
             return false;
+        }
 
-        if (getClass() != obj.getClass())
+        Genre genre = (Genre) o;
+
+        if (getGenreId() != genre.getGenreId()) {
             return false;
-        Genre itemCompare = (Genre) obj;
-        return itemCompare.genreId == this.genreId;
+        }
+        return getGenreName() != null ? getGenreName().equals(genre.getGenreName()) : genre.getGenreName() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getGenreId() ^ (getGenreId() >>> 32));
+        result = 31 * result + (getGenreName() != null ? getGenreName().hashCode() : 0);
+        return result;
     }
 }

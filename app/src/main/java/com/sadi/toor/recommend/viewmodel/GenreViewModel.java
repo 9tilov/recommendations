@@ -8,7 +8,6 @@ import com.sadi.toor.recommend.core.wrapper.ErrorObject;
 import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.genre.Genres;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.model.repo.DataRepository;
 
 import javax.inject.Inject;

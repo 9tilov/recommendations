@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
+apply from: "$project.rootDir/tools/findbugs/findbugs.gradle"
+apply from: "$project.rootDir/tools/pmd/pmd.gradle"
+apply from: "$project.rootDir/tools/checkstyle/checkstyle.gradle"
+
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))

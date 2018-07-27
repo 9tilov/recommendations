@@ -1,12 +1,10 @@
 package com.sadi.toor.recommend.model.api;
 
-import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.genre.Genres;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
 
 import io.reactivex.Single;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;

@@ -47,6 +47,8 @@ public abstract class BaseFragment<M extends ViewModel> extends Fragment {
         return view;
     }
 
+    protected abstract void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, M viewModel);
+
     @SuppressWarnings("unchecked")
     @SuppressLint("CheckResult")
     @Override
@@ -66,12 +68,11 @@ public abstract class BaseFragment<M extends ViewModel> extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Navigation.findNavController(getView()).popBackStack();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            Navigation.findNavController(getView()).popBackStack();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -80,8 +81,6 @@ public abstract class BaseFragment<M extends ViewModel> extends Fragment {
     }
 
     protected abstract Class<M> getViewModel();
-
-    protected abstract void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, M viewModel);
 
     @StringRes
     protected abstract int getTitle();

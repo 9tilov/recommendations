@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
-public class UiSizeConverter {
+public final class UiSizeConverter {
 
     private UiSizeConverter() {
         throw new IllegalStateException("This is Utility class");
