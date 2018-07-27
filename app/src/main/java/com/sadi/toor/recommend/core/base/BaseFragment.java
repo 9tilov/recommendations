@@ -5,8 +5,6 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -23,13 +21,16 @@ import com.sadi.toor.recommend.viewmodel.SharedViewModel;
 import javax.inject.Inject;
 
 import androidx.navigation.Navigation;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
 
-public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBinding> extends Fragment {
+public abstract class BaseFragment<M extends ViewModel> extends Fragment {
 
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
     protected SharedViewModel sharedViewModel;
+    private Unbinder unbinder;
 
     @Override
     public void onAttach(Context context) {
@@ -38,15 +39,12 @@ public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBindin
         ((BaseActivity) getActivity()).setActionBarTitle(getString(getTitle()));
     }
 
-    @SuppressWarnings("unchecked")
-    @SuppressLint("CheckResult")
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        ViewDataBinding binding = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
-        getBinding((B) binding);
-        return binding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(getLayoutResId(), container, false);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
     @SuppressWarnings("unchecked")
@@ -58,6 +56,12 @@ public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBindin
         sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         onViewCreated(view, savedInstanceState, (M) viewModel);
         ((BaseActivity) getActivity()).showBackButton(showBackButton());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -74,8 +78,6 @@ public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBindin
     private void configureDagger() {
         AndroidSupportInjection.inject(this);
     }
-
-    protected abstract void getBinding(B binding);
 
     protected abstract Class<M> getViewModel();
 

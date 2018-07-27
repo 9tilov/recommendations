@@ -5,16 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
-import com.sadi.toor.recommend.databinding.GenreFragmentBinding;
 import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.genre.Genres;
 import com.sadi.toor.recommend.model.data.genre.SelectableGenre;
@@ -28,21 +25,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
 import timber.log.Timber;
 
-public class GenreFragment extends BaseFragment<GenreViewModel, GenreFragmentBinding> implements SelectableViewHolder.OnItemSelectedListener {
+public class GenreFragment extends BaseFragment<GenreViewModel> implements SelectableViewHolder.OnItemSelectedListener {
 
-    private GenreFragmentBinding binding;
+    @BindView(R.id.recycler_view_genre)
+    RecyclerView recyclerViewGenre;
+
     private SelectableAdapter adapter;
     private List<Movie> movies = new ArrayList<>();
 
     public static GenreFragment newInstance() {
         return new GenreFragment();
-    }
-
-    @Override
-    protected void getBinding(GenreFragmentBinding binding) {
-        this.binding = binding;
     }
 
     @Override
@@ -65,12 +60,12 @@ public class GenreFragment extends BaseFragment<GenreViewModel, GenreFragmentBin
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        binding.recyclerViewGenre.addItemDecoration(decoration);
-        binding.recyclerViewGenre.setLayoutManager(layoutManager);
+        recyclerViewGenre.addItemDecoration(decoration);
+        recyclerViewGenre.setLayoutManager(layoutManager);
         viewModel.getGenreList().observe(this, movies -> {
             if (movies.getData() != null) {
                 adapter = new SelectableAdapter(this, movies.getData().getGenres(), true);
-                binding.recyclerViewGenre.setAdapter(adapter);
+                recyclerViewGenre.setAdapter(adapter);
                 Timber.d("Size = " + movies.getData().getGenres().size());
             } else {
                 Toast.makeText(getContext(), movies.getError().getMessage(), Toast.LENGTH_SHORT).show();

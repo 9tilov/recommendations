@@ -5,8 +5,12 @@ import android.arch.lifecycle.ViewModel;
 
 import com.sadi.toor.recommend.core.wrapper.DataWrapper;
 import com.sadi.toor.recommend.core.wrapper.ErrorObject;
+import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.model.repo.DataRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,11 +24,14 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<DataWrapper<Movies>> movies = new MutableLiveData<>();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private final DataRepository repository;
+    private final List<Movie> favoritesMovie = new ArrayList<>();
+    private final int favoriteMovieCount;
 
     @Inject
     MainViewModel(DataRepository dataRepository) {
         this.repository = dataRepository;
         loadMovies();
+        favoriteMovieCount = 7;
     }
 
     private void loadMovies() {
@@ -41,6 +48,17 @@ public class MainViewModel extends ViewModel {
 
     public MutableLiveData<DataWrapper<Movies>> getMovieList() {
         return movies;
+    }
+
+
+    public boolean addToFavorite(Movie movie) {
+        favoritesMovie.add(movie);
+        Timber.d("moggot size= " + favoritesMovie.size());
+        return favoritesMovie.size() == favoriteMovieCount;
+    }
+
+    public void removeFromFavorite() {
+        favoritesMovie.remove(favoritesMovie.size() - 1);
     }
 
     @Override

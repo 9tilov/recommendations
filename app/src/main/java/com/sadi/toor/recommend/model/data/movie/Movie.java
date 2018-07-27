@@ -60,15 +60,4 @@ public class Movie {
     public int getYear() {
         return year;
     }
-
-    @BindingAdapter({"app:glideBinding", "app:placeholder"})
-    public static void bindImage(ImageView imageView, String url, Drawable placeHolder) {
-        Glide.with(imageView)
-                .setDefaultRequestOptions(RequestOptions.placeholderOf(placeHolder))
-                .asBitmap()
-                .load(url)
-                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))
-                .into(imageView);
-    }
-
 }
