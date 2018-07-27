@@ -58,7 +58,9 @@ public class MainViewModel extends ViewModel {
     }
 
     public void removeFromFavorite() {
-        favoritesMovie.remove(favoritesMovie.size() - 1);
+        if (favoritesMovie.size() > 0) {
+            favoritesMovie.remove(favoritesMovie.size() - 1);
+        }
     }
 
     @Override
