@@ -25,13 +25,17 @@ public class MainViewModel extends ViewModel {
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private final DataRepository repository;
     private final List<Movie> favoritesMovie = new ArrayList<>();
-    private final int favoriteMovieCount;
+    private final int favoriteMovieCountToSelect;
 
     @Inject
     MainViewModel(DataRepository dataRepository) {
         this.repository = dataRepository;
         loadMovies();
-        favoriteMovieCount = 7;
+        favoriteMovieCountToSelect = 7;
+    }
+
+    public void clearFavorites() {
+        favoritesMovie.clear();
     }
 
     private void loadMovies() {
@@ -54,7 +58,7 @@ public class MainViewModel extends ViewModel {
     public boolean addToFavorite(Movie movie) {
         favoritesMovie.add(movie);
         Timber.d("moggot size= " + favoritesMovie.size());
-        return favoritesMovie.size() == favoriteMovieCount;
+        return favoritesMovie.size() == favoriteMovieCountToSelect;
     }
 
     public void removeFromFavorite() {

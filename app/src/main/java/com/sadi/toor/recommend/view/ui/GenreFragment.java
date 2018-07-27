@@ -32,6 +32,8 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
 
     @BindView(R.id.recycler_view_genre)
     RecyclerView recyclerViewGenre;
+    @BindView(R.id.btn_genre)
+    TextView btnSend;
 
     private SelectableAdapter adapter;
     private List<Movie> movies = new ArrayList<>();
@@ -65,6 +67,7 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
         viewModel.getGenreList().observe(this, movies -> {
             if (movies.getData() != null) {
                 adapter = new SelectableAdapter(this, movies.getData().getGenres(), true);
+                btnSend.setVisibility(View.VISIBLE);
                 recyclerViewGenre.setAdapter(adapter);
                 Timber.d("Size = " + movies.getData().getGenres().size());
             } else {
@@ -80,8 +83,7 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
             }
         });
 
-        TextView send = (TextView) ((MainActivity) getContext()).findViewById(R.id.btn_genre);
-        send.setOnClickListener(view1 -> {
+        btnSend.setOnClickListener(view1 -> {
             Movies movies = new Movies(this.movies);
             Genres genres = new Genres(adapter.getSelectedItems());
             long[] movieIds = new long[movies.getMovies().size()];

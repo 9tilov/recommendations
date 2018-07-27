@@ -55,6 +55,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, MainViewModel viewModel) {
         Timber.d("moggot create");
         this.viewModel = viewModel;
+        viewModel.clearFavorites();
         viewModel.getMovieList().observe(this, movies -> {
             if (movies.getData() != null) {
                 adapter = new MovieAdapter(movies.getData().getMovies(), this);
