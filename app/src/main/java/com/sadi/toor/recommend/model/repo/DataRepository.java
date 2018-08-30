@@ -5,6 +5,7 @@ import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.genre.Genres;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
+import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -36,7 +37,7 @@ public class DataRepository {
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 
-    public Flowable<Movie> sendUserWish(Wish wish) {
+    public Flowable<Recommendations> sendUserWish(Wish wish) {
         return api.sendUserFavoriteWish(wish.getMovies(), wish.getGenres()).toFlowable()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }

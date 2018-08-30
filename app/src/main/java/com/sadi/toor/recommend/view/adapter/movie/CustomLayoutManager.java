@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.view.adapter;
+package com.sadi.toor.recommend.view.adapter.movie;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;

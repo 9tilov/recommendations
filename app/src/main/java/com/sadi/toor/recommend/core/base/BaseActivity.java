@@ -30,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     protected abstract void configureDagger();
 
-    public void setActionBarTitle(String title) {
+    public void setActionBarTitle(int title) {
         getSupportActionBar().setTitle(title);
     }
 

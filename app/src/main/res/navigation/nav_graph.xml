@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
 
@@ -15,5 +16,14 @@
     <fragment
         android:id="@+id/genreFragment"
         android:name="com.sadi.toor.recommend.view.ui.GenreFragment"
-        android:label="GenreFragment" />
+        android:label="GenreFragment" >
+        <action
+            android:id="@+id/action_genreFragment_to_recommendFragment"
+            app:destination="@id/recommendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recommendFragment"
+        android:name="com.sadi.toor.recommend.view.ui.RecommendFragment"
+        android:label="recommend_fragment"
+        tools:layout="@layout/recommend_item" />
 </navigation>

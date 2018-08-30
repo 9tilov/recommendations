@@ -17,7 +17,8 @@ import android.widget.Toast;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.view.adapter.CustomLayoutManager;
+import com.sadi.toor.recommend.model.data.movie.Movies;
+import com.sadi.toor.recommend.view.adapter.movie.CustomLayoutManager;
 import com.sadi.toor.recommend.view.adapter.movie.MovieAdapter;
 import com.sadi.toor.recommend.viewmodel.MainViewModel;
 
@@ -53,9 +54,9 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         this.viewModel = viewModel;
         viewModel.clearFavorites();
         viewModel.getMovieList().observe(this, movies -> {
+            initRecyclerView(movies.getData());
             if (movies.getData() != null) {
-                adapter = new MovieAdapter(movies.getData().getMovies(), this);
-                initRecyclerView();
+
                 Timber.d("Size = " + movies.getData().getMovies().size());
             } else {
                 Toast.makeText(getContext(), movies.getError().getMessage(), Toast.LENGTH_SHORT).show();
@@ -68,7 +69,8 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         btnSkip.setOnClickListener(v -> switchNext());
     }
 
-    private void initRecyclerView() {
+    private void initRecyclerView(Movies movies) {
+        adapter = new MovieAdapter(movies, this);
         rvMovie.setAdapter(adapter);
 
         ((SimpleItemAnimator) rvMovie.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -96,7 +98,9 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     }
 
     private void switchNext() {
-        rvMovie.getLayoutManager().scrollToPosition(linearLayoutManager.findLastVisibleItemPosition() + 1);
+        if (rvMovie != null) {
+            rvMovie.getLayoutManager().scrollToPosition(linearLayoutManager.findLastVisibleItemPosition() + 1);
+        }
     }
 
     private void switchPrevious() {
@@ -106,9 +110,10 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     @Override
     public void rate(Movie movie) {
         if (viewModel.addToFavorite(movie)) {
+            sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
             Navigation.findNavController(getView()).navigate(R.id.genreFragment);
         } else {
-            new Handler().postDelayed(this::switchNext, 200);
+            new Handler().postDelayed(MainFragment.this::switchNext, 200);
         }
     }
 }

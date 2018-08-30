@@ -3,6 +3,7 @@ package com.sadi.toor.recommend.model.api;
 import com.sadi.toor.recommend.model.data.genre.Genres;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
+import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -18,5 +19,5 @@ public interface Api {
     Single<Genres> getGenres();
 
     @POST("getRec")
-    Single<Movie> sendUserFavoriteWish(@Query("likes") String movies, @Query("genres") String genres);
+    Single<Recommendations> sendUserFavoriteWish(@Query("likes") String movies, @Query("genres") String genres);
 }

@@ -1,5 +1,6 @@
 package com.sadi.toor.recommend.di.module;
 
+import com.sadi.toor.recommend.view.ui.RecommendFragment;
 import com.sadi.toor.recommend.view.ui.GenreFragment;
 import com.sadi.toor.recommend.view.ui.MainFragment;
 
@@ -18,5 +19,8 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract GenreFragment contributeGenreFragment();
+
+    @ContributesAndroidInjector
+    abstract RecommendFragment contributeRecommendFragment();
 
 }

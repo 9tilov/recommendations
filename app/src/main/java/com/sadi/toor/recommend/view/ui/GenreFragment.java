@@ -1,5 +1,6 @@
 package com.sadi.toor.recommend.view.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import timber.log.Timber;
 
@@ -74,12 +76,11 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
                 Toast.makeText(getContext(), movies.getError().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-        viewModel.getRecmmendedMovie().observe(this, movies -> {
+        viewModel.clearRecommendedMovie();
+        viewModel.getRecommendedMovie().observe(this, movies -> {
             if (movies.getData() != null) {
-                Toast.makeText(getContext(), movies.getData().getName(), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), movies.getError().getMessage(), Toast.LENGTH_SHORT).show();
+                sharedViewModel.putRecommendations(movies.getData());
+                Navigation.findNavController(getView()).navigate(R.id.recommendFragment);
             }
         });
 

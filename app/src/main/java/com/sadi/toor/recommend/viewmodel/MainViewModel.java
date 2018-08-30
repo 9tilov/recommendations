@@ -58,7 +58,11 @@ public class MainViewModel extends ViewModel {
     public boolean addToFavorite(Movie movie) {
         favoritesMovie.add(movie);
         Timber.d("moggot size= " + favoritesMovie.size());
-        return favoritesMovie.size() == favoriteMovieCountToSelect;
+        return favoritesMovie.size() >= favoriteMovieCountToSelect;
+    }
+
+    public List<Movie> getFavoritesMovie() {
+        return favoritesMovie;
     }
 
     public void removeFromFavorite() {

@@ -17,28 +17,12 @@ public class Movie {
     @SerializedName("year")
     @Expose
     private int year;
-
-    private boolean isSelected = false;
-    private boolean isLiked = false;
+    @SerializedName("trailer")
+    @Expose
+    private String trailer;
 
     public long getMovieId() {
         return movieId;
-    }
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.isSelected = selected;
-    }
-
-    public boolean isLiked() {
-        return isLiked;
-    }
-
-    public void setLiked(boolean liked) {
-        isLiked = liked;
     }
 
     public String getLink() {
@@ -51,5 +35,9 @@ public class Movie {
 
     public int getYear() {
         return year;
+    }
+
+    public String getTrailer() {
+        return trailer;
     }
 }

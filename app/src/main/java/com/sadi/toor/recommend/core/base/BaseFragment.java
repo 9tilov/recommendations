@@ -36,7 +36,7 @@ public abstract class BaseFragment<M extends ViewModel> extends Fragment {
     public void onAttach(Context context) {
         configureDagger();
         super.onAttach(context);
-        ((BaseActivity) getActivity()).setActionBarTitle(getString(getTitle()));
+        ((BaseActivity) getActivity()).setActionBarTitle(getTitle());
     }
 
     @Nullable
