@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -11,6 +11,73 @@
     <style name="PlayerTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="TextRegular" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily" tools:targetApi="16">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextMedium" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily" tools:targetApi="16">@string/font_family_medium</item>
+    </style>
+
+    <style name="TextRobotoBold" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily" tools:targetApi="16">@string/font_family_regular</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextMedium.Headline">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextMedium.Headline.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextMedium.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextMedium.Title.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="TextMedium.Subheader">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextMedium.Subheader.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextRegular.Body1">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextRegular.Body1.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextRegular.Body1.Left">
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextMedium.Body2">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextRegular.Caption2">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextMedium.Button">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/grey_color</item>
+        <item name="colorControlActivated">@color/black_color</item>
     </style>
 
 </resources>

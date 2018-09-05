@@ -63,10 +63,14 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
             }
         });
         btnBack.setOnClickListener(v -> {
+            btnBack.setVisibility(View.GONE);
             switchPrevious();
             viewModel.removeFromFavorite();
         });
-        btnSkip.setOnClickListener(v -> switchNext());
+        btnSkip.setOnClickListener(v -> {
+            btnBack.setVisibility(View.VISIBLE);
+            switchNext();
+        });
     }
 
     private void initRecyclerView(Movies movies) {
@@ -109,6 +113,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
 
     @Override
     public void rate(Movie movie) {
+        btnBack.setVisibility(View.VISIBLE);
         if (viewModel.addToFavorite(movie)) {
             sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
             Navigation.findNavController(getView()).navigate(R.id.genreFragment);

@@ -27,6 +27,7 @@ import io.reactivex.annotations.Nullable;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
+    @NonNull
     private List<Movie> movies = new ArrayList<>();
     private final OnViewClickLister clickLister;
 

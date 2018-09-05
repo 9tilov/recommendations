@@ -11,19 +11,22 @@
         android:layout_height="0dp"
         android:layout_margin="32dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/tv_movie_title"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tv_movie_title"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tv_movie_title"
+        style="@style/TextMedium.Title.Center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
+        android:layout_marginRight="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_main_movie_pic"
@@ -31,9 +34,11 @@
 
     <TextView
         android:id="@+id/tv_movie_year"
+        style="@style/TextRegular.Body1.Center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/rate_fragment_bar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
@@ -45,9 +50,10 @@
         android:layout_height="wrap_content"
         android:numStars="5"
         android:stepSize="1"
+        android:theme="@style/RatingBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_movie_year"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_year" />
 
 </android.support.constraint.ConstraintLayout>

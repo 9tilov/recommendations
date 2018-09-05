@@ -20,9 +20,13 @@
 
     <TextView
         android:id="@+id/btn_skip"
+        style="@style/TextMedium.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
         android:text="@string/havent_seen"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -34,9 +38,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_skip"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/ic_undo" />
+        app:layout_constraintTop_toTopOf="@+id/btn_skip"
+        app:srcCompat="@drawable/ic_undo"
+        tools:visibility="visible" />
 
 </android.support.constraint.ConstraintLayout>
-

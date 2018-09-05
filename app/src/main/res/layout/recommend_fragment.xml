@@ -16,6 +16,7 @@
 
     <TextView
         android:id="@+id/tv_rec_skip"
+        style="@style/TextMedium.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
