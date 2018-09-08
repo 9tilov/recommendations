@@ -20,6 +20,11 @@ public class Movie {
     @SerializedName("trailer")
     @Expose
     private String trailer;
+    @SerializedName("overview")
+    @Expose
+    private String description;
+
+    private float rating;
 
     public long getMovieId() {
         return movieId;
@@ -39,5 +44,21 @@ public class Movie {
 
     public String getTrailer() {
         return trailer;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "movieId=" + movieId +
+                ", rating=" + rating +
+                '}';
     }
 }

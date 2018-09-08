@@ -5,45 +5,69 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.MainFragment">
+    tools:context=".preparing.ui.MainFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_movie"
+    <ProgressBar
+        android:id="@+id/main_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.9"
+        android:layout_height="@dimen/progress_bar_height"
+        android:layout_margin="32dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progressDrawable="@drawable/bg_progress_bar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/btn_skip"
-        style="@style/TextMedium.Headline"
+        android:id="@+id/main_tv_progress_count"
+        style="@style/TextRegular.Caption2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:text="@string/main_progress"
+        app:layout_constraintBottom_toTopOf="@+id/main_progress_bar"
+        app:layout_constraintRight_toRightOf="@+id/main_progress_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0 of 10" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/main_rv_movie"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/main_iv_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_progress_bar" />
+
+    <TextView
+        android:id="@+id/main_btn_skip"
+        style="@style/TextMedium.Body2.Center"
+        android:layout_width="200dp"
+        android:layout_height="36dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/sel_btn"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/havent_seen"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_movie" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_back"
+        android:id="@+id/main_iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="gone"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@+id/main_btn_skip"
+        app:layout_constraintBottom_toBottomOf="@+id/main_btn_skip"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_skip"
+        app:layout_constraintRight_toLeftOf="@+id/main_btn_skip"
         app:srcCompat="@drawable/ic_undo"
         tools:visibility="visible" />
 

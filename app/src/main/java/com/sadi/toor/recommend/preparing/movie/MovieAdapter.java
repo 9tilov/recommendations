@@ -1,11 +1,10 @@
-package com.sadi.toor.recommend.view.adapter.movie;
+package com.sadi.toor.recommend.preparing.movie;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.hsalf.smilerating.SmileRating;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
@@ -43,10 +43,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false);
         MovieViewHolder viewHolder = new MovieViewHolder(view);
-        viewHolder.ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+        viewHolder.ratingBar.setOnSmileySelectionListener((smiley, reselected) -> {
             int adapterPosition = viewHolder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Movie movie = movies.get(adapterPosition);
+                movie.setRating(smiley);
                 clickLister.rate(movie);
             }
         });
@@ -78,7 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @BindView(R.id.tv_movie_year)
         TextView tvYear;
         @BindView(R.id.rate_fragment_bar)
-        RatingBar ratingBar;
+        SmileRating ratingBar;
 
         MovieViewHolder(View view) {
             super(view);

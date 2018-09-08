@@ -2,7 +2,7 @@ package com.sadi.toor.recommend.di.module;
 
 import com.sadi.toor.recommend.view.ui.RecommendFragment;
 import com.sadi.toor.recommend.view.ui.GenreFragment;
-import com.sadi.toor.recommend.view.ui.MainFragment;
+import com.sadi.toor.recommend.preparing.ui.MainFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

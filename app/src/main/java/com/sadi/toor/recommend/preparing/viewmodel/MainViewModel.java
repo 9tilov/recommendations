@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.viewmodel;
+package com.sadi.toor.recommend.preparing.viewmodel;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
@@ -22,20 +22,24 @@ import timber.log.Timber;
 public class MainViewModel extends ViewModel {
 
     private final MutableLiveData<DataWrapper<Movies>> movies = new MutableLiveData<>();
+    private final MutableLiveData<ProgressStatus> progressData = new MutableLiveData<>();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
     private final DataRepository repository;
     private final List<Movie> favoritesMovie = new ArrayList<>();
-    private final int favoriteMovieCountToSelect;
+    private ProgressStatus progressStatus;
 
     @Inject
     MainViewModel(DataRepository dataRepository) {
         this.repository = dataRepository;
+        this.progressStatus = new ProgressStatus();
+        progressStatus.setChosenMovies(favoritesMovie.size());
+        progressData.setValue(progressStatus);
         loadMovies();
-        favoriteMovieCountToSelect = 7;
     }
 
     public void clearFavorites() {
         favoritesMovie.clear();
+        progressStatus.setChosenMovies(favoritesMovie.size());
     }
 
     private void loadMovies() {
@@ -54,11 +58,14 @@ public class MainViewModel extends ViewModel {
         return movies;
     }
 
+    public MutableLiveData<ProgressStatus> getProgress() {
+        return progressData;
+    }
 
-    public boolean addToFavorite(Movie movie) {
+    public void addToFavorite(Movie movie) {
         favoritesMovie.add(movie);
         Timber.d("moggot size= " + favoritesMovie.size());
-        return favoritesMovie.size() >= favoriteMovieCountToSelect;
+        progressStatus.setChosenMovies(favoritesMovie.size());
     }
 
     public List<Movie> getFavoritesMovie() {
@@ -68,6 +75,7 @@ public class MainViewModel extends ViewModel {
     public void removeFromFavorite() {
         if (favoritesMovie.size() > 0) {
             favoritesMovie.remove(favoritesMovie.size() - 1);
+            progressStatus.setChosenMovies(favoritesMovie.size());
         }
     }
 

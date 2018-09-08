@@ -56,4 +56,11 @@ public class Genre {
         result = 31 * result + (getGenreName() != null ? getGenreName().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "genreId=" + genreId +
+                '}';
+    }
 }

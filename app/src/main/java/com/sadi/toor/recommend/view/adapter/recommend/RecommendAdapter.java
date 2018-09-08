@@ -79,11 +79,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         }
 
         void bind(Movie data) {
-            Glide.with(ivVideo)
-                    .asBitmap()
-                    .load(Uri.fromFile(new File(data.getTrailer())))
-                    .into(ivVideo);
-
             Glide.with(ivPic)
                     .load(data.getLink())
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))

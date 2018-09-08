@@ -22,7 +22,6 @@ import com.sadi.toor.recommend.view.adapter.genre.SelectableViewHolder;
 import com.sadi.toor.recommend.viewmodel.GenreViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import androidx.navigation.Navigation;
@@ -86,15 +85,7 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
         btnSend.setOnClickListener(view1 -> {
             Movies movies = new Movies(this.movies);
             Genres genres = new Genres(adapter.getSelectedItems());
-            long[] movieIds = new long[movies.getMovies().size()];
-            for (int i = 0; i < movies.getMovies().size(); ++i) {
-                movieIds[i] = movies.getMovies().get(i).getMovieId();
-            }
-            long[] genreIds = new long[genres.getGenres().size()];
-            for (int i = 0; i < genres.getGenres().size(); ++i) {
-                genreIds[i] = genres.getGenres().get(i).getGenreId();
-            }
-            viewModel.sendUserMovies(new Wish(Arrays.toString(movieIds), Arrays.toString(genreIds)));
+            viewModel.sendUserMovies(new Wish(movies.toString(), genres.toString()));
         });
 
     }

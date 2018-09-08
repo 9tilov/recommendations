@@ -67,6 +67,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextMedium.Body2.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="TextRegular.Caption2">
         <item name="android:textSize">12sp</item>
     </style>

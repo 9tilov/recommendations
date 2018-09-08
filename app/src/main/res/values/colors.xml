@@ -6,4 +6,10 @@
 
     <color name="black_color">#000000</color>
     <color name="grey_color">#808080</color>
+
+    <color name="progress_bar_active_color">#000000</color>
+    <color name="progress_bar_color">#D3D3D3</color>
+
+    <color name="button_round">#EEEEEE</color>
+    <color name="button_round_pressed">#D3D3D3</color>
 </resources>

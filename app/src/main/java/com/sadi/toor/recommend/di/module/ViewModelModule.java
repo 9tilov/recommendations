@@ -7,7 +7,7 @@ import com.sadi.toor.recommend.viewmodel.RecommendViewModel;
 import com.sadi.toor.recommend.di.scope.ViewModelKey;
 import com.sadi.toor.recommend.viewmodel.FactoryViewModel;
 import com.sadi.toor.recommend.viewmodel.GenreViewModel;
-import com.sadi.toor.recommend.viewmodel.MainViewModel;
+import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 
 import dagger.Binds;
 import dagger.Module;
