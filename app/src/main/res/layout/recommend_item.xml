@@ -21,6 +21,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/bg_gradient"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -43,12 +45,11 @@
                 style="@style/TextMedium.Title.Left"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
                 android:layout_marginLeft="48dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="48dp"
                 android:textColor="@android:color/white"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rec_empty_space"
                 tools:text="@tools:sample/cities" />
 
