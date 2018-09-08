@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.viewmodel;
+package com.sadi.toor.recommend.genre.viewmodel;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
@@ -7,7 +7,6 @@ import com.sadi.toor.recommend.core.wrapper.DataWrapper;
 import com.sadi.toor.recommend.core.wrapper.ErrorObject;
 import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.genre.Genres;
-import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 import com.sadi.toor.recommend.model.repo.DataRepository;
 

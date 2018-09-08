@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.view.adapter.genre;
+package com.sadi.toor.recommend.genre.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;

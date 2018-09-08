@@ -3,11 +3,11 @@ package com.sadi.toor.recommend.di.module;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.sadi.toor.recommend.viewmodel.RecommendViewModel;
+import com.sadi.toor.recommend.core.base.FactoryViewModel;
 import com.sadi.toor.recommend.di.scope.ViewModelKey;
-import com.sadi.toor.recommend.viewmodel.FactoryViewModel;
-import com.sadi.toor.recommend.viewmodel.GenreViewModel;
+import com.sadi.toor.recommend.genre.viewmodel.GenreViewModel;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
+import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
 
 import dagger.Binds;
 import dagger.Module;

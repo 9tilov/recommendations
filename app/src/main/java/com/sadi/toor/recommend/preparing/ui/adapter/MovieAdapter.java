@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.preparing.movie;
+package com.sadi.toor.recommend.preparing.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,9 +27,9 @@ import io.reactivex.annotations.Nullable;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
+    private final OnViewClickLister clickLister;
     @NonNull
     private List<Movie> movies = new ArrayList<>();
-    private final OnViewClickLister clickLister;
 
     public MovieAdapter(@Nullable Movies movies, OnViewClickLister clickLister) {
         this.clickLister = clickLister;
@@ -64,6 +64,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public int getItemCount() {
         return movies.size();
+    }
+
+    public Movie getMoviewFromPosition(int position) {
+        return movies.get(position);
     }
 
     public interface OnViewClickLister {

@@ -40,6 +40,7 @@ public class MainViewModel extends ViewModel {
     public void clearFavorites() {
         favoritesMovie.clear();
         progressStatus.setChosenMovies(favoritesMovie.size());
+        progressData.setValue(progressStatus);
     }
 
     private void loadMovies() {
@@ -64,18 +65,19 @@ public class MainViewModel extends ViewModel {
 
     public void addToFavorite(Movie movie) {
         favoritesMovie.add(movie);
-        Timber.d("moggot size= " + favoritesMovie.size());
         progressStatus.setChosenMovies(favoritesMovie.size());
+        progressData.setValue(progressStatus);
     }
 
     public List<Movie> getFavoritesMovie() {
         return favoritesMovie;
     }
 
-    public void removeFromFavorite() {
-        if (favoritesMovie.size() > 0) {
-            favoritesMovie.remove(favoritesMovie.size() - 1);
+    public void removeFromFavorite(Movie movie) {
+        if (favoritesMovie.size() > 0 && favoritesMovie.contains(movie)) {
+            favoritesMovie.remove(movie);
             progressStatus.setChosenMovies(favoritesMovie.size());
+            progressData.setValue(progressStatus);
         }
     }
 

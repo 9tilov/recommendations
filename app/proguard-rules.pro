@@ -80,3 +80,7 @@
 }
 -keepnames class com.fasterxml.** { *; }
 -dontwarn com.fasterxml.jackson.databind.**
+
+#progressbar
+-keep class com.wang.avi.** { *; }
+-keep class com.wang.avi.indicators.** { *; }

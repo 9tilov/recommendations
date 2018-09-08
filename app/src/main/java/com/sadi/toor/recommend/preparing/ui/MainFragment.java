@@ -2,7 +2,6 @@ package com.sadi.toor.recommend.preparing.ui;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
@@ -21,8 +20,8 @@ import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
-import com.sadi.toor.recommend.preparing.movie.CustomLayoutManager;
-import com.sadi.toor.recommend.preparing.movie.MovieAdapter;
+import com.sadi.toor.recommend.preparing.ui.adapter.CustomLayoutManager;
+import com.sadi.toor.recommend.preparing.ui.adapter.MovieAdapter;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 import com.sadi.toor.recommend.preparing.viewmodel.ProgressStatus;
 
@@ -43,6 +42,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     @BindView(R.id.main_tv_progress_count)
     TextView tvProgressCount;
 
+    private MovieAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private MainViewModel viewModel;
 
@@ -74,11 +74,18 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         btnSkip.setOnClickListener(v -> {
             switchNext();
         });
-        viewModel.getProgress().observe(this, this::setProgress);
+        viewModel.getProgress().observe(this, progressStatus -> {
+            if (progressStatus.needToStop()) {
+                sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
+                Navigation.findNavController(getView()).navigate(R.id.genreFragment);
+            } else {
+                setProgress(progressStatus);
+            }
+        });
     }
 
     private void initRecyclerView(Movies movies) {
-        MovieAdapter adapter = new MovieAdapter(movies, this);
+        adapter = new MovieAdapter(movies, this);
         rvMovie.setAdapter(adapter);
 
         ((SimpleItemAnimator) rvMovie.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -107,32 +114,20 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
 
     private void switchNext() {
         if (rvMovie != null) {
-            viewModel.getProgress().observe(this, progressStatus -> {
-                if (progressStatus.needToStop()) {
-                    sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
-                    Navigation.findNavController(getView()).navigate(R.id.genreFragment);
-                } else {
-                    rvMovie.getLayoutManager().scrollToPosition(linearLayoutManager.findLastVisibleItemPosition() + 1);
-                    btnBack.setVisibility(View.VISIBLE);
-                    setProgress(progressStatus);
-
-                }
-            });
+            rvMovie.getLayoutManager().scrollToPosition(linearLayoutManager.findLastVisibleItemPosition() + 1);
+            btnBack.setVisibility(View.VISIBLE);
         }
     }
 
     private void switchPrevious() {
         btnBack.setVisibility(View.INVISIBLE);
-        viewModel.removeFromFavorite();
-        viewModel.getProgress().observe(this, progressStatus -> {
-            rvMovie.getLayoutManager().scrollToPosition(linearLayoutManager.findLastVisibleItemPosition() - 1);
-            setProgress(progressStatus);
-        });
+        viewModel.removeFromFavorite(adapter.getMoviewFromPosition(linearLayoutManager.findLastVisibleItemPosition() - 1));
+        rvMovie.getLayoutManager().scrollToPosition(linearLayoutManager.findLastVisibleItemPosition() - 1);
     }
 
     @Override
     public void rate(Movie movie) {
-        new Handler().postDelayed(this::switchNext, 200);
+        switchNext();
         viewModel.addToFavorite(movie);
     }
 

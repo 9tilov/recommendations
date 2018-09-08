@@ -1,11 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="BaseActivityTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="BaseActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="buttonStyle">@style/bg_buttons</item>
+    </style>
+
+    <style name="bg_buttons" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/sel_btn</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
     </style>
 
     <style name="PlayerTheme" parent="Theme.AppCompat.Light">
@@ -42,6 +52,9 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="TextMedium.Title.Left">
+        <item name="android:gravity">left</item>
+    </style>
 
     <style name="TextMedium.Subheader">
         <item name="android:textSize">16sp</item>
@@ -73,15 +86,6 @@
 
     <style name="TextRegular.Caption2">
         <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="TextMedium.Button">
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/grey_color</item>
-        <item name="colorControlActivated">@color/black_color</item>
     </style>
 
 </resources>

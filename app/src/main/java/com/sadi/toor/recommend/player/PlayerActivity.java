@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.view.ui;
+package com.sadi.toor.recommend.player;
 
 import android.net.Uri;
 import android.os.Bundle;

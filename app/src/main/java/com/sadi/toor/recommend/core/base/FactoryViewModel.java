@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.viewmodel;
+package com.sadi.toor.recommend.core.base;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

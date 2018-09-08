@@ -1,8 +1,7 @@
-package com.sadi.toor.recommend.view.ui;
+package com.sadi.toor.recommend;
 
 import android.os.Bundle;
 
-import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseActivity;
 
 import dagger.android.AndroidInjection;

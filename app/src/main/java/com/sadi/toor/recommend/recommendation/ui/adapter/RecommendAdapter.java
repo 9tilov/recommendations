@@ -1,6 +1,5 @@
-package com.sadi.toor.recommend.view.adapter.recommend;
+package com.sadi.toor.recommend.recommendation.ui.adapter;
 
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +10,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +33,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
     public RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommend_item, parent, false);
         RecommendViewHolder viewHolder = new RecommendViewHolder(view);
-        viewHolder.ivVideo.setOnClickListener(v -> {
+        viewHolder.ivPoster.setOnClickListener(v -> {
             int adapterPosition = viewHolder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Movie movie = movies.getMovies().get(adapterPosition);
@@ -64,14 +60,12 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
     static class RecommendViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_rec_video)
-        ImageView ivVideo;
-        @BindView(R.id.iv_rec_pic)
-        ImageView ivPic;
-        @BindView(R.id.tv_rec_title)
+        @BindView(R.id.rec_iv_poster)
+        ImageView ivPoster;
+        @BindView(R.id.rec_tv_title)
         TextView tvTitle;
-        @BindView(R.id.tv_rec_year)
-        TextView tvYear;
+        @BindView(R.id.rec_tv_overview)
+        TextView tvOverview;
 
         RecommendViewHolder(View view) {
             super(view);
@@ -79,12 +73,12 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         }
 
         void bind(Movie data) {
-            Glide.with(ivPic)
+            Glide.with(ivPoster)
                     .load(data.getLink())
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))
-                    .into(ivPic);
-            tvTitle.setText(data.getName());
-            tvYear.setText(String.valueOf(data.getYear()));
+                    .into(ivPoster);
+            tvTitle.setText(itemView.getResources().getString(R.string.rec_title_with_year, data.getName(), data.getYear()));
+            tvOverview.setText(data.getDescription());
         }
     }
 }

@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sadi.toor.recommend.viewmodel.SharedViewModel;
+import com.sadi.toor.recommend.core.common.SharedViewModel;
 
 import javax.inject.Inject;
 

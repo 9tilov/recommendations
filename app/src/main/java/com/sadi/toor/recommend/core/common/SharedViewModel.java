@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.viewmodel;
+package com.sadi.toor.recommend.core.common;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

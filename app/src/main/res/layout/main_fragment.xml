@@ -42,15 +42,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_progress_bar" />
 
-    <TextView
+    <Button
         android:id="@+id/main_btn_skip"
-        style="@style/TextMedium.Body2.Center"
-        android:layout_width="200dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/sel_btn"
-        android:clickable="true"
-        android:focusable="true"
         android:text="@string/havent_seen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,10 +60,10 @@
         android:clickable="true"
         android:focusable="true"
         android:visibility="invisible"
-        app:layout_constraintTop_toTopOf="@+id/main_btn_skip"
         app:layout_constraintBottom_toBottomOf="@+id/main_btn_skip"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/main_btn_skip"
+        app:layout_constraintTop_toTopOf="@+id/main_btn_skip"
         app:srcCompat="@drawable/ic_undo"
         tools:visibility="visible" />
 
