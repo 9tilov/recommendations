@@ -16,9 +16,7 @@ import com.sadi.toor.recommend.filter.genre.ui.adapter.SelectableViewHolder;
 import com.sadi.toor.recommend.filter.genre.viewmodel.GenreViewModel;
 import com.sadi.toor.recommend.model.data.genre.Genre;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -56,7 +54,7 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
             if (genres.getData() != null) {
                 sharedViewModel.getSelectedGenres().observe(this, selectedGenres -> {
                     Set<Genre> genreSet = new HashSet<>(selectedGenres);
-                    for (Genre genre: genres.getData().getGenres()) {
+                    for (Genre genre : genres.getData().getGenres()) {
                         if (genreSet.contains(genre)) {
                             genre.setSelected(true);
                         }

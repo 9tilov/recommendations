@@ -34,7 +34,8 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, FilterViewModel viewModel) {
-        cvGenre.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.genreFragment, null,
+        cvGenre.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.genreFragment,
+                null,
                 new NavOptions.Builder()
                         .setEnterAnim(R.anim.slide_in_right)
                         .setExitAnim(R.anim.slide_out_left)

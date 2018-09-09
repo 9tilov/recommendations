@@ -10,7 +10,6 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.SnapHelper;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -41,7 +40,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @BindView(R.id.rec_btn_filter)
     AppCompatImageView btnFilter;
 
-    private RecommendViewModel viewModel;
     private RecommendAdapter adapter;
 
     public static RecommendFragment newInstance() {
@@ -50,7 +48,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
-        this.viewModel = viewModel;
         sharedViewModel.getSelectedMovies().observe(this, movies -> {
             viewModel.sendUserMovies(new Wish(new Movies(movies).toString()));
         });
@@ -59,30 +56,20 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             initRecyclerView(recommendations.getData());
             Timber.d("moggot size = " + recommendations.getData().getMovies().size());
         });
-        disableBackButton();
         btnRateAgain.setOnClickListener(v -> {
             Navigation.findNavController(getView()).popBackStack();
         });
         btnFilter.setOnClickListener(v -> {
-            Navigation.findNavController(getView()).navigate(R.id.filterFragment, null, new NavOptions.Builder()
-                    .setEnterAnim(R.anim.push_up_in)
-                    .setExitAnim(R.anim.push_up_out)
-                    .setPopEnterAnim(R.anim.push_down_in)
-                    .setPopExitAnim(R.anim.push_down_out)
-                    .build());
+            Navigation.findNavController(getView()).navigate(R.id.filterFragment,
+                    null,
+                    new NavOptions.Builder()
+                            .setEnterAnim(R.anim.push_up_in)
+                            .setExitAnim(R.anim.push_up_out)
+                            .setPopEnterAnim(R.anim.push_down_in)
+                            .setPopExitAnim(R.anim.push_down_out)
+                            .build());
         });
 
-    }
-
-    private void disableBackButton() {
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener((v, keyCode, event) -> {
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                return true;
-            }
-            return false;
-        });
     }
 
     private void initRecyclerView(Recommendations recommendations) {

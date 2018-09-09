@@ -79,7 +79,8 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         viewModel.getProgress().observe(this, progressStatus -> {
             if (progressStatus.needToStop()) {
                 sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
-                Navigation.findNavController(getView()).navigate(R.id.recommendFragment, null,
+                Navigation.findNavController(getView()).navigate(R.id.recommendFragment,
+                        null,
                         new NavOptions.Builder()
                                 .setEnterAnim(R.anim.slide_in_right)
                                 .setExitAnim(R.anim.slide_out_left)

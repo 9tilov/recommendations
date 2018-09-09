@@ -20,8 +20,7 @@
         tools:layout="@layout/recommend_item" >
         <action
             android:id="@+id/action_recommendFragment_to_filterFragment"
-            app:destination="@id/filterFragment"
-            app:popUpTo="@id/recommendFragment" />
+            app:destination="@id/filterFragment" />
     </fragment>
     <fragment
         android:id="@+id/genreFragment"
