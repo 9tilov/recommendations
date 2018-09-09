@@ -38,7 +38,7 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Any" />
+                android:text="@string/any" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -75,7 +75,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="8dp"
-                tools:text="1990s" />
+                android:text="@string/any" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

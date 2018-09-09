@@ -61,7 +61,9 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
             tvGenre.setText(sb.toString());
         });
         sharedViewModel.getSelectedPeriod().observe(this, periodPair -> {
-            tvYear.setText(getString(R.string.time_period, periodPair.first, periodPair.second));
+            tvYear.setText(periodPair.first.equals(periodPair.second)
+                    ? String.valueOf(periodPair.first)
+                    : getString(R.string.time_period, periodPair.first, periodPair.second));
         });
     }
 

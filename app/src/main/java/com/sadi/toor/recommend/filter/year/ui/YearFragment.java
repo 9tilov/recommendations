@@ -3,6 +3,7 @@ package com.sadi.toor.recommend.filter.year.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 import android.view.View;
 import android.widget.NumberPicker;
 
@@ -24,7 +25,6 @@ public class YearFragment extends BaseFragment<YearViewModel> {
     NumberPicker npEnd;
 
     private static final int MIN_YEAR = 1899;
-
     private String[] displayedValues;
 
     public static YearFragment newInstance() {
@@ -38,13 +38,18 @@ public class YearFragment extends BaseFragment<YearViewModel> {
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, YearViewModel viewModel) {
-        formDisplayedValues();
         initNumberPickers();
+        sharedViewModel.getSelectedPeriod().observe(this, integerIntegerPair -> {
+            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            npStart.setValue(currentYear - integerIntegerPair.first);
+            npEnd.setValue(currentYear - integerIntegerPair.second);
+        });
         npStart.setOnValueChangedListener((picker, oldVal, newVal) -> {
             int curVal = Integer.parseInt(displayedValues[newVal]);
             if (curVal > Integer.parseInt(displayedValues[npEnd.getValue()])) {
                 npEnd.setValue(0);
             }
+            sharedViewModel.putPeriod(new Pair<>(curVal, Integer.parseInt(displayedValues[npEnd.getValue()])));
         });
 
         npEnd.setOnValueChangedListener((picker, oldVal, newVal) -> {
@@ -52,7 +57,18 @@ public class YearFragment extends BaseFragment<YearViewModel> {
             if (curVal < Integer.parseInt(displayedValues[npStart.getValue()])) {
                 npStart.setValue(newVal);
             }
+            sharedViewModel.putPeriod(new Pair<>(Integer.parseInt(displayedValues[npStart.getValue()]), curVal));
         });
+    }
+
+    private void initNumberPickers() {
+        formDisplayedValues();
+        npStart.setWrapSelectorWheel(false);
+        npEnd.setWrapSelectorWheel(false);
+        npStart.setMaxValue(displayedValues.length - 1);
+        npEnd.setMaxValue(displayedValues.length - 1);
+        npStart.setDisplayedValues(displayedValues);
+        npEnd.setDisplayedValues(displayedValues);
     }
 
     private void formDisplayedValues() {
@@ -63,25 +79,6 @@ public class YearFragment extends BaseFragment<YearViewModel> {
         }
         displayedValues = startValues.toArray(new String[0]);
     }
-
-    private void initNumberPickers() {
-        npStart.setWrapSelectorWheel(false);
-        npEnd.setWrapSelectorWheel(false);
-        npStart.setMaxValue(displayedValues.length - 1);
-        npEnd.setMaxValue(displayedValues.length - 1);
-        npStart.setDisplayedValues(displayedValues);
-        npEnd.setDisplayedValues(displayedValues);
-    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                sharedViewModel.putPeriod(new Pair<>(Integer.parseInt(displayedValues[npStart.getValue()]), Integer.parseInt(displayedValues[npEnd.getValue()])));
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     protected int getTitle() {
