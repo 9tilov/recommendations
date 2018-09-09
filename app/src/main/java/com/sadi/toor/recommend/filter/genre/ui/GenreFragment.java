@@ -39,12 +39,6 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, GenreViewModel viewModel) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);

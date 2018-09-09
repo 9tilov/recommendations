@@ -33,5 +33,12 @@
         <action
             android:id="@+id/action_filterFragment_to_genreFragment"
             app:destination="@id/genreFragment" />
+        <action
+            android:id="@+id/action_filterFragment_to_yearFragment"
+            app:destination="@id/yearFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/yearFragment"
+        android:name="com.sadi.toor.recommend.filter.year.ui.YearFragment"
+        android:label="YearFragment" />
 </navigation>

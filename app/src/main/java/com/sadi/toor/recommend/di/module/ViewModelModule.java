@@ -7,6 +7,7 @@ import com.sadi.toor.recommend.core.base.FactoryViewModel;
 import com.sadi.toor.recommend.di.scope.ViewModelKey;
 import com.sadi.toor.recommend.filter.viewmodel.FilterViewModel;
 import com.sadi.toor.recommend.filter.genre.viewmodel.GenreViewModel;
+import com.sadi.toor.recommend.filter.year.viewmodel.YearViewModel;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
 
@@ -36,6 +37,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FilterViewModel.class)
     abstract ViewModel bindFilterViewModel(FilterViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(YearViewModel.class)
+    abstract ViewModel bindYearViewModel(YearViewModel viewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);

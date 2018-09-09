@@ -48,8 +48,10 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
-        sharedViewModel.getSelectedMovies().observe(this, movies -> {
-            viewModel.sendUserMovies(new Wish(new Movies(movies).toString()));
+        sharedViewModel.getSelectedMovies().observe(this, movieList -> {
+            Movies movies = new Movies();
+            movies.setMovies(movieList);
+            viewModel.sendUserMovies(new Wish(movies.toString()));
         });
         viewModel.getRecommendations().observe(this, recommendations -> {
             progressDialog.setVisibility(View.GONE);

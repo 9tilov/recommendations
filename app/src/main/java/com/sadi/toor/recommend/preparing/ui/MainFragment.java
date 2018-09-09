@@ -46,6 +46,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     private MovieAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private MainViewModel viewModel;
+    private Movies movies = new Movies();
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -61,12 +62,15 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         Timber.d("moggot create");
         this.viewModel = viewModel;
         viewModel.clearFavorites();
-        viewModel.getMovieList().observe(this, movies -> {
-            initRecyclerView(movies.getData());
-            if (movies.getData() != null) {
-                Timber.d("Size = " + movies.getData().getMovies().size());
+        initRecyclerView();
+        viewModel.getMovieList().observe(this, movieList -> {
+            if (movieList.getData() != null) {
+                movies.setMovies(movieList.getData().getMovies());
+                adapter = new MovieAdapter(movies, this);
+                rvMovie.setAdapter(adapter);
+                Timber.d("Size = " + movieList.getData().getMovies().size());
             } else {
-                Toast.makeText(getContext(), movies.getError().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), movieList.getError().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         btnBack.setOnClickListener(v -> {
@@ -93,10 +97,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         });
     }
 
-    private void initRecyclerView(Movies movies) {
-        adapter = new MovieAdapter(movies, this);
-        rvMovie.setAdapter(adapter);
-
+    private void initRecyclerView() {
         ((SimpleItemAnimator) rvMovie.getItemAnimator()).setSupportsChangeAnimations(false);
         linearLayoutManager = new CustomLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 

@@ -26,7 +26,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/filter_genre" />
+                android:text="@string/filter_genre_title" />
 
             <TextView
                 android:id="@+id/filter_tv_genre"
@@ -65,7 +65,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/filter_time_period" />
+                android:text="@string/filter_time_period_title" />
 
             <TextView
                 android:id="@+id/filter_tv_year"
@@ -104,7 +104,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/filter_rating" />
+                android:text="@string/filter_rating_title" />
 
             <TextView
                 android:id="@+id/filter_tv_rating"

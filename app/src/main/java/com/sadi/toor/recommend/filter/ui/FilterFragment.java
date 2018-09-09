@@ -23,8 +23,12 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
 
     @BindView(R.id.filter_cv_genre)
     CardView cvGenre;
+    @BindView(R.id.filter_cv_year)
+    CardView cvYear;
     @BindView(R.id.filter_tv_genre)
     TextView tvGenre;
+    @BindView(R.id.filter_tv_year)
+    TextView tvYear;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,14 +38,19 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, FilterViewModel viewModel) {
+        NavOptions navOptions = new NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .build();
         cvGenre.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.genreFragment,
                 null,
-                new NavOptions.Builder()
-                        .setEnterAnim(R.anim.slide_in_right)
-                        .setExitAnim(R.anim.slide_out_left)
-                        .setPopEnterAnim(R.anim.slide_in_left)
-                        .setPopExitAnim(R.anim.slide_out_right)
-                        .build()));
+                navOptions));
+
+        cvYear.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.yearFragment,
+                null,
+                navOptions));
         sharedViewModel.getSelectedGenres().observe(this, genres -> {
             StringBuilder sb = new StringBuilder();
             for (Genre genre : genres) {
@@ -50,6 +59,9 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
             }
             sb.delete(sb.length() - 2, sb.length() - 1);
             tvGenre.setText(sb.toString());
+        });
+        sharedViewModel.getSelectedPeriod().observe(this, periodPair -> {
+            tvYear.setText(getString(R.string.time_period, periodPair.first, periodPair.second));
         });
     }
 

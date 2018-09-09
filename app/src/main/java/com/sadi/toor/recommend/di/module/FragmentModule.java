@@ -2,8 +2,11 @@ package com.sadi.toor.recommend.di.module;
 
 import com.sadi.toor.recommend.filter.ui.FilterFragment;
 import com.sadi.toor.recommend.filter.genre.ui.GenreFragment;
+import com.sadi.toor.recommend.filter.year.ui.YearFragment;
 import com.sadi.toor.recommend.preparing.ui.MainFragment;
 import com.sadi.toor.recommend.recommendation.ui.RecommendFragment;
+
+import java.time.Year;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -19,12 +22,15 @@ public abstract class FragmentModule {
     abstract MainFragment contributeMainFragment();
 
     @ContributesAndroidInjector
-    abstract GenreFragment contributeGenreFragment();
-
-    @ContributesAndroidInjector
     abstract RecommendFragment contributeRecommendFragment();
 
     @ContributesAndroidInjector
     abstract FilterFragment contributeFilterFragment();
+
+    @ContributesAndroidInjector
+    abstract GenreFragment contributeGenreFragment();
+
+    @ContributesAndroidInjector
+    abstract YearFragment contributeYearFragment();
 
 }
