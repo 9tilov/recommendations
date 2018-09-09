@@ -45,6 +45,9 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
         recyclerViewGenre.addItemDecoration(decoration);
         recyclerViewGenre.setLayoutManager(layoutManager);
         viewModel.getGenreList().observe(this, genres -> {
+            if (genres == null) {
+                return;
+            }
             if (genres.getData() != null) {
                 sharedViewModel.getSelectedGenres().observe(this, selectedGenres -> {
                     Set<Genre> genreSet = new HashSet<>(selectedGenres);
@@ -56,7 +59,6 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
                 });
                 adapter = new SelectableAdapter(this, genres.getData().getGenres(), true);
                 recyclerViewGenre.setAdapter(adapter);
-                Timber.d("Size = " + genres.getData().getGenres().size());
             } else {
                 Toast.makeText(getContext(), genres.getError().getMessage(), Toast.LENGTH_SHORT).show();
             }

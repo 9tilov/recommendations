@@ -64,11 +64,13 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         viewModel.clearFavorites();
         initRecyclerView();
         viewModel.getMovieList().observe(this, movieList -> {
+            if (movieList == null) {
+                return;
+            }
             if (movieList.getData() != null) {
                 movies.setMovies(movieList.getData().getMovies());
                 adapter = new MovieAdapter(movies, this);
                 rvMovie.setAdapter(adapter);
-                Timber.d("Size = " + movieList.getData().getMovies().size());
             } else {
                 Toast.makeText(getContext(), movieList.getError().getMessage(), Toast.LENGTH_SHORT).show();
             }

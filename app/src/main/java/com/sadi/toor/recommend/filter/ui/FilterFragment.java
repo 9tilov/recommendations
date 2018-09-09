@@ -52,6 +52,9 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
                 null,
                 navOptions));
         sharedViewModel.getSelectedGenres().observe(this, genres -> {
+            if (genres == null) {
+                return;
+            }
             StringBuilder sb = new StringBuilder();
             for (Genre genre : genres) {
                 sb.append(genre.getGenreName());

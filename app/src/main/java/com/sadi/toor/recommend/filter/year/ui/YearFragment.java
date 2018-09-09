@@ -40,6 +40,9 @@ public class YearFragment extends BaseFragment<YearViewModel> {
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, YearViewModel viewModel) {
         initNumberPickers();
         sharedViewModel.getSelectedPeriod().observe(this, integerIntegerPair -> {
+            if (integerIntegerPair == null) {
+                return;
+            }
             int currentYear = Calendar.getInstance().get(Calendar.YEAR);
             npStart.setValue(currentYear - integerIntegerPair.first);
             npEnd.setValue(currentYear - integerIntegerPair.second);

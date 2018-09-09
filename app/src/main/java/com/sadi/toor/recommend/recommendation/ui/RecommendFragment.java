@@ -13,6 +13,7 @@ import android.support.v7.widget.SnapHelper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
@@ -27,7 +28,6 @@ import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
-import timber.log.Timber;
 
 public class RecommendFragment extends BaseFragment<RecommendViewModel> implements RecommendAdapter.OnViewClickLister {
 
@@ -54,9 +54,15 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             viewModel.sendUserMovies(new Wish(movies.toString()));
         });
         viewModel.getRecommendations().observe(this, recommendations -> {
-            progressDialog.setVisibility(View.GONE);
-            initRecyclerView(recommendations.getData());
-            Timber.d("moggot size = " + recommendations.getData().getMovies().size());
+            if (recommendations == null) {
+                return;
+            }
+            if (recommendations.getData() != null) {
+                progressDialog.setVisibility(View.GONE);
+                initRecyclerView(recommendations.getData());
+            } else {
+                Toast.makeText(getContext(), recommendations.getError().getMessage(), Toast.LENGTH_SHORT).show();
+            }
         });
         btnRateAgain.setOnClickListener(v -> {
             Navigation.findNavController(getView()).popBackStack();
