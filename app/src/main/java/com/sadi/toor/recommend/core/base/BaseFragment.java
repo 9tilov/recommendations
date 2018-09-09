@@ -12,6 +12,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,4 +91,5 @@ public abstract class BaseFragment<M extends ViewModel> extends Fragment {
 
     @LayoutRes
     protected abstract int getLayoutResId();
+
 }

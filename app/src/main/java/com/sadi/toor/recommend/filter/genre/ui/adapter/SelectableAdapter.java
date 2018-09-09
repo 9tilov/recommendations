@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.genre.ui.adapter;
+package com.sadi.toor.recommend.filter.genre.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.model.data.genre.Genre;
-import com.sadi.toor.recommend.model.data.genre.SelectableGenre;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectableAdapter extends RecyclerView.Adapter implements SelectableViewHolder.OnItemSelectedListener {
 
-    private final List<SelectableGenre> values;
+    private final List<Genre> values;
     private final boolean isMultiSelectionEnabled;
     private final SelectableViewHolder.OnItemSelectedListener listener;
 
@@ -26,24 +25,20 @@ public class SelectableAdapter extends RecyclerView.Adapter implements Selectabl
         this.isMultiSelectionEnabled = isMultiSelectionEnabled;
 
         values = new ArrayList<>();
-        for (Genre item : items) {
-            values.add(new SelectableGenre(item, false));
-        }
+        values.addAll(items);
     }
 
     @Override
     public SelectableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.genre_item, parent, false);
-
         return new SelectableViewHolder(itemView, this);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-
         SelectableViewHolder holder = (SelectableViewHolder) viewHolder;
-        SelectableGenre selectableItem = values.get(position);
+        Genre selectableItem = values.get(position);
         String name = selectableItem.getGenreName();
         holder.textView.setText(name);
         if (isMultiSelectionEnabled) {
@@ -66,7 +61,7 @@ public class SelectableAdapter extends RecyclerView.Adapter implements Selectabl
     public List<Genre> getSelectedItems() {
 
         List<Genre> selectedItems = new ArrayList<>();
-        for (SelectableGenre item : values) {
+        for (Genre item : values) {
             if (item.isSelected()) {
                 selectedItems.add(item);
             }
@@ -84,10 +79,10 @@ public class SelectableAdapter extends RecyclerView.Adapter implements Selectabl
     }
 
     @Override
-    public void onItemSelected(SelectableGenre item) {
+    public void onItemSelected(Genre item) {
         if (!isMultiSelectionEnabled) {
 
-            for (SelectableGenre selectableItem : values) {
+            for (Genre selectableItem : values) {
                 if (!selectableItem.equals(item)
                         && selectableItem.isSelected()) {
                     selectableItem.setSelected(false);

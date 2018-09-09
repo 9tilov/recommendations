@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.sadi.toor.recommend.player.PlayerActivity;
 import com.sadi.toor.recommend.recommendation.ui.adapter.RecommendAdapter;
 import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
 
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import timber.log.Timber;
@@ -36,6 +38,8 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     Button btnRateAgain;
     @BindView(R.id.rec_progressbar)
     FrameLayout progressDialog;
+    @BindView(R.id.rec_btn_filter)
+    AppCompatImageView btnFilter;
 
     private RecommendViewModel viewModel;
     private RecommendAdapter adapter;
@@ -47,7 +51,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
         this.viewModel = viewModel;
-        sharedViewModel.getSelected().observe(this, movies -> {
+        sharedViewModel.getSelectedMovies().observe(this, movies -> {
             viewModel.sendUserMovies(new Wish(new Movies(movies).toString()));
         });
         viewModel.getRecommendations().observe(this, recommendations -> {
@@ -55,6 +59,22 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             initRecyclerView(recommendations.getData());
             Timber.d("moggot size = " + recommendations.getData().getMovies().size());
         });
+        disableBackButton();
+        btnRateAgain.setOnClickListener(v -> {
+            Navigation.findNavController(getView()).popBackStack();
+        });
+        btnFilter.setOnClickListener(v -> {
+            Navigation.findNavController(getView()).navigate(R.id.filterFragment, null, new NavOptions.Builder()
+                    .setEnterAnim(R.anim.push_up_in)
+                    .setExitAnim(R.anim.push_up_out)
+                    .setPopEnterAnim(R.anim.push_down_in)
+                    .setPopExitAnim(R.anim.push_down_out)
+                    .build());
+        });
+
+    }
+
+    private void disableBackButton() {
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();
         getView().setOnKeyListener((v, keyCode, event) -> {
@@ -63,10 +83,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             }
             return false;
         });
-        btnRateAgain.setOnClickListener(v -> {
-            Navigation.findNavController(getView()).popBackStack(R.id.mainFragment, true);
-        });
-
     }
 
     private void initRecyclerView(Recommendations recommendations) {
@@ -107,5 +123,10 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     public void showTrailer(Movie movie) {
         startActivity(new Intent(getActivity(), PlayerActivity.class));
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }

@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.genre.ui.adapter;
+package com.sadi.toor.recommend.filter.genre.ui.adapter;
 
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sadi.toor.recommend.R;
-import com.sadi.toor.recommend.model.data.genre.SelectableGenre;
+import com.sadi.toor.recommend.model.data.genre.Genre;
 
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
@@ -18,7 +18,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
     private final AppCompatImageView ivCheck;
     private final OnItemSelectedListener itemSelectedListener;
     TextView textView;
-    SelectableGenre item;
+    Genre item;
 
 
     public SelectableViewHolder(View view, OnItemSelectedListener listener) {
@@ -40,7 +40,7 @@ public class SelectableViewHolder extends RecyclerView.ViewHolder {
 
     public interface OnItemSelectedListener {
 
-        void onItemSelected(SelectableGenre item);
+        void onItemSelected(Genre item);
     }
 
 }

@@ -12,9 +12,19 @@ public class Genre {
     @Expose
     private String genreName;
 
+    private boolean isSelected = false;
+
     public Genre(long id, String name) {
         this.genreId = id;
         this.genreName = name;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public long getGenreId() {

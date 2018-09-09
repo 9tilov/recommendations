@@ -25,6 +25,7 @@ import com.sadi.toor.recommend.preparing.ui.adapter.MovieAdapter;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 import com.sadi.toor.recommend.preparing.viewmodel.ProgressStatus;
 
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import timber.log.Timber;
@@ -78,7 +79,13 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         viewModel.getProgress().observe(this, progressStatus -> {
             if (progressStatus.needToStop()) {
                 sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
-                Navigation.findNavController(getView()).navigate(R.id.recommendFragment);
+                Navigation.findNavController(getView()).navigate(R.id.recommendFragment, null,
+                        new NavOptions.Builder()
+                                .setEnterAnim(R.anim.slide_in_right)
+                                .setExitAnim(R.anim.slide_out_left)
+                                .setPopEnterAnim(R.anim.slide_in_left)
+                                .setPopExitAnim(R.anim.slide_out_right)
+                                .build());
             } else {
                 setProgress(progressStatus);
             }

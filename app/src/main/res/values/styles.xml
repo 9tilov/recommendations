@@ -64,6 +64,10 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="TextMedium.Subheader.Left">
+        <item name="android:gravity">left</item>
+    </style>
+
     <style name="TextRegular.Body1">
         <item name="android:textSize">16sp</item>
     </style>

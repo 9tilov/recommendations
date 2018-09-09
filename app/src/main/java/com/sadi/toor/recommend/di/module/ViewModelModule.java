@@ -5,7 +5,8 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.sadi.toor.recommend.core.base.FactoryViewModel;
 import com.sadi.toor.recommend.di.scope.ViewModelKey;
-import com.sadi.toor.recommend.genre.viewmodel.GenreViewModel;
+import com.sadi.toor.recommend.filter.viewmodel.FilterViewModel;
+import com.sadi.toor.recommend.filter.genre.viewmodel.GenreViewModel;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
 
@@ -30,6 +31,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(RecommendViewModel.class)
     abstract ViewModel bindRecommendViewModel(RecommendViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FilterViewModel.class)
+    abstract ViewModel bindFilterViewModel(FilterViewModel viewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);
