@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModel;
 
 import com.sadi.toor.recommend.core.wrapper.DataWrapper;
 import com.sadi.toor.recommend.core.wrapper.ErrorObject;
+import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
+import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 import com.sadi.toor.recommend.model.repo.DataRepository;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<DataWrapper<Movies>> movies = new MutableLiveData<>();
     private final MutableLiveData<ProgressStatus> progressData = new MutableLiveData<>();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     private final DataRepository repository;
     private final List<Movie> favoritesMovie = new ArrayList<>();
     private ProgressStatus progressStatus;
@@ -35,12 +38,6 @@ public class MainViewModel extends ViewModel {
         progressStatus.setChosenMovies(favoritesMovie.size());
         progressData.setValue(progressStatus);
         loadMovies();
-    }
-
-    public void clearFavorites() {
-        favoritesMovie.clear();
-        progressStatus.setChosenMovies(favoritesMovie.size());
-        progressData.setValue(progressStatus);
     }
 
     private void loadMovies() {
@@ -55,22 +52,10 @@ public class MainViewModel extends ViewModel {
                 }));
     }
 
-    public MutableLiveData<DataWrapper<Movies>> getMovieList() {
-        return movies;
-    }
-
-    public MutableLiveData<ProgressStatus> getProgress() {
-        return progressData;
-    }
-
     public void addToFavorite(Movie movie) {
         favoritesMovie.add(movie);
         progressStatus.setChosenMovies(favoritesMovie.size());
         progressData.setValue(progressStatus);
-    }
-
-    public List<Movie> getFavoritesMovie() {
-        return favoritesMovie;
     }
 
     public void removeFromFavorite(Movie movie) {
@@ -79,6 +64,24 @@ public class MainViewModel extends ViewModel {
             progressStatus.setChosenMovies(favoritesMovie.size());
             progressData.setValue(progressStatus);
         }
+    }
+
+    public void clearFavorites() {
+        favoritesMovie.clear();
+        progressStatus.setChosenMovies(favoritesMovie.size());
+        progressData.setValue(progressStatus);
+    }
+
+    public MutableLiveData<DataWrapper<Movies>> getMovieList() {
+        return movies;
+    }
+
+    public MutableLiveData<ProgressStatus> getProgress() {
+        return progressData;
+    }
+
+    public List<Movie> getFavoritesMovie() {
+        return favoritesMovie;
     }
 
     @Override

@@ -74,10 +74,11 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         btnSkip.setOnClickListener(v -> {
             switchNext();
         });
+
         viewModel.getProgress().observe(this, progressStatus -> {
             if (progressStatus.needToStop()) {
                 sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
-                Navigation.findNavController(getView()).navigate(R.id.genreFragment);
+                Navigation.findNavController(getView()).navigate(R.id.recommendFragment);
             } else {
                 setProgress(progressStatus);
             }

@@ -1,5 +1,6 @@
 package com.sadi.toor.recommend.recommendation.ui.adapter;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,8 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         TextView tvTitle;
         @BindView(R.id.rec_tv_overview)
         TextView tvOverview;
+        @BindView(R.id.rec_cv)
+        CardView cardView;
 
         RecommendViewHolder(View view) {
             super(view);
@@ -75,7 +78,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         void bind(Movie data) {
             Glide.with(ivPoster)
                     .load(data.getLink())
-                    .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))
+                    .apply(new RequestOptions().transforms(new CenterCrop()))
                     .into(ivPoster);
             tvTitle.setText(itemView.getResources().getString(R.string.rec_title_with_year, data.getName(), data.getYear()));
             tvOverview.setText(data.getDescription());

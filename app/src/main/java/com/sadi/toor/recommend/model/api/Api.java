@@ -18,5 +18,5 @@ public interface Api {
     Single<Genres> getGenres();
 
     @POST("getRec")
-    Single<Recommendations> sendUserFavoriteWish(@Query("likes") String movies, @Query("genres") String genres);
+    Single<Recommendations> sendUserFavoriteWish(@Query("likes") String movies);
 }

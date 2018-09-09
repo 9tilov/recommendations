@@ -12,10 +12,13 @@ import android.support.v7.widget.SnapHelper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
+import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.movie.Movie;
+import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 import com.sadi.toor.recommend.player.PlayerActivity;
 import com.sadi.toor.recommend.recommendation.ui.adapter.RecommendAdapter;
@@ -31,6 +34,8 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     RecyclerView rvRec;
     @BindView(R.id.rec_btn_rate_again)
     Button btnRateAgain;
+    @BindView(R.id.rec_progressbar)
+    FrameLayout progressDialog;
 
     private RecommendViewModel viewModel;
     private RecommendAdapter adapter;
@@ -42,9 +47,13 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
         this.viewModel = viewModel;
-        sharedViewModel.getRecommendations().observe(this, recommendations -> {
-            initRecyclerView(recommendations);
-            Timber.d("moggot size = " + recommendations.getMovies().size());
+        sharedViewModel.getSelected().observe(this, movies -> {
+            viewModel.sendUserMovies(new Wish(new Movies(movies).toString()));
+        });
+        viewModel.getRecommendations().observe(this, recommendations -> {
+            progressDialog.setVisibility(View.GONE);
+            initRecyclerView(recommendations.getData());
+            Timber.d("moggot size = " + recommendations.getData().getMovies().size());
         });
         getView().setFocusableInTouchMode(true);
         getView().requestFocus();

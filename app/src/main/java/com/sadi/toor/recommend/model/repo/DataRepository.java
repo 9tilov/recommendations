@@ -37,7 +37,7 @@ public class DataRepository {
     }
 
     public Flowable<Recommendations> sendUserWish(Wish wish) {
-        return api.sendUserFavoriteWish(wish.getMovies(), wish.getGenres()).toFlowable()
+        return api.sendUserFavoriteWish(wish.getMovies()).toFlowable()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 }

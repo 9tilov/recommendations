@@ -7,21 +7,13 @@ public class Wish {
 
     @JsonProperty("likes")
     private final String movies;
-    @JsonProperty("genres")
-    private final String genres;
 
     @JsonCreator
-    public Wish(@JsonProperty("likes") String movies,
-                @JsonProperty("genres") String genres) {
+    public Wish(@JsonProperty("likes") String movies) {
         this.movies = movies;
-        this.genres = genres;
     }
 
     public String getMovies() {
         return movies;
-    }
-
-    public String getGenres() {
-        return genres;
     }
 }

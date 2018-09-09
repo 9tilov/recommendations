@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.model.data.movie.Movie;
@@ -91,6 +92,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(Movie data) {
+            ratingBar.setNameForSmile(BaseRating.OKAY, R.string.rating_bar_normal);
             Glide.with(imageView)
                     .load(data.getLink())
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))

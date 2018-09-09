@@ -20,7 +20,6 @@ import com.sadi.toor.recommend.model.data.genre.Genres;
 import com.sadi.toor.recommend.model.data.genre.SelectableGenre;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +34,6 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
     RecyclerView recyclerViewGenre;
     @BindView(R.id.btn_genre)
     TextView btnSend;
-    @BindView(R.id.genre_progress)
-    AVLoadingIndicatorView progressBar;
 
     private SelectableAdapter adapter;
     private List<Movie> movies = new ArrayList<>();
@@ -88,8 +85,7 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
         btnSend.setOnClickListener(view1 -> {
             Movies movies = new Movies(this.movies);
             Genres genres = new Genres(adapter.getSelectedItems());
-            viewModel.sendUserMovies(new Wish(movies.toString(), genres.toString()));
-            progressBar.setVisibility(View.VISIBLE);
+            viewModel.sendUserMovies(new Wish(movies.toString()));
             btnSend.setVisibility(View.INVISIBLE);
         });
 

@@ -2,7 +2,7 @@ package com.sadi.toor.recommend.preparing.viewmodel;
 
 public class ProgressStatus {
 
-    private final int movieCountToChoose = 10;
+    private final int movieCountToChoose = 2;
     private int chosenMovies = 0;
 
     public int getProgress() {
