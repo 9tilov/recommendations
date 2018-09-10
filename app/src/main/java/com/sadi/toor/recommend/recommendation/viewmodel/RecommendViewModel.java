@@ -3,6 +3,7 @@ package com.sadi.toor.recommend.recommendation.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.core.wrapper.DataWrapper;
 import com.sadi.toor.recommend.core.wrapper.ErrorObject;
 import com.sadi.toor.recommend.model.data.Wish;
@@ -16,7 +17,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class RecommendViewModel extends ViewModel {
+public class RecommendViewModel extends BaseViewModel {
 
     private final DataRepository repository;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -25,6 +26,7 @@ public class RecommendViewModel extends ViewModel {
     @Inject
     RecommendViewModel(DataRepository repository) {
         this.repository = repository;
+        addObserver(recommendations);
     }
 
     public void sendUserMovies(Wish wish) {
@@ -32,9 +34,9 @@ public class RecommendViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    recommendations.setValue(new DataWrapper<>(value, null));
+                    recommendations.postValue(new DataWrapper<>(value, null));
                 }, t -> {
-                    recommendations.setValue(new DataWrapper<>(null, new ErrorObject(t.getMessage())));
+                    recommendations.postValue(new DataWrapper<>(null, new ErrorObject(t.getMessage())));
                     Timber.d("moggot = " + t.getMessage());
                 }));
     }

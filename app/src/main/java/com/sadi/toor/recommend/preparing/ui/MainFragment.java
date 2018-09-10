@@ -61,7 +61,6 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, MainViewModel viewModel) {
         Timber.d("moggot create");
         this.viewModel = viewModel;
-        viewModel.clearFavorites();
         initRecyclerView();
         viewModel.getMovieList().observe(this, movieList -> {
             if (movieList == null) {
@@ -94,18 +93,28 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
                                 .setPopExitAnim(R.anim.slide_out_right)
                                 .build());
             } else {
-                setProgress(progressStatus);
+                updateProgress(progressStatus);
             }
         });
+    }
+
+    private void updateProgress(ProgressStatus progress) {
+        tvProgressCount.setText(getString(R.string.main_progress, progress.getChosenMovies(), progress.getMovieCountToChoose()));
+        ValueAnimator progressAnimation = ValueAnimator.ofInt(progressBar.getProgress(), progress.getProgress());
+        progressAnimation.setInterpolator(new LinearOutSlowInInterpolator());
+        progressAnimation.addUpdateListener(animation -> {
+            if (animation != null && progressBar != null) {
+                progressBar.setProgress((int) animation.getAnimatedValue());
+            }
+        });
+        progressAnimation.start();
     }
 
     private void initRecyclerView() {
         ((SimpleItemAnimator) rvMovie.getItemAnimator()).setSupportsChangeAnimations(false);
         linearLayoutManager = new CustomLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvMovie);
-
         rvMovie.setLayoutManager(linearLayoutManager);
     }
 
@@ -133,8 +142,9 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
 
     private void switchPrevious() {
         btnBack.setVisibility(View.INVISIBLE);
-        viewModel.removeFromFavorite(adapter.getMoviewFromPosition(linearLayoutManager.findLastVisibleItemPosition() - 1));
-        rvMovie.getLayoutManager().scrollToPosition(linearLayoutManager.findLastVisibleItemPosition() - 1);
+        int prevAdapterPosition = linearLayoutManager.findLastVisibleItemPosition() - 1;
+        rvMovie.getLayoutManager().scrollToPosition(prevAdapterPosition);
+        viewModel.removeFromFavorite(adapter.getMoviewFromPosition(prevAdapterPosition));
     }
 
     @Override
@@ -143,15 +153,9 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         viewModel.addToFavorite(movie);
     }
 
-    private void setProgress(ProgressStatus progress) {
-        tvProgressCount.setText(getString(R.string.main_progress, progress.getChosenMovies(), progress.getMovieCountToChoose()));
-        ValueAnimator progressAnimation = ValueAnimator.ofInt(progressBar.getProgress(), progress.getProgress());
-        progressAnimation.setInterpolator(new LinearOutSlowInInterpolator());
-        progressAnimation.addUpdateListener(animation -> {
-            if (animation != null && progressBar != null) {
-                progressBar.setProgress((int) animation.getAnimatedValue());
-            }
-        });
-        progressAnimation.start();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.clearFavorites();
     }
 }

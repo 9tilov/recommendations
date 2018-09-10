@@ -3,6 +3,7 @@ package com.sadi.toor.recommend.filter.genre.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.core.wrapper.DataWrapper;
 import com.sadi.toor.recommend.core.wrapper.ErrorObject;
 import com.sadi.toor.recommend.model.data.genre.Genres;
@@ -15,7 +16,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class GenreViewModel extends ViewModel {
+public class GenreViewModel extends BaseViewModel {
 
     private final MutableLiveData<DataWrapper<Genres>> genres = new MutableLiveData<>();
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -24,6 +25,7 @@ public class GenreViewModel extends ViewModel {
     @Inject
     GenreViewModel(DataRepository dataRepository) {
         this.repository = dataRepository;
+        addObserver(genres);
         loadGenres();
     }
 
@@ -32,9 +34,9 @@ public class GenreViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
-                    genres.setValue(new DataWrapper<>(value, null));
+                    genres.postValue(new DataWrapper<>(value, null));
                 }, t -> {
-                    genres.setValue(new DataWrapper<>(null, new ErrorObject(t.getMessage())));
+                    genres.postValue(new DataWrapper<>(null, new ErrorObject(t.getMessage())));
                     Timber.d("moggot = " + t.getMessage());
                 }));
     }

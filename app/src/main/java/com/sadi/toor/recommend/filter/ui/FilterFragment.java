@@ -57,11 +57,12 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
             }
             StringBuilder sb = new StringBuilder();
             for (Genre genre : genres) {
+                if (sb.length() > 0) {
+                    sb.append(", ");
+                }
                 sb.append(genre.getGenreName());
-                sb.append(", ");
             }
-            sb.delete(sb.length() - 2, sb.length() - 1);
-            tvGenre.setText(sb.toString());
+            tvGenre.setText(sb.length() > 0 ? sb.toString() : getString(R.string.any));
         });
         sharedViewModel.getSelectedPeriod().observe(this, periodPair -> {
             tvYear.setText(periodPair.first.equals(periodPair.second)

@@ -9,13 +9,15 @@ import android.widget.NumberPicker;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
+import com.sadi.toor.recommend.core.utils.DateUtils;
 import com.sadi.toor.recommend.filter.year.viewmodel.YearViewModel;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.sadi.toor.recommend.core.utils.DateUtils.MIN_YEAR;
 
 public class YearFragment extends BaseFragment<YearViewModel> {
 
@@ -24,7 +26,6 @@ public class YearFragment extends BaseFragment<YearViewModel> {
     @BindView(R.id.year_np_end)
     NumberPicker npEnd;
 
-    private static final int MIN_YEAR = 1899;
     private String[] displayedValues;
 
     public static YearFragment newInstance() {
@@ -43,7 +44,7 @@ public class YearFragment extends BaseFragment<YearViewModel> {
             if (integerIntegerPair == null) {
                 return;
             }
-            int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+            int currentYear = DateUtils.getCurrentYear();
             npStart.setValue(currentYear - integerIntegerPair.first);
             npEnd.setValue(currentYear - integerIntegerPair.second);
         });
@@ -75,7 +76,7 @@ public class YearFragment extends BaseFragment<YearViewModel> {
     }
 
     private void formDisplayedValues() {
-        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        int currentYear = DateUtils.getCurrentYear();
         List<String> startValues = new ArrayList<>();
         for (int i = currentYear; i >= MIN_YEAR; --i) {
             startValues.add(String.valueOf(i));
