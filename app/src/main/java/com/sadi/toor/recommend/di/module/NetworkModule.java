@@ -59,4 +59,3 @@ public class NetworkModule {
         return retrofit.create(Api.class);
     }
 }
-

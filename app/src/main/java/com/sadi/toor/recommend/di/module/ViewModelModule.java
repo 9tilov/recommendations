@@ -5,8 +5,8 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.sadi.toor.recommend.core.base.FactoryViewModel;
 import com.sadi.toor.recommend.di.scope.ViewModelKey;
-import com.sadi.toor.recommend.filter.viewmodel.FilterViewModel;
 import com.sadi.toor.recommend.filter.genre.viewmodel.GenreViewModel;
+import com.sadi.toor.recommend.filter.viewmodel.FilterViewModel;
 import com.sadi.toor.recommend.filter.year.viewmodel.YearViewModel;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;

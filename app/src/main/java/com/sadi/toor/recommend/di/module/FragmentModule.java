@@ -1,12 +1,10 @@
 package com.sadi.toor.recommend.di.module;
 
-import com.sadi.toor.recommend.filter.ui.FilterFragment;
 import com.sadi.toor.recommend.filter.genre.ui.GenreFragment;
+import com.sadi.toor.recommend.filter.ui.FilterFragment;
 import com.sadi.toor.recommend.filter.year.ui.YearFragment;
 import com.sadi.toor.recommend.preparing.ui.MainFragment;
 import com.sadi.toor.recommend.recommendation.ui.RecommendFragment;
-
-import java.time.Year;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

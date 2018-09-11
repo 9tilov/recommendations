@@ -1,40 +1,31 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Recommend</string>
+
     <string name="fragment_title_choose_movies">Select the movies you watched</string>
     <string name="fragment_title_genre">Select favorite genres</string>
     <string name="fragment_title_time_period">Select time period</string>
     <string name="fragment_title_filter">Filter</string>
-    <string name="havent_seen">Haven\'t seen</string>
+
+    <string name="have_not_seen">Haven\'t seen</string>
     <string name="recommend_title">Your recommendations</string>
-    <string name="not_want_watch">I don\'t want to watch</string>
-    <string name="storage_permission_denied">Permission to access storage was denied</string>
-    <string name="unexpected_intent_action">Unexpected intent action: <xliff:g id="action">%1$s</xliff:g></string>
-    <string name="error_drm_unknown">An unknown DRM error occurred</string>
-    <string name="error_drm_not_supported">Protected content not supported on API levels below 18</string>
-    <string name="error_drm_unsupported_scheme">This device does not support the required DRM scheme</string>
-    <string name="error_unrecognized_abr_algorithm">Unrecognized ABR algorithm</string>
-    <string name="ima_not_loaded">Playing sample without ads, as the IMA extension was not loaded</string>
-    <string name="exo_track_selection_title_video">Video</string>
-    <!-- The title of a track selection view for audio tracks. [CHAR LIMIT=20] -->
-    <string name="exo_track_selection_title_audio">Audio</string>
-    <!-- The title of a track selection view for text (i.e. subtitle or caption) tracks. [CHAR LIMIT=20] -->
-    <string name="exo_track_selection_title_text">Text</string>
-    <string name="error_generic">Playback failed</string>
-    <string name="error_querying_decoders">Unable to query device decoders</string>
-    <string name="error_no_secure_decoder">This device does not provide a secure decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
-    <string name="error_no_decoder">This device does not provide a decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
-    <string name="error_instantiating_decoder">Unable to instantiate decoder <xliff:g id="decoder_name">%1$s</xliff:g></string>
     <string name="main_progress">%1$d of %2$d</string>
     <string name="rec_title_with_year">%1$s, %2$d</string>
     <string name="recommend_film">Recommend film</string>
     <string name="rate_movies">Rate movies</string>
     <string name="rating_bar_normal">Normal</string>
-    <string name="filter_genre_title">Genre</string>
-    <string name="filter_time_period_title">Time period</string>
-    <string name="filter_rating_title">Rating</string>
     <string name="coming_soon">Coming soon</string>
     <string name="year_from">from</string>
     <string name="year_to">to</string>
     <string name="time_period">from %1$d to %2$d</string>
     <string name="any">Any</string>
+    <string name="retry">Retry</string>
+
+    <string name="filter_genre_title">Genre</string>
+    <string name="filter_time_period_title">Time period</string>
+    <string name="filter_rating_title">Rating</string>
+
+    <string name="error_load_movies">Unable to load movies</string>
+    <string name="error_load_rec">Unable to load recommendations</string>
+    <string name="error_load_genres">Unable to load genres</string>
+
 </resources>

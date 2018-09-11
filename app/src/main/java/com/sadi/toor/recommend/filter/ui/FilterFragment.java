@@ -44,11 +44,11 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
                 .setPopEnterAnim(R.anim.slide_in_left)
                 .setPopExitAnim(R.anim.slide_out_right)
                 .build();
-        cvGenre.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.genreFragment,
+        cvGenre.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.genreFragment,
                 null,
                 navOptions));
 
-        cvYear.setOnClickListener(v -> Navigation.findNavController(getView()).navigate(R.id.yearFragment,
+        cvYear.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.yearFragment,
                 null,
                 navOptions));
         sharedViewModel.getSelectedGenres().observe(this, genres -> {
@@ -65,9 +65,11 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
             tvGenre.setText(sb.length() > 0 ? sb.toString() : getString(R.string.any));
         });
         sharedViewModel.getSelectedPeriod().observe(this, periodPair -> {
-            tvYear.setText(periodPair.first.equals(periodPair.second)
-                    ? String.valueOf(periodPair.first)
-                    : getString(R.string.time_period, periodPair.first, periodPair.second));
+            if (periodPair != null) {
+                tvYear.setText(periodPair.first.equals(periodPair.second)
+                        ? String.valueOf(periodPair.first)
+                        : getString(R.string.time_period, periodPair.first, periodPair.second));
+            }
         });
     }
 

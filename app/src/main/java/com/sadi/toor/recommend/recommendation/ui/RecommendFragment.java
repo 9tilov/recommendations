@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -13,7 +14,6 @@ import android.support.v7.widget.SnapHelper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
@@ -35,12 +35,10 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     RecyclerView rvRec;
     @BindView(R.id.rec_btn_rate_again)
     Button btnRateAgain;
-    @BindView(R.id.rec_progressbar)
-    FrameLayout progressDialog;
     @BindView(R.id.rec_btn_filter)
     AppCompatImageView btnFilter;
-
-    private RecommendAdapter adapter;
+    @BindView(R.id.progress_view)
+    FrameLayout progress;
 
     public static RecommendFragment newInstance() {
         return new RecommendFragment();
@@ -53,22 +51,30 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             movies.setMovies(movieList);
             viewModel.sendUserMovies(new Wish(movies.toString()));
         });
-        viewModel.getRecommendations().observe(this, recommendations -> {
-            if (recommendations == null) {
-                return;
-            }
-            if (recommendations.getData() != null) {
-                progressDialog.setVisibility(View.GONE);
-                initRecyclerView(recommendations.getData());
-            } else {
-                Toast.makeText(getContext(), recommendations.getError().getMessage(), Toast.LENGTH_SHORT).show();
+        viewModel.getRecommendations().observe(this, this::initRecyclerView);
+        viewModel.getStatus().observe(this, status -> {
+            switch (status) {
+                case START_LOADING:
+                    progress.setVisibility(View.VISIBLE);
+                    break;
+                case SUCCESS:
+                    progress.setVisibility(View.GONE);
+                    break;
+                case ERROR:
+                    progress.setVisibility(View.GONE);
+                    Snackbar.make(view, getString(R.string.error_load_rec), Snackbar.LENGTH_INDEFINITE)
+                            .setAction(getString(R.string.retry), action -> viewModel.retryCall())
+                            .show();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown progress status = " + status.name());
             }
         });
         btnRateAgain.setOnClickListener(v -> {
-            Navigation.findNavController(getView()).popBackStack();
+            Navigation.findNavController(view).popBackStack();
         });
         btnFilter.setOnClickListener(v -> {
-            Navigation.findNavController(getView()).navigate(R.id.filterFragment,
+            Navigation.findNavController(view).navigate(R.id.filterFragment,
                     null,
                     new NavOptions.Builder()
                             .setEnterAnim(R.anim.push_up_in)
@@ -81,7 +87,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     }
 
     private void initRecyclerView(Recommendations recommendations) {
-        adapter = new RecommendAdapter(recommendations, this);
+        RecommendAdapter adapter = new RecommendAdapter(recommendations, this);
         rvRec.setAdapter(adapter);
 
         ((SimpleItemAnimator) rvRec.getItemAnimator()).setSupportsChangeAnimations(false);

@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.SnapHelper;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
@@ -28,7 +29,6 @@ import com.sadi.toor.recommend.preparing.viewmodel.ProgressStatus;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
-import timber.log.Timber;
 
 public class MainFragment extends BaseFragment<MainViewModel> implements MovieAdapter.OnViewClickLister {
 
@@ -42,7 +42,10 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     ProgressBar progressBar;
     @BindView(R.id.main_tv_progress_count)
     TextView tvProgressCount;
+    @BindView(R.id.progress_view)
+    FrameLayout progress;
 
+    @Nullable
     private MovieAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private MainViewModel viewModel;
@@ -59,32 +62,34 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, MainViewModel viewModel) {
-        Timber.d("moggot create");
         this.viewModel = viewModel;
         initRecyclerView();
-        viewModel.getMovieList().observe(this, movieList -> {
-            if (movieList == null) {
+        viewModel.getMovieList().observe(this, this::initAdapter);
+        viewModel.getStatus().observe(this, status -> {
+            switch (status) {
+                case START_LOADING:
+                    progress.setVisibility(View.VISIBLE);
+                    break;
+                case SUCCESS:
+                    progress.setVisibility(View.GONE);
+                    break;
+                case ERROR:
+                    progress.setVisibility(View.GONE);
+                    Snackbar.make(view, getString(R.string.error_load_movies), Snackbar.LENGTH_INDEFINITE)
+                            .setAction(getString(R.string.retry), action -> viewModel.retryCall())
+                            .show();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown progress status = " + status.name());
+            }
+        });
+        viewModel.getProgress().observe(this, progressStatus -> {
+            if (progressStatus == null) {
                 return;
             }
-            if (movieList.getData() != null) {
-                movies.setMovies(movieList.getData().getMovies());
-                adapter = new MovieAdapter(movies, this);
-                rvMovie.setAdapter(adapter);
-            } else {
-                Toast.makeText(getContext(), movieList.getError().getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        btnBack.setOnClickListener(v -> {
-            switchPrevious();
-        });
-        btnSkip.setOnClickListener(v -> {
-            switchNext();
-        });
-
-        viewModel.getProgress().observe(this, progressStatus -> {
             if (progressStatus.needToStop()) {
                 sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
-                Navigation.findNavController(getView()).navigate(R.id.recommendFragment,
+                Navigation.findNavController(view).navigate(R.id.recommendFragment,
                         null,
                         new NavOptions.Builder()
                                 .setEnterAnim(R.anim.slide_in_right)
@@ -95,6 +100,12 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
             } else {
                 updateProgress(progressStatus);
             }
+        });
+        btnBack.setOnClickListener(v -> {
+            switchPrevious();
+        });
+        btnSkip.setOnClickListener(v -> {
+            switchNext();
         });
     }
 
@@ -116,6 +127,12 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         SnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvMovie);
         rvMovie.setLayoutManager(linearLayoutManager);
+    }
+
+    private void initAdapter(Movies movies) {
+        this.movies = movies;
+        adapter = new MovieAdapter(movies, this);
+        rvMovie.setAdapter(adapter);
     }
 
     @Override
@@ -144,7 +161,9 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         btnBack.setVisibility(View.INVISIBLE);
         int prevAdapterPosition = linearLayoutManager.findLastVisibleItemPosition() - 1;
         rvMovie.getLayoutManager().scrollToPosition(prevAdapterPosition);
-        viewModel.removeFromFavorite(adapter.getMoviewFromPosition(prevAdapterPosition));
+        if (adapter != null) {
+            viewModel.removeFromFavorite(adapter.getMoviewFromPosition(prevAdapterPosition));
+        }
     }
 
     @Override

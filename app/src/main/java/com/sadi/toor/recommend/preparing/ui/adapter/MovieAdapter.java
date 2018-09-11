@@ -48,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             int adapterPosition = viewHolder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Movie movie = movies.get(adapterPosition);
-                movie.setRating(smiley);
+                movie.setRating(smiley + 1);
                 clickLister.rate(movie);
             }
         });

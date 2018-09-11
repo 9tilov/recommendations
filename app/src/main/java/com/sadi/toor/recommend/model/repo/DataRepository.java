@@ -9,7 +9,8 @@ import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import timber.log.Timber;
 
 @Singleton
@@ -22,22 +23,22 @@ public class DataRepository {
         this.api = api;
     }
 
-    public Flowable<Movies> getMovieLiveList() {
-        return getFromNetwork();
+    public Observable<Movies> getMovieLiveList() {
+        return getFromNetwork().toObservable();
     }
 
-    private Flowable<Movies> getFromNetwork() {
-        return api.getMovies().toFlowable()
+    private Single<Movies> getFromNetwork() {
+        return api.getMovies()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 
-    public Flowable<Genres> getGenresList() {
-        return api.getGenres().toFlowable()
+    public Observable<Genres> getGenresList() {
+        return api.getGenres()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 
-    public Flowable<Recommendations> sendUserWish(Wish wish) {
-        return api.sendUserFavoriteWish(wish.getMovies()).toFlowable()
+    public Observable<Recommendations> sendUserWish(Wish wish) {
+        return api.sendUserFavoriteWish(wish.getMovies())
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 }

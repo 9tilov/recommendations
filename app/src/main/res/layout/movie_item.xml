@@ -56,9 +56,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:placeHolderSmileColor="@color/smile_eyes"
         app:placeHolderBackgroundColor="@color/smile_face"
-        app:textSelectionColor="@color/smile_text_selected"
-        app:showLine="false" />
+        app:placeHolderSmileColor="@color/smile_eyes"
+        app:showLine="false"
+        app:textSelectionColor="@color/smile_text_selected" />
 
 </android.support.constraint.ConstraintLayout>

@@ -3,8 +3,7 @@ package com.sadi.toor.recommend.preparing.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.sadi.toor.recommend.core.base.BaseViewModel;
-import com.sadi.toor.recommend.core.wrapper.DataWrapper;
-import com.sadi.toor.recommend.core.wrapper.ErrorObject;
+import com.sadi.toor.recommend.core.base.Status;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.model.repo.DataRepository;
@@ -16,11 +15,10 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class MainViewModel extends BaseViewModel {
 
-    private final MutableLiveData<DataWrapper<Movies>> movies = new MutableLiveData<>();
+    private final MutableLiveData<Movies> moviesList = new MutableLiveData<>();
     private final MutableLiveData<ProgressStatus> progressData = new MutableLiveData<>();
 
     private final DataRepository repository;
@@ -31,7 +29,7 @@ public class MainViewModel extends BaseViewModel {
     MainViewModel(DataRepository dataRepository) {
         this.repository = dataRepository;
         this.progressStatus = new ProgressStatus();
-        addObserver(movies);
+        addObserver(moviesList);
         addObserver(progressData);
         progressStatus.setChosenMovies(favoritesMovie.size());
         progressData.postValue(progressStatus);
@@ -42,11 +40,14 @@ public class MainViewModel extends BaseViewModel {
         compositeDisposable.add(repository.getMovieLiveList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value -> {
-                    movies.postValue(new DataWrapper<>(value, null));
-                }, t -> {
-                    movies.postValue(new DataWrapper<>(null, new ErrorObject(t.getMessage())));
-                    Timber.d("moggot = " + t.getMessage());
+                .doOnSubscribe(disposable -> {
+                    status.postValue(Status.START_LOADING);
+                })
+                .doOnError(throwable -> status.postValue(Status.ERROR))
+                .retryWhen(retryHandler -> retryHandler.flatMap(retryManager::observeRetries))
+                .subscribe(movies -> {
+                    status.postValue(Status.SUCCESS);
+                    moviesList.postValue(movies);
                 }));
     }
 
@@ -70,8 +71,8 @@ public class MainViewModel extends BaseViewModel {
         progressData.postValue(progressStatus);
     }
 
-    public MutableLiveData<DataWrapper<Movies>> getMovieList() {
-        return movies;
+    public MutableLiveData<Movies> getMovieList() {
+        return moviesList;
     }
 
     public MutableLiveData<ProgressStatus> getProgress() {
