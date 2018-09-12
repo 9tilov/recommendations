@@ -3,6 +3,9 @@ package com.sadi.toor.recommend.di.module;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.model.api.Api;
+import com.sadi.toor.recommend.model.network.LanguageInterceptor;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -35,10 +38,20 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttp(HttpLoggingInterceptor interceptor, StethoInterceptor stethoInterceptor) {
-        return new OkHttpClient.Builder()
+    LanguageInterceptor provideAuthInterseptor() {
+        return new LanguageInterceptor();
+    }
+
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttp(HttpLoggingInterceptor interceptor, StethoInterceptor stethoInterceptor, LanguageInterceptor languageInterceptor) {
+        return new OkHttpClient.Builder().
+                readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .addNetworkInterceptor(interceptor)
                 .addNetworkInterceptor(stethoInterceptor)
+                .addInterceptor(languageInterceptor)
                 .build();
     }
 

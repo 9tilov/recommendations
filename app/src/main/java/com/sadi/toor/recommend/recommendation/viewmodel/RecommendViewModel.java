@@ -29,7 +29,9 @@ public class RecommendViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> status.postValue(Status.START_LOADING))
-                .doOnError(throwable -> status.postValue(Status.ERROR))
+                .doOnError(throwable -> {
+                    status.postValue(Status.ERROR);
+                })
                 .retryWhen(retryHandler -> retryHandler.flatMap(retryManager::observeRetries))
                 .subscribe(value -> {
                     status.postValue(Status.SUCCESS);

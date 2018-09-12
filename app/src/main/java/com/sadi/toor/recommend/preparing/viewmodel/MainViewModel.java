@@ -43,7 +43,9 @@ public class MainViewModel extends BaseViewModel {
                 .doOnSubscribe(disposable -> {
                     status.postValue(Status.START_LOADING);
                 })
-                .doOnError(throwable -> status.postValue(Status.ERROR))
+                .doOnError(throwable -> {
+                    status.postValue(Status.ERROR);
+                })
                 .retryWhen(retryHandler -> retryHandler.flatMap(retryManager::observeRetries))
                 .subscribe(movies -> {
                     status.postValue(Status.SUCCESS);

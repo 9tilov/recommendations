@@ -40,12 +40,15 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @BindView(R.id.progress_view)
     FrameLayout progress;
 
+    private RecommendViewModel viewModel;
+
     public static RecommendFragment newInstance() {
         return new RecommendFragment();
     }
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
+        this.viewModel = viewModel;
         sharedViewModel.getSelectedMovies().observe(this, movieList -> {
             Movies movies = new Movies();
             movies.setMovies(movieList);
@@ -129,5 +132,13 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Snackbar.make(getView(), getString(R.string.error_load_rec), Snackbar.LENGTH_INDEFINITE)
+                .setAction(getString(R.string.retry), action -> viewModel.retryCall())
+                .dismiss();
     }
 }
