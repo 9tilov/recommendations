@@ -4,9 +4,8 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.core.base.Status;
-import com.sadi.toor.recommend.model.data.Wish;
+import com.sadi.toor.recommend.interactor.MovieInteractor;
 import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
-import com.sadi.toor.recommend.model.repo.DataRepository;
 
 import javax.inject.Inject;
 
@@ -15,17 +14,18 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RecommendViewModel extends BaseViewModel {
 
-    private final DataRepository repository;
+    private final MovieInteractor movieInteractor;
     private final MutableLiveData<Recommendations> recommendations = new MutableLiveData<>();
 
     @Inject
-    RecommendViewModel(DataRepository repository) {
-        this.repository = repository;
+    RecommendViewModel(MovieInteractor movieInteractor) {
+        this.movieInteractor = movieInteractor;
         addObserver(recommendations);
+        loadRecommendations();
     }
 
-    public void sendUserMovies(Wish wish) {
-        compositeDisposable.add(repository.sendUserWish(wish)
+    private void loadRecommendations() {
+        compositeDisposable.add(movieInteractor.getRecommendations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> status.postValue(Status.START_LOADING))
@@ -39,7 +39,7 @@ public class RecommendViewModel extends BaseViewModel {
                 }));
     }
 
-    public MutableLiveData<Recommendations> getRecommendations() {
+    public MutableLiveData<Recommendations> getRecommendations(){
         return recommendations;
     }
 }

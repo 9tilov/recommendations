@@ -25,12 +25,13 @@ import com.sadi.toor.recommend.preparing.ui.adapter.CustomLayoutManager;
 import com.sadi.toor.recommend.preparing.ui.adapter.MovieAdapter;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 import com.sadi.toor.recommend.preparing.viewmodel.ProgressStatus;
+import com.sadi.toor.recommend.recommendation.ui.RecommendFragment;
 
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 import butterknife.BindView;
 
 public class MainFragment extends BaseFragment<MainViewModel> implements MovieAdapter.OnViewClickLister {
+
+    public static final String TAG = "MainFragment";
 
     @BindView(R.id.main_rv_movie)
     RecyclerView rvMovie;
@@ -49,7 +50,6 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     private MovieAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private MainViewModel viewModel;
-    private Movies movies = new Movies();
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -88,15 +88,11 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
                 return;
             }
             if (progressStatus.needToStop()) {
-                sharedViewModel.putWatchedMovies(viewModel.getFavoritesMovie());
-                Navigation.findNavController(view).navigate(R.id.recommendFragment,
-                        null,
-                        new NavOptions.Builder()
-                                .setEnterAnim(R.anim.slide_in_right)
-                                .setExitAnim(R.anim.slide_out_left)
-                                .setPopEnterAnim(R.anim.slide_in_left)
-                                .setPopExitAnim(R.anim.slide_out_right)
-                                .build());
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, RecommendFragment.newInstance(), RecommendFragment.TAG)
+                        .addToBackStack(null)
+                        .commit();
             } else {
                 updateProgress(progressStatus);
             }
@@ -130,7 +126,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     }
 
     private void initAdapter(Movies movies) {
-        this.movies = movies;
+        Movies movies1 = movies;
         adapter = new MovieAdapter(movies, this);
         rvMovie.setAdapter(adapter);
     }

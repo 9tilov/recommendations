@@ -15,16 +15,18 @@ import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.annotations.NonNull;
 
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder> {
 
-    private final Recommendations movies;
+    private final List<Movie> movies;
     private final OnViewClickLister clickLister;
 
-    public RecommendAdapter(@NonNull Recommendations movies, OnViewClickLister clickLister) {
+    public RecommendAdapter(@NonNull List<Movie> movies, OnViewClickLister clickLister) {
         this.movies = movies;
         this.clickLister = clickLister;
     }
@@ -36,7 +38,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         viewHolder.ivPoster.setOnClickListener(v -> {
             int adapterPosition = viewHolder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
-                Movie movie = movies.getMovies().get(adapterPosition);
+                Movie movie = movies.get(adapterPosition);
                 clickLister.showTrailer(movie);
             }
         });
@@ -46,12 +48,12 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
 
     @Override
     public void onBindViewHolder(@NonNull RecommendViewHolder holder, int position) {
-        holder.bind(movies.getMovies().get(position));
+        holder.bind(movies.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return movies.getMovies().size();
+        return movies.size();
     }
 
     public interface OnViewClickLister {

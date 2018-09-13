@@ -4,11 +4,10 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.core.base.Status;
+import com.sadi.toor.recommend.interactor.MovieInteractor;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
-import com.sadi.toor.recommend.model.repo.DataRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,23 +20,22 @@ public class MainViewModel extends BaseViewModel {
     private final MutableLiveData<Movies> moviesList = new MutableLiveData<>();
     private final MutableLiveData<ProgressStatus> progressData = new MutableLiveData<>();
 
-    private final DataRepository repository;
-    private final List<Movie> favoritesMovie = new ArrayList<>();
+    private final MovieInteractor movieInteractor;
     private ProgressStatus progressStatus;
 
     @Inject
-    MainViewModel(DataRepository dataRepository) {
-        this.repository = dataRepository;
+    MainViewModel(MovieInteractor movieInteractor) {
+        this.movieInteractor = movieInteractor;
         this.progressStatus = new ProgressStatus();
         addObserver(moviesList);
         addObserver(progressData);
-        progressStatus.setChosenMovies(favoritesMovie.size());
+        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
         progressData.postValue(progressStatus);
         loadMovies();
     }
 
     private void loadMovies() {
-        compositeDisposable.add(repository.getMovieLiveList()
+        compositeDisposable.add(movieInteractor.getPrepareMovieList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
@@ -54,22 +52,20 @@ public class MainViewModel extends BaseViewModel {
     }
 
     public void addToFavorite(Movie movie) {
-        favoritesMovie.add(movie);
-        progressStatus.setChosenMovies(favoritesMovie.size());
+        movieInteractor.addToFavorites(movie);
+        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
         progressData.postValue(progressStatus);
     }
 
     public void removeFromFavorite(Movie movie) {
-        if (favoritesMovie.size() > 0 && favoritesMovie.contains(movie)) {
-            favoritesMovie.remove(movie);
-            progressStatus.setChosenMovies(favoritesMovie.size());
-            progressData.postValue(progressStatus);
-        }
+        movieInteractor.removeFromFavorites(movie);
+        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
+        progressData.postValue(progressStatus);
     }
 
     public void clearFavorites() {
-        favoritesMovie.clear();
-        progressStatus.setChosenMovies(favoritesMovie.size());
+        movieInteractor.clearFavorites();
+        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
         progressData.postValue(progressStatus);
     }
 
@@ -79,9 +75,5 @@ public class MainViewModel extends BaseViewModel {
 
     public MutableLiveData<ProgressStatus> getProgress() {
         return progressData;
-    }
-
-    public List<Movie> getFavoritesMovie() {
-        return favoritesMovie;
     }
 }

@@ -16,20 +16,23 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.sadi.toor.recommend.R;
+import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.core.base.BaseFragment;
-import com.sadi.toor.recommend.model.data.Wish;
+import com.sadi.toor.recommend.filter.ui.FilterFragment;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 import com.sadi.toor.recommend.player.PlayerActivity;
 import com.sadi.toor.recommend.recommendation.ui.adapter.RecommendAdapter;
 import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
 
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 import butterknife.BindView;
+import timber.log.Timber;
+
+import static android.app.Activity.RESULT_OK;
 
 public class RecommendFragment extends BaseFragment<RecommendViewModel> implements RecommendAdapter.OnViewClickLister {
+
+    public static final String TAG = "RecommendFragment";
 
     @BindView(R.id.rv_rec)
     RecyclerView rvRec;
@@ -40,6 +43,8 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @BindView(R.id.progress_view)
     FrameLayout progress;
 
+    Snackbar snackbar;
+
     private RecommendViewModel viewModel;
 
     public static RecommendFragment newInstance() {
@@ -49,11 +54,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
         this.viewModel = viewModel;
-        sharedViewModel.getSelectedMovies().observe(this, movieList -> {
-            Movies movies = new Movies();
-            movies.setMovies(movieList);
-            viewModel.sendUserMovies(new Wish(movies.toString()));
-        });
         viewModel.getRecommendations().observe(this, this::initRecyclerView);
         viewModel.getStatus().observe(this, status -> {
             switch (status) {
@@ -65,32 +65,32 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
                     break;
                 case ERROR:
                     progress.setVisibility(View.GONE);
-                    Snackbar.make(view, getString(R.string.error_load_rec), Snackbar.LENGTH_INDEFINITE)
-                            .setAction(getString(R.string.retry), action -> viewModel.retryCall())
-                            .show();
+                    this.snackbar = Snackbar.make(view, getString(R.string.error_load_rec), Snackbar.LENGTH_INDEFINITE)
+                            .setAction(getString(R.string.retry), action -> viewModel.retryCall());
+                    snackbar.show();
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown progress status = " + status.name());
             }
         });
         btnRateAgain.setOnClickListener(v -> {
-            Navigation.findNavController(view).popBackStack();
+            getActivity().getSupportFragmentManager()
+                    .popBackStack();
         });
         btnFilter.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.filterFragment,
-                    null,
-                    new NavOptions.Builder()
-                            .setEnterAnim(R.anim.push_up_in)
-                            .setExitAnim(R.anim.push_up_out)
-                            .setPopEnterAnim(R.anim.push_down_in)
-                            .setPopExitAnim(R.anim.push_down_out)
-                            .build());
+            FilterFragment filterFragment = FilterFragment.newInstance();
+            filterFragment.setTargetFragment(RecommendFragment.this, Constants.REC_FILTER_REQUEST_CODE);
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, filterFragment, FilterFragment.TAG)
+                    .addToBackStack(null)
+                    .commit();
         });
 
     }
 
     private void initRecyclerView(Recommendations recommendations) {
-        RecommendAdapter adapter = new RecommendAdapter(recommendations, this);
+        RecommendAdapter adapter = new RecommendAdapter(recommendations.getMovies(), this);
         rvRec.setAdapter(adapter);
 
         ((SimpleItemAnimator) rvRec.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -102,7 +102,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
 
         rvRec.setLayoutManager(linearLayoutManager);
     }
-
 
     @Override
     protected Class<RecommendViewModel> getViewModel() {
@@ -129,16 +128,19 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
         startActivity(new Intent(getActivity(), PlayerActivity.class));
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constants.REC_FILTER_REQUEST_CODE)
+                Timber.d("moggot back!!");
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Snackbar.make(getView(), getString(R.string.error_load_rec), Snackbar.LENGTH_INDEFINITE)
-                .setAction(getString(R.string.retry), action -> viewModel.retryCall())
-                .dismiss();
+        if (snackbar != null) {
+            snackbar.dismiss();
+        }
     }
 }

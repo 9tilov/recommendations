@@ -21,6 +21,8 @@ import static com.sadi.toor.recommend.core.utils.DateUtils.MIN_YEAR;
 
 public class YearFragment extends BaseFragment<YearViewModel> {
 
+    public static final String TAG = "YearFragment";
+
     @BindView(R.id.year_np_start)
     NumberPicker npStart;
     @BindView(R.id.year_np_end)

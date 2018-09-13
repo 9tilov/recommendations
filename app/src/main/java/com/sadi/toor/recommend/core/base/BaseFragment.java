@@ -17,9 +17,10 @@ import android.view.ViewGroup;
 
 import com.sadi.toor.recommend.core.common.SharedViewModel;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
-import androidx.navigation.Navigation;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
@@ -42,6 +43,7 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         setHasOptionsMenu(true);
     }
 
@@ -61,7 +63,6 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
-        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
         onViewCreated(view, savedInstanceState, (M) viewModel);
         ((BaseActivity) getActivity()).showBackButton(showBackButton());
     }
@@ -76,7 +77,7 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Navigation.findNavController(getView()).popBackStack();
+            getActivity().getSupportFragmentManager().popBackStack();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -97,4 +98,25 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     @LayoutRes
     protected abstract int getLayoutResId();
 
+    public final boolean processBackButton() {
+        final List<Fragment> childFragments = getChildFragmentManager().getFragments();
+        if (childFragments != null) {
+
+            // Перебираем дочерние фрагменты до первого, кто поглотит событие
+            for (Fragment childFragment : childFragments) {
+                if (childFragment instanceof BaseFragment
+                        && ((BaseFragment) childFragment).processBackButton()) {
+                    return true;
+                }
+            }
+        }
+
+        // Дочерних фрагментов нет, или никто из них событие не поглотил - передаём обработку в
+        // текущий фрагмент
+        return onBackPressed();
+    }
+
+    protected boolean onBackPressed() {
+        return false;
+    }
 }

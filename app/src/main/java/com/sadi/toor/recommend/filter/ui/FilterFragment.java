@@ -12,14 +12,19 @@ import android.widget.TextView;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
+import com.sadi.toor.recommend.filter.genre.ui.GenreFragment;
 import com.sadi.toor.recommend.filter.viewmodel.FilterViewModel;
+import com.sadi.toor.recommend.filter.year.ui.YearFragment;
 import com.sadi.toor.recommend.model.data.genre.Genre;
 
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 import butterknife.BindView;
+import timber.log.Timber;
+
+import static android.app.Activity.RESULT_OK;
 
 public class FilterFragment extends BaseFragment<FilterViewModel> {
+
+    public static final String TAG = "FilterFragment";
 
     @BindView(R.id.filter_cv_genre)
     CardView cvGenre;
@@ -30,6 +35,10 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
     @BindView(R.id.filter_tv_year)
     TextView tvYear;
 
+    public static FilterFragment newInstance() {
+        return new FilterFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,19 +47,19 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
 
     @Override
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, FilterViewModel viewModel) {
-        NavOptions navOptions = new NavOptions.Builder()
-                .setEnterAnim(R.anim.slide_in_right)
-                .setExitAnim(R.anim.slide_out_left)
-                .setPopEnterAnim(R.anim.slide_in_left)
-                .setPopExitAnim(R.anim.slide_out_right)
-                .build();
-        cvGenre.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.genreFragment,
-                null,
-                navOptions));
+        cvGenre.setOnClickListener(v -> getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, GenreFragment.newInstance(), GenreFragment.TAG)
+                .addToBackStack(null)
+                .commit());
 
-        cvYear.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.yearFragment,
-                null,
-                navOptions));
+        cvYear.setOnClickListener(v -> {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, YearFragment.newInstance(), YearFragment.TAG)
+                    .addToBackStack(null)
+                    .commit();
+        });
         sharedViewModel.getSelectedGenres().observe(this, genres -> {
             if (genres == null) {
                 return;
@@ -94,6 +103,13 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
     }
 
     @Override
+    protected boolean onBackPressed() {
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, null);
+        Timber.d("moggot bbbbact");
+        return super.onBackPressed();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -103,7 +119,8 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_close:
-                Navigation.findNavController(getView()).popBackStack();
+                getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, null);
+                getActivity().getSupportFragmentManager().popBackStack();
                 return true;
         }
         return false;

@@ -24,6 +24,8 @@ import butterknife.BindView;
 
 public class GenreFragment extends BaseFragment<GenreViewModel> implements SelectableViewHolder.OnItemSelectedListener {
 
+    public static final String TAG = "GenreFragment";
+
     @BindView(R.id.recycler_view_genre)
     RecyclerView recyclerViewGenre;
 

@@ -4,4 +4,6 @@ public class Constants {
 
     public static final String BASE_URL = "http://94.45.205.95:8080/api/sandi/";
     public static final int MIN_MOVIES_SEEN = 3;
+
+    public static final int REC_FILTER_REQUEST_CODE = 100;
 }
