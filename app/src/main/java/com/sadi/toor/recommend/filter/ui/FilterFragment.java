@@ -49,6 +49,7 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
     protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, FilterViewModel viewModel) {
         cvGenre.setOnClickListener(v -> getActivity().getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                 .replace(R.id.nav_host_fragment, GenreFragment.newInstance(), GenreFragment.TAG)
                 .addToBackStack(null)
                 .commit());
@@ -56,6 +57,7 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
         cvYear.setOnClickListener(v -> {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                     .replace(R.id.nav_host_fragment, YearFragment.newInstance(), YearFragment.TAG)
                     .addToBackStack(null)
                     .commit();

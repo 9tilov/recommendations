@@ -82,6 +82,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             filterFragment.setTargetFragment(RecommendFragment.this, Constants.REC_FILTER_REQUEST_CODE);
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out, R.anim.push_down_in, R.anim.push_down_out)
                     .replace(R.id.nav_host_fragment, filterFragment, FilterFragment.TAG)
                     .addToBackStack(null)
                     .commit();
@@ -92,14 +93,11 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     private void initRecyclerView(Recommendations recommendations) {
         RecommendAdapter adapter = new RecommendAdapter(recommendations.getMovies(), this);
         rvRec.setAdapter(adapter);
-
         ((SimpleItemAnimator) rvRec.getItemAnimator()).setSupportsChangeAnimations(false);
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
         SnapHelper snapHelper = new PagerSnapHelper();
         rvRec.setOnFlingListener(null);
         snapHelper.attachToRecyclerView(rvRec);
-
         rvRec.setLayoutManager(linearLayoutManager);
     }
 

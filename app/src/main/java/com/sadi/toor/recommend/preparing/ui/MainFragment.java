@@ -90,6 +90,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
             if (progressStatus.needToStop()) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
                         .replace(R.id.nav_host_fragment, RecommendFragment.newInstance(), RecommendFragment.TAG)
                         .addToBackStack(null)
                         .commit();
@@ -126,7 +127,6 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     }
 
     private void initAdapter(Movies movies) {
-        Movies movies1 = movies;
         adapter = new MovieAdapter(movies, this);
         rvMovie.setAdapter(adapter);
     }
