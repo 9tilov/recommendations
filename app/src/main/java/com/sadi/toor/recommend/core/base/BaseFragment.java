@@ -37,7 +37,6 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     public void onAttach(Context context) {
         configureDagger();
         super.onAttach(context);
-        ((BaseActivity) getActivity()).setActionBarTitle(getTitle());
     }
 
     @Override
@@ -50,6 +49,7 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ((BaseActivity) getActivity()).setActionBarTitle(getTitle());
         View view = inflater.inflate(getLayoutResId(), container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;

@@ -5,10 +5,9 @@ import android.arch.lifecycle.MutableLiveData;
 import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.core.base.Status;
 import com.sadi.toor.recommend.interactor.MovieInteractor;
+import com.sadi.toor.recommend.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,19 +17,12 @@ import io.reactivex.schedulers.Schedulers;
 public class MainViewModel extends BaseViewModel {
 
     private final MutableLiveData<Movies> moviesList = new MutableLiveData<>();
-    private final MutableLiveData<ProgressStatus> progressData = new MutableLiveData<>();
-
     private final MovieInteractor movieInteractor;
-    private ProgressStatus progressStatus;
 
     @Inject
     MainViewModel(MovieInteractor movieInteractor) {
         this.movieInteractor = movieInteractor;
-        this.progressStatus = new ProgressStatus();
         addObserver(moviesList);
-        addObserver(progressData);
-        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
-        progressData.postValue(progressStatus);
         loadMovies();
     }
 
@@ -51,29 +43,19 @@ public class MainViewModel extends BaseViewModel {
                 }));
     }
 
-    public void addToFavorite(Movie movie) {
-        movieInteractor.addToFavorites(movie);
-        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
-        progressData.postValue(progressStatus);
+    public MovieProgressStatus addToFavorite(Movie movie) {
+        return movieInteractor.addToFavorites(movie);
     }
 
-    public void removeFromFavorite(Movie movie) {
-        movieInteractor.removeFromFavorites(movie);
-        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
-        progressData.postValue(progressStatus);
+    public MovieProgressStatus removeFromFavorite(Movie movie) {
+        return movieInteractor.removeFromFavorites(movie);
     }
 
     public void clearFavorites() {
         movieInteractor.clearFavorites();
-        progressStatus.setChosenMovies(movieInteractor.getFavoritesSize());
-        progressData.postValue(progressStatus);
     }
 
     public MutableLiveData<Movies> getMovieList() {
         return moviesList;
-    }
-
-    public MutableLiveData<ProgressStatus> getProgress() {
-        return progressData;
     }
 }

@@ -16,6 +16,7 @@
         android:layout_margin="32dp"
         android:indeterminate="false"
         android:max="100"
+        android:progress="0"
         android:progressDrawable="@drawable/bg_progress_bar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

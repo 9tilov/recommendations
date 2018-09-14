@@ -74,6 +74,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             }
         });
         btnRateAgain.setOnClickListener(v -> {
+            getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, null);
             getActivity().getSupportFragmentManager()
                     .popBackStack();
         });
@@ -82,7 +83,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
             filterFragment.setTargetFragment(RecommendFragment.this, Constants.REC_FILTER_REQUEST_CODE);
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .setCustomAnimations(R.anim.push_up_in,R.anim.push_up_out, R.anim.push_down_in, R.anim.push_down_out)
+                    .setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out, R.anim.push_down_in, R.anim.push_down_out)
                     .replace(R.id.nav_host_fragment, filterFragment, FilterFragment.TAG)
                     .addToBackStack(null)
                     .commit();
@@ -124,6 +125,12 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     public void showTrailer(Movie movie) {
         startActivity(new Intent(getActivity(), PlayerActivity.class));
+    }
+
+    @Override
+    protected boolean onBackPressed() {
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, null);
+        return super.onBackPressed();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

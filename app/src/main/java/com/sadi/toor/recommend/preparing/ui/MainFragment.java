@@ -1,6 +1,7 @@
 package com.sadi.toor.recommend.preparing.ui;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,16 +19,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sadi.toor.recommend.R;
+import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.core.base.BaseFragment;
+import com.sadi.toor.recommend.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.preparing.ui.adapter.CustomLayoutManager;
 import com.sadi.toor.recommend.preparing.ui.adapter.MovieAdapter;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
-import com.sadi.toor.recommend.preparing.viewmodel.ProgressStatus;
 import com.sadi.toor.recommend.recommendation.ui.RecommendFragment;
 
 import butterknife.BindView;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MainFragment extends BaseFragment<MainViewModel> implements MovieAdapter.OnViewClickLister {
 
@@ -83,39 +87,13 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
                     throw new IllegalArgumentException("Unknown progress status = " + status.name());
             }
         });
-        viewModel.getProgress().observe(this, progressStatus -> {
-            if (progressStatus == null) {
-                return;
-            }
-            if (progressStatus.needToStop()) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
-                        .replace(R.id.nav_host_fragment, RecommendFragment.newInstance(), RecommendFragment.TAG)
-                        .addToBackStack(null)
-                        .commit();
-            } else {
-                updateProgress(progressStatus);
-            }
-        });
+        tvProgressCount.setText(getString(R.string.main_progress, 0, MovieProgressStatus.MOVIE_COUNT_TO_CHOOSE));
         btnBack.setOnClickListener(v -> {
             switchPrevious();
         });
         btnSkip.setOnClickListener(v -> {
             switchNext();
         });
-    }
-
-    private void updateProgress(ProgressStatus progress) {
-        tvProgressCount.setText(getString(R.string.main_progress, progress.getChosenMovies(), progress.getMovieCountToChoose()));
-        ValueAnimator progressAnimation = ValueAnimator.ofInt(progressBar.getProgress(), progress.getProgress());
-        progressAnimation.setInterpolator(new LinearOutSlowInInterpolator());
-        progressAnimation.addUpdateListener(animation -> {
-            if (animation != null && progressBar != null) {
-                progressBar.setProgress((int) animation.getAnimatedValue());
-            }
-        });
-        progressAnimation.start();
     }
 
     private void initRecyclerView() {
@@ -158,19 +136,49 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         int prevAdapterPosition = linearLayoutManager.findLastVisibleItemPosition() - 1;
         rvMovie.getLayoutManager().scrollToPosition(prevAdapterPosition);
         if (adapter != null) {
-            viewModel.removeFromFavorite(adapter.getMoviewFromPosition(prevAdapterPosition));
+            MovieProgressStatus progressStatus = viewModel.removeFromFavorite(adapter.getMoviewFromPosition(prevAdapterPosition));
+            updateProgress(progressStatus);
         }
     }
 
     @Override
     public void rate(Movie movie) {
         switchNext();
-        viewModel.addToFavorite(movie);
+        MovieProgressStatus movieProgressStatus = viewModel.addToFavorite(movie);
+        if (movieProgressStatus.isComplete()) {
+            RecommendFragment recommendFragment = RecommendFragment.newInstance();
+            recommendFragment.setTargetFragment(MainFragment.this, Constants.MAIN_REC_REQUEST_CODE);
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
+                    .replace(R.id.nav_host_fragment, recommendFragment, RecommendFragment.TAG)
+                    .addToBackStack(null)
+                    .commit();
+            progressBar.setProgress(0);
+        } else {
+            updateProgress(movieProgressStatus);
+        }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModel.clearFavorites();
+    private void updateProgress(MovieProgressStatus progress) {
+        tvProgressCount.setText(getString(R.string.main_progress, progress.getChosenMovies(), MovieProgressStatus.MOVIE_COUNT_TO_CHOOSE));
+        progressBar.setProgress(0);
+        ValueAnimator progressAnimation = ValueAnimator.ofInt(progressBar.getProgress(), progress.getProgress());
+        progressAnimation.setInterpolator(new LinearOutSlowInInterpolator());
+        progressAnimation.addUpdateListener(animation -> {
+            if (animation != null && progressBar != null) {
+                progressBar.setProgress((int) animation.getAnimatedValue());
+            }
+        });
+        progressAnimation.start();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constants.MAIN_REC_REQUEST_CODE) {
+                viewModel.clearFavorites();
+            }
+        }
     }
 }
