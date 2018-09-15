@@ -102,6 +102,11 @@ public class YearFragment extends BaseFragment<YearViewModel> {
     }
 
     @Override
+    protected String getFragmentTag() {
+        return TAG;
+    }
+
+    @Override
     protected boolean showBackButton() {
         return true;
     }

@@ -111,6 +111,11 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
     }
 
     @Override
+    protected String getFragmentTag() {
+        return TAG;
+    }
+
+    @Override
     protected boolean showBackButton() {
         return false;
     }

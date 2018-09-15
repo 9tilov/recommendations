@@ -26,6 +26,8 @@ public class App extends Application implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
         this.initDagger();
+        Analytics firebase = new Analytics(this);
+        firebase.init();
         Timber.plant(new Timber.DebugTree());
         Stetho.initializeWithDefaults(this);
         configureCrashReporting();

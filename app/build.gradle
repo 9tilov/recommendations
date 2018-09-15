@@ -112,9 +112,13 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 //    exoplayer
     implementation 'com.google.android.exoplayer:exoplayer:2.8.2'
+    //analytics
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.google.android.gms:play-services-analytics:16.0.3'
 
     implementation 'com.github.sujithkanna:smileyrating:1.6.8'
 
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
-
 }
+
+apply plugin: 'com.google.gms.google-services'

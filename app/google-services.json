@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "149664959122",
+    "firebase_url": "https://recommend-1531547037118.firebaseio.com",
+    "project_id": "recommend-1531547037118",
+    "storage_bucket": "recommend-1531547037118.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149664959122:android:b1d7551ed5e771b2",
+        "android_client_info": {
+          "package_name": "com.sadi.toor.recommend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149664959122-sp8on8quo5b8l6n56l2eqrl0ebf2vc9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxvpk5kfNl0ujHMKN2mg0osTh_tk1Q37U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

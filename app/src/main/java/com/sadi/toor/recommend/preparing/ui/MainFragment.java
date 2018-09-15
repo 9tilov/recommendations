@@ -120,6 +120,11 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     }
 
     @Override
+    protected String getFragmentTag() {
+        return TAG;
+    }
+
+    @Override
     protected boolean showBackButton() {
         return false;
     }

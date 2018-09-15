@@ -130,6 +130,11 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     }
 
     @Override
+    protected String getFragmentTag() {
+        return TAG;
+    }
+
+    @Override
     protected boolean showBackButton() {
         return false;
     }

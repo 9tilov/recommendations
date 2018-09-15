@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sadi.toor.recommend.Analytics;
 import com.sadi.toor.recommend.core.common.SharedViewModel;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
     protected SharedViewModel sharedViewModel;
+    protected Analytics analytics;
     private M viewModel;
     private Unbinder unbinder;
 
@@ -38,6 +40,7 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     public void onAttach(Context context) {
         configureDagger();
         super.onAttach(context);
+        analytics = new Analytics(context);
     }
 
     @Override
@@ -55,6 +58,7 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
         ((BaseActivity) getActivity()).setActionBarTitle(getTitle());
         View view = inflater.inflate(getLayoutResId(), container, false);
         unbinder = ButterKnife.bind(this, view);
+        analytics.setCurrentScreen(getActivity(), getFragmentTag());
         return view;
     }
 
@@ -94,6 +98,8 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
 
     @StringRes
     protected abstract int getTitle();
+
+    protected abstract String getFragmentTag();
 
     protected abstract boolean showBackButton();
 

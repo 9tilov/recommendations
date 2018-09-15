@@ -1,6 +1,5 @@
 package com.sadi.toor.recommend.filter.genre.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -82,6 +81,11 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
     @Override
     protected int getTitle() {
         return R.string.fragment_title_genre;
+    }
+
+    @Override
+    protected String getFragmentTag() {
+        return TAG;
     }
 
     @Override

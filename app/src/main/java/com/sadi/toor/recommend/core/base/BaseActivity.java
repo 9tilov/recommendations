@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.sadi.toor.recommend.Analytics;
 import com.sadi.toor.recommend.R;
 
 import javax.inject.Inject;
@@ -18,11 +20,13 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+    protected Analytics analytics;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         configureDagger();
         super.onCreate(savedInstanceState);
+        this.analytics = new Analytics(this);
     }
 
     @Override
