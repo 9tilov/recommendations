@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -43,6 +44,8 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
+        onCreate(savedInstanceState, viewModel);
         setHasOptionsMenu(true);
     }
 
@@ -55,15 +58,14 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
         return view;
     }
 
-    protected abstract void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, M viewModel);
+    protected abstract void onCreate(@Nullable Bundle savedInstanceState, M viewModel);
 
     @SuppressWarnings("unchecked")
     @SuppressLint("CheckResult")
     @Override
+    @CallSuper
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
-        onViewCreated(view, savedInstanceState, (M) viewModel);
         ((BaseActivity) getActivity()).showBackButton(showBackButton());
     }
 

@@ -1,8 +1,8 @@
-package com.sadi.toor.recommend.interactor;
+package com.sadi.toor.recommend.preparing.interactor;
 
 public class MovieProgressStatus {
 
-    public static final int MOVIE_COUNT_TO_CHOOSE = 2;
+    public static final int MOVIE_COUNT_TO_CHOOSE = 10;
     private int chosenMovies = 0;
 
     public void increaseProgress() {

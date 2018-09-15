@@ -1,18 +1,22 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Recommend</string>
 
-    <string name="fragment_title_choose_movies">Select the movies you watched</string>
-    <string name="fragment_title_genre">Select favorite genres</string>
+    <string name="fragment_title_choose_movies">Rate movies</string>
+    <string name="fragment_title_genre">Select genres</string>
     <string name="fragment_title_time_period">Select time period</string>
     <string name="fragment_title_filter">Filter</string>
 
-    <string name="have_not_seen">Haven\'t seen</string>
+    <string name="have_not_seen">Skip</string>
     <string name="recommend_title">Your recommendations</string>
     <string name="main_progress">%1$d of %2$d</string>
     <string name="rec_title_with_year">%1$s, %2$d</string>
     <string name="recommend_film">Recommend film</string>
-    <string name="rate_movies">Rate movies</string>
+    <string name="rate_movies">Rate again</string>
+    <string name="rating_bar_terrible">Terrible</string>
+    <string name="rating_bar_bad">Bad</string>
     <string name="rating_bar_normal">Normal</string>
+    <string name="rating_bar_good">Good</string>
+    <string name="rating_bar_great">Great</string>
     <string name="coming_soon">Coming soon</string>
     <string name="year_from">from</string>
     <string name="year_to">to</string>
@@ -20,12 +24,14 @@
     <string name="any">Any</string>
     <string name="retry">Retry</string>
 
-    <string name="filter_genre_title">Genre</string>
+    <string name="filter_genre_title">Genres</string>
     <string name="filter_time_period_title">Time period</string>
     <string name="filter_rating_title">Rating</string>
 
     <string name="error_load_movies">Unable to load movies</string>
     <string name="error_load_rec">Unable to load recommendations</string>
     <string name="error_load_genres">Unable to load genres</string>
+
+    <string name="nothing_found">Nothing found</string>
 
 </resources>

@@ -10,7 +10,7 @@ public class Recommendations {
 
     @SerializedName("recs")
     @Expose
-    private final List<Movie> movies;
+    private List<Movie> movies;
 
     public Recommendations(List<Movie> movies) {
         this.movies = movies;
@@ -18,5 +18,9 @@ public class Recommendations {
 
     public List<Movie> getMovies() {
         return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 }

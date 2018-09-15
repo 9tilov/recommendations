@@ -4,8 +4,8 @@ import android.arch.lifecycle.MutableLiveData;
 
 import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.core.base.Status;
-import com.sadi.toor.recommend.interactor.MovieInteractor;
-import com.sadi.toor.recommend.interactor.MovieProgressStatus;
+import com.sadi.toor.recommend.preparing.interactor.MovieInteractor;
+import com.sadi.toor.recommend.preparing.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
 

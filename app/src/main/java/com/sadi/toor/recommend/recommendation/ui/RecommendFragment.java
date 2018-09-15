@@ -14,6 +14,7 @@ import android.support.v7.widget.SnapHelper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.Constants;
@@ -26,7 +27,6 @@ import com.sadi.toor.recommend.recommendation.ui.adapter.RecommendAdapter;
 import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
 
 import butterknife.BindView;
-import timber.log.Timber;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -38,6 +38,8 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     RecyclerView rvRec;
     @BindView(R.id.rec_btn_rate_again)
     Button btnRateAgain;
+    @BindView(R.id.rec_tv_nothing_found)
+    TextView tvNothingFound;
     @BindView(R.id.rec_btn_filter)
     AppCompatImageView btnFilter;
     @BindView(R.id.progress_view)
@@ -46,15 +48,31 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     Snackbar snackbar;
 
     private RecommendViewModel viewModel;
+    private Recommendations recommendations;
+    private RecommendAdapter adapter;
 
     public static RecommendFragment newInstance() {
         return new RecommendFragment();
     }
 
     @Override
-    protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
+    protected void onCreate(@Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
         this.viewModel = viewModel;
-        viewModel.getRecommendations().observe(this, this::initRecyclerView);
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getRecommendationData().observe(this, recommendations1 -> {
+            this.recommendations = recommendations1;
+            this.adapter = new RecommendAdapter(recommendations.getMovies(), this);
+            initRecyclerView();
+            tvNothingFound.setVisibility(recommendations1.getMovies().isEmpty()
+                    ? View.VISIBLE
+                    : View.GONE);
+
+        });
         viewModel.getStatus().observe(this, status -> {
             switch (status) {
                 case START_LOADING:
@@ -91,8 +109,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
 
     }
 
-    private void initRecyclerView(Recommendations recommendations) {
-        RecommendAdapter adapter = new RecommendAdapter(recommendations.getMovies(), this);
+    private void initRecyclerView() {
         rvRec.setAdapter(adapter);
         ((SimpleItemAnimator) rvRec.getItemAnimator()).setSupportsChangeAnimations(false);
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -136,8 +153,9 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == Constants.REC_FILTER_REQUEST_CODE)
-                Timber.d("moggot back!!");
+            if (requestCode == Constants.REC_FILTER_REQUEST_CODE) {
+                viewModel.getFilteredRecommendations();
+            }
         }
     }
 

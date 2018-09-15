@@ -57,6 +57,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:placeHolderBackgroundColor="@color/smile_face"
+        app:normalColor="@color/smile_face_selected"
         app:placeHolderSmileColor="@color/smile_eyes"
         app:showLine="false"
         app:textSelectionColor="@color/smile_text_selected" />

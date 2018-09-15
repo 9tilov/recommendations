@@ -16,6 +16,10 @@ import com.sadi.toor.recommend.filter.genre.ui.GenreFragment;
 import com.sadi.toor.recommend.filter.viewmodel.FilterViewModel;
 import com.sadi.toor.recommend.filter.year.ui.YearFragment;
 import com.sadi.toor.recommend.model.data.genre.Genre;
+import com.sadi.toor.recommend.model.data.genre.Genre2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import timber.log.Timber;
@@ -30,23 +34,29 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
     CardView cvGenre;
     @BindView(R.id.filter_cv_year)
     CardView cvYear;
+    @BindView(R.id.filter_cv_rating)
+    CardView cvRating;
     @BindView(R.id.filter_tv_genre)
     TextView tvGenre;
     @BindView(R.id.filter_tv_year)
     TextView tvYear;
+
+    private FilterViewModel viewModel;
 
     public static FilterFragment newInstance() {
         return new FilterFragment();
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(@Nullable Bundle savedInstanceState, FilterViewModel viewModel) {
         setHasOptionsMenu(true);
+        this.viewModel = viewModel;
     }
 
     @Override
-    protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, FilterViewModel viewModel) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        cvRating.setEnabled(false);
         cvGenre.setOnClickListener(v -> getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
@@ -73,10 +83,16 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
                 }
                 sb.append(genre.getGenreName());
             }
+            List<Genre2> genre2s = new ArrayList<>();
+            for (Genre genre : genres) {
+                genre2s.add(new Genre2(genre.getGenreId(), genre.getGenreName()));
+            }
+            viewModel.setGenreList(genre2s);
             tvGenre.setText(sb.length() > 0 ? sb.toString() : getString(R.string.any));
         });
         sharedViewModel.getSelectedPeriod().observe(this, periodPair -> {
             if (periodPair != null) {
+                viewModel.setFilterPeriod(periodPair);
                 tvYear.setText(periodPair.first.equals(periodPair.second)
                         ? String.valueOf(periodPair.first)
                         : getString(R.string.time_period, periodPair.first, periodPair.second));

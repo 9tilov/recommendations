@@ -1,9 +1,7 @@
-package com.sadi.toor.recommend.interactor;
+package com.sadi.toor.recommend.preparing.interactor;
 
-import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
-import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 import com.sadi.toor.recommend.model.repo.DataRepository;
 
 import javax.inject.Inject;
@@ -38,11 +36,5 @@ public class MovieInteractor {
 
     public Observable<Movies> getPrepareMovieList() {
         return repository.getMovieLiveList();
-    }
-
-    public Observable<Recommendations> getRecommendations() {
-        Movies movies = new Movies();
-        movies.setMovies(favoriteMovieController.getFavoritesMovies());
-        return repository.sendUserWish(new Wish(movies.toString()));
     }
 }

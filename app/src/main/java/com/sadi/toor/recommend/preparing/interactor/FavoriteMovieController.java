@@ -1,4 +1,4 @@
-package com.sadi.toor.recommend.interactor;
+package com.sadi.toor.recommend.preparing.interactor;
 
 import com.sadi.toor.recommend.model.data.movie.Movie;
 

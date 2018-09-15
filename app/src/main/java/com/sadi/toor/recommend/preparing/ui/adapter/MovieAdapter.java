@@ -92,7 +92,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         void bind(Movie data) {
+            ratingBar.setNameForSmile(BaseRating.TERRIBLE, R.string.rating_bar_terrible);
+            ratingBar.setNameForSmile(BaseRating.BAD, R.string.rating_bar_bad);
             ratingBar.setNameForSmile(BaseRating.OKAY, R.string.rating_bar_normal);
+            ratingBar.setNameForSmile(BaseRating.GOOD, R.string.rating_bar_good);
+            ratingBar.setNameForSmile(BaseRating.GREAT, R.string.rating_bar_great);
             Glide.with(imageView)
                     .load(data.getLink())
                     .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(20)))

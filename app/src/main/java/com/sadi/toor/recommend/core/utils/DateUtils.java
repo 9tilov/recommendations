@@ -9,6 +9,7 @@ public class DateUtils {
     }
 
     public static final int MIN_YEAR = 1899;
+    public static final int DEFAULT_YEAR = 1990;
 
     public static int getCurrentYear() {
         return Calendar.getInstance().get(Calendar.YEAR);

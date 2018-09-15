@@ -1,5 +1,6 @@
 package com.sadi.toor.recommend.filter.genre.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
     RecyclerView recyclerViewGenre;
 
     private SelectableAdapter adapter;
+    private GenreViewModel viewModel;
 
     public static GenreFragment newInstance() {
         return new GenreFragment();
@@ -41,7 +43,13 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
     }
 
     @Override
-    protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, GenreViewModel viewModel) {
+    protected void onCreate(@Nullable Bundle savedInstanceState, GenreViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         viewModel.getGenreList().observe(this, genres -> {
             sharedViewModel.getSelectedGenres().observe(this, selectedGenres -> {

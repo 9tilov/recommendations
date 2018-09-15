@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.sadi.toor.recommend.core.utils.DateUtils.DEFAULT_YEAR;
 import static com.sadi.toor.recommend.core.utils.DateUtils.MIN_YEAR;
 
 public class YearFragment extends BaseFragment<YearViewModel> {
@@ -29,9 +30,15 @@ public class YearFragment extends BaseFragment<YearViewModel> {
     NumberPicker npEnd;
 
     private String[] displayedValues;
+    private YearViewModel viewModel;
 
     public static YearFragment newInstance() {
         return new YearFragment();
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState, YearViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
     @Override
@@ -40,7 +47,8 @@ public class YearFragment extends BaseFragment<YearViewModel> {
     }
 
     @Override
-    protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, YearViewModel viewModel) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initNumberPickers();
         sharedViewModel.getSelectedPeriod().observe(this, integerIntegerPair -> {
             if (integerIntegerPair == null) {
@@ -75,6 +83,8 @@ public class YearFragment extends BaseFragment<YearViewModel> {
         npEnd.setMaxValue(displayedValues.length - 1);
         npStart.setDisplayedValues(displayedValues);
         npEnd.setDisplayedValues(displayedValues);
+        int currentYear = DateUtils.getCurrentYear();
+        npStart.setValue(currentYear - DEFAULT_YEAR);
     }
 
     private void formDisplayedValues() {

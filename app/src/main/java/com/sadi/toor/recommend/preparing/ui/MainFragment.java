@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.core.base.BaseFragment;
-import com.sadi.toor.recommend.interactor.MovieProgressStatus;
+import com.sadi.toor.recommend.preparing.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.preparing.ui.adapter.CustomLayoutManager;
@@ -60,13 +60,18 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     }
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState, MainViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
+    @Override
     protected Class<MainViewModel> getViewModel() {
         return MainViewModel.class;
     }
 
     @Override
-    protected void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, MainViewModel viewModel) {
-        this.viewModel = viewModel;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         viewModel.getMovieList().observe(this, this::initAdapter);
         viewModel.getStatus().observe(this, status -> {
