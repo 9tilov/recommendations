@@ -16,14 +16,14 @@ public class BaseViewModel extends ViewModel {
 
     protected final RetryManager retryManager = new NetworkRetryManager();
     protected final CompositeDisposable compositeDisposable = new CompositeDisposable();
-    protected final MutableLiveData<Status> status = new MutableLiveData<>();
+    protected final MutableLiveData<LoadingStatus> status = new MutableLiveData<>();
     private List<MutableLiveData> observers = new ArrayList<>();
 
     public BaseViewModel() {
         addObserver(status);
     }
 
-    public MutableLiveData<Status> getStatus() {
+    public MutableLiveData<LoadingStatus> getStatus() {
         return status;
     }
 

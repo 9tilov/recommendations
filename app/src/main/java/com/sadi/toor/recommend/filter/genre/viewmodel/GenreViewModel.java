@@ -3,7 +3,7 @@ package com.sadi.toor.recommend.filter.genre.viewmodel;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.sadi.toor.recommend.core.base.BaseViewModel;
-import com.sadi.toor.recommend.core.base.Status;
+import com.sadi.toor.recommend.core.base.LoadingStatus;
 import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.repo.DataRepository;
 
@@ -13,6 +13,8 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.sadi.toor.recommend.core.base.LoadingStatus.ERROR;
 
 public class GenreViewModel extends BaseViewModel {
 
@@ -30,7 +32,7 @@ public class GenreViewModel extends BaseViewModel {
         compositeDisposable.add(repository.getGenresList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(throwable -> status.postValue(Status.ERROR))
+                .doOnError(throwable -> status.postValue(new LoadingStatus(ERROR)))
                 .retryWhen(retryHandler -> retryHandler.flatMap(retryManager::observeRetries))
                 .subscribe(genres::postValue));
     }

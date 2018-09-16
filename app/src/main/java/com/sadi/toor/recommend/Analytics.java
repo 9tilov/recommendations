@@ -11,6 +11,7 @@ public class Analytics {
     private static final String FIREBASE_ITEM_ID = "id";
     private static final String FIREBASE_ITEM_NAME = "name";
     private static final String FIREBASE_CONTENT_TYPE = "image";
+    public static final String KEY_NETWORK_REQUEST_ERROR = "key_network_error";
 
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -28,5 +29,9 @@ public class Analytics {
 
     public void setCurrentScreen(Activity activity, String tag) {
         firebaseAnalytics.setCurrentScreen(activity, tag, null);
+    }
+
+    public void logEvent(String key, Bundle bundle) {
+        firebaseAnalytics.logEvent(key, bundle);
     }
 }

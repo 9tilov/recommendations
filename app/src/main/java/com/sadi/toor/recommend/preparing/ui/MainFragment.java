@@ -18,11 +18,12 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sadi.toor.recommend.Analytics;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.core.base.BaseFragment;
-import com.sadi.toor.recommend.preparing.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.model.data.movie.Movie;
+import com.sadi.toor.recommend.preparing.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.preparing.ui.adapter.CustomLayoutManager;
 import com.sadi.toor.recommend.preparing.ui.adapter.MovieAdapter;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
@@ -33,6 +34,9 @@ import java.util.List;
 import butterknife.BindView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.sadi.toor.recommend.core.base.LoadingStatus.ERROR;
+import static com.sadi.toor.recommend.core.base.LoadingStatus.START_LOADING;
+import static com.sadi.toor.recommend.core.base.LoadingStatus.SUCCESS;
 
 public class MainFragment extends BaseFragment<MainViewModel> implements MovieAdapter.OnViewClickLister {
 
@@ -75,7 +79,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         initRecyclerView();
         viewModel.getMovieList().observe(this, this::initAdapter);
         viewModel.getStatus().observe(this, status -> {
-            switch (status) {
+            switch (status.getType()) {
                 case START_LOADING:
                     progress.setVisibility(View.VISIBLE);
                     break;
@@ -83,13 +87,16 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
                     progress.setVisibility(View.GONE);
                     break;
                 case ERROR:
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TAG, status.getThrowable().getMessage());
+                    analytics.logEvent(Analytics.KEY_NETWORK_REQUEST_ERROR, bundle);
                     progress.setVisibility(View.GONE);
                     Snackbar.make(view, getString(R.string.error_load_movies), Snackbar.LENGTH_INDEFINITE)
                             .setAction(getString(R.string.retry), action -> viewModel.retryCall())
                             .show();
                     break;
                 default:
-                    throw new IllegalArgumentException("Unknown progress status = " + status.name());
+                    throw new IllegalArgumentException("Unknown progress status = " + status.getType());
             }
         });
         tvProgressCount.setText(getString(R.string.main_progress, 0, MovieProgressStatus.MOVIE_COUNT_TO_CHOOSE));

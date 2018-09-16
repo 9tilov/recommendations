@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.sadi.toor.recommend.Analytics;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.core.base.BaseFragment;
@@ -29,6 +30,9 @@ import java.util.List;
 import butterknife.BindView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.sadi.toor.recommend.core.base.LoadingStatus.ERROR;
+import static com.sadi.toor.recommend.core.base.LoadingStatus.START_LOADING;
+import static com.sadi.toor.recommend.core.base.LoadingStatus.SUCCESS;
 
 public class RecommendFragment extends BaseFragment<RecommendViewModel> {
 
@@ -68,7 +72,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> {
 
         });
         viewModel.getStatus().observe(this, status -> {
-            switch (status) {
+            switch (status.getType()) {
                 case START_LOADING:
                     progress.setVisibility(View.VISIBLE);
                     break;
@@ -76,13 +80,16 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> {
                     progress.setVisibility(View.GONE);
                     break;
                 case ERROR:
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TAG, status.getThrowable().getMessage());
+                    analytics.logEvent(Analytics.KEY_NETWORK_REQUEST_ERROR, bundle);
                     progress.setVisibility(View.GONE);
                     this.snackbar = Snackbar.make(view, getString(R.string.error_load_rec), Snackbar.LENGTH_INDEFINITE)
                             .setAction(getString(R.string.retry), action -> viewModel.retryCall());
                     snackbar.show();
                     break;
                 default:
-                    throw new IllegalArgumentException("Unknown progress status = " + status.name());
+                    throw new IllegalArgumentException("Unknown progress status = " + status.getType());
             }
         });
         btnRateAgain.setOnClickListener(v -> {

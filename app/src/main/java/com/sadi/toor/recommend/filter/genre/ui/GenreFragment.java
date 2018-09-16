@@ -9,9 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.sadi.toor.recommend.Analytics;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.core.base.BaseFragment;
-import com.sadi.toor.recommend.core.base.Status;
+import com.sadi.toor.recommend.core.base.LoadingStatus;
 import com.sadi.toor.recommend.filter.genre.ui.adapter.SelectableAdapter;
 import com.sadi.toor.recommend.filter.genre.ui.adapter.SelectableViewHolder;
 import com.sadi.toor.recommend.filter.genre.viewmodel.GenreViewModel;
@@ -62,7 +63,10 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
             recyclerViewGenre.setAdapter(adapter);
         });
         viewModel.getStatus().observe(this, status -> {
-            if (status == Status.ERROR) {
+            if (status.getType() == LoadingStatus.ERROR) {
+                Bundle bundle = new Bundle();
+                bundle.putString(TAG, status.getThrowable().getMessage());
+                analytics.logEvent(Analytics.KEY_NETWORK_REQUEST_ERROR, bundle);
                 Snackbar.make(view, getString(R.string.error_load_genres), Snackbar.LENGTH_INDEFINITE)
                         .setAction(getString(R.string.retry), action -> viewModel.retryCall())
                         .show();
