@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Recommend</string>
+    <string name="app_name" translatable="false">Movie.AI</string>
 
     <string name="fragment_title_choose_movies">Rate movies</string>
     <string name="fragment_title_genre">Select genres</string>
