@@ -12,21 +12,23 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        style="@style/TextMedium.Body2"
+        style="@style/TextMedium.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/year_from"
+        android:textColor="@color/text_color_dark"
         app:layout_constraintBottom_toTopOf="@+id/year_np_start"
         app:layout_constraintLeft_toLeftOf="@id/year_np_start"
         app:layout_constraintRight_toRightOf="@+id/year_np_start" />
 
     <TextView
-        style="@style/TextMedium.Body2"
+        style="@style/TextMedium.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/year_to"
+        android:textColor="@color/text_color_dark"
         app:layout_constraintBottom_toTopOf="@+id/year_np_end"
         app:layout_constraintLeft_toLeftOf="@id/year_np_end"
         app:layout_constraintRight_toRightOf="@+id/year_np_end" />

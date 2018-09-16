@@ -1,28 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#ffcc00</color>
+    <color name="colorPrimary">#383127</color>
+    <color name="colorPrimaryDark">#241B0D</color>
+    <color name="colorAccent">#E4DBBF</color>
+
+    <color name="background">#E4DBBF</color>
+
+    <color name="text_color">#DC5B21</color>
+    <color name="text_color_light">#9C9378</color>
+    <color name="text_color_dark">#241B0D</color>
 
     <color name="black_color">#000000</color>
     <color name="grey_color">#808080</color>
 
-    <color name="progress_bar_active_color">#ffcc00</color>
-    <color name="progress_bar_color">#D3D3D3</color>
+    <color name="progress_bar_active_color">#1D1D27</color>
+    <color name="progress_bar_color">#7B8792</color>
+    <color name="progress_bar_text_color">#1D1D27</color>
 
-    <color name="button_round">#EEEEEE</color>
-    <color name="button_round_pressed">#D3D3D3</color>
+    <color name="button_round">#383127</color>
+    <color name="button_round_pressed">#9C8D78</color>
+    <color name="button_round_text_color">#E4DBBF</color>
 
-    <color name="smile_eyes">#A9A9A9</color>
-    <color name="smile_face">#808080</color>
-    <color name="smile_face_selected">#ffcc00</color>
-    <color name="smile_text_selected">#D3D3D3</color>
+    <color name="smile_eyes">#E4DBBF</color>
+    <color name="smile_face">#70AB8F</color>
+    <color name="smile_face_selected">#DC5B21</color>
+    <color name="smile_text">#241B0D</color>
+    <color name="smile_text_selected">#DC5B21</color>
 
-    <color name="filter_title">#808080</color>
+    <color name="progress_color">#241B0D</color>
+
+    <color name="filter_title">#DC5B21</color>
 
     <color name="rec_genre_text_color">#808080</color>
 
-    <color name="cardview_disable_color">#D3D3D3</color>
+    <color name="cardview_color">#E4DBBF</color>
+    <color name="cardview_disable_color">#E4DBBF</color>
+    <color name="cardview_title_text">#241B0D</color>
+    <color name="cardview_text">#DC5B21</color>
 
     <color name="nothing_found_text_color">#808080</color>
+
+    <color name="icons_color_dark">#383127</color>
+    <color name="icons_color_light">#E4DBBF</color>
 </resources>

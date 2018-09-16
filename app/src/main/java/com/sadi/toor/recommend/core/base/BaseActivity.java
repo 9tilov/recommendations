@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.sadi.toor.recommend.Analytics;
 import com.sadi.toor.recommend.R;
 

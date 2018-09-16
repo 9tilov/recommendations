@@ -12,10 +12,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.sadi.toor.recommend.R;
-import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.data.genre.Genre2;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 
 import java.util.List;
 
@@ -26,26 +24,15 @@ import io.reactivex.annotations.NonNull;
 public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.RecommendViewHolder> {
 
     private final List<Movie> movies;
-    private final OnViewClickLister clickLister;
 
-    public RecommendAdapter(@NonNull List<Movie> movies, OnViewClickLister clickLister) {
+    public RecommendAdapter(@NonNull List<Movie> movies) {
         this.movies = movies;
-        this.clickLister = clickLister;
     }
 
     @Override
     public RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommend_item, parent, false);
-        RecommendViewHolder viewHolder = new RecommendViewHolder(view);
-        viewHolder.ivPoster.setOnClickListener(v -> {
-            int adapterPosition = viewHolder.getAdapterPosition();
-            if (adapterPosition != RecyclerView.NO_POSITION) {
-                Movie movie = movies.get(adapterPosition);
-                clickLister.showTrailer(movie);
-            }
-        });
-
-        return viewHolder;
+        return new RecommendViewHolder(view);
     }
 
     @Override
@@ -56,10 +43,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
     @Override
     public int getItemCount() {
         return movies.size();
-    }
-
-    public interface OnViewClickLister {
-        void showTrailer(Movie movie);
     }
 
     static class RecommendViewHolder extends RecyclerView.ViewHolder {

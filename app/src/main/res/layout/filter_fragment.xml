@@ -10,6 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/cardview_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +28,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/filter_genre_title"
-                android:textColor="@color/filter_title" />
+                android:textColor="@color/cardview_title_text" />
 
             <TextView
                 android:id="@+id/filter_tv_genre"
@@ -39,7 +40,8 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@string/any" />
+                android:text="@string/any"
+                android:textColor="@color/cardview_text" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -50,6 +52,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
+        app:cardBackgroundColor="@color/cardview_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filter_cv_genre">
@@ -67,7 +70,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/filter_time_period_title"
-                android:textColor="@color/filter_title" />
+                android:textColor="@color/cardview_title_text" />
 
             <TextView
                 android:id="@+id/filter_tv_year"
@@ -77,7 +80,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/any" />
+                android:text="@string/any"
+                android:textColor="@color/cardview_text" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -108,7 +112,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/filter_rating_title"
-                android:textColor="@color/filter_title" />
+                android:textColor="@color/cardview_title_text" />
 
             <TextView
                 android:id="@+id/filter_tv_rating"

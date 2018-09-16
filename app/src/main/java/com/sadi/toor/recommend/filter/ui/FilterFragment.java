@@ -55,7 +55,6 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         cvRating.setEnabled(false);
         cvGenre.setOnClickListener(v -> getActivity().getSupportFragmentManager()
                 .beginTransaction()

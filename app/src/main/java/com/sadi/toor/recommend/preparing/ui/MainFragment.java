@@ -71,7 +71,6 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         viewModel.getMovieList().observe(this, this::initAdapter);
         viewModel.getStatus().observe(this, status -> {
@@ -172,7 +171,6 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
 
     private void updateProgress(MovieProgressStatus progress) {
         tvProgressCount.setText(getString(R.string.main_progress, progress.getChosenMovies(), MovieProgressStatus.MOVIE_COUNT_TO_CHOOSE));
-        progressBar.setProgress(0);
         ValueAnimator progressAnimation = ValueAnimator.ofInt(progressBar.getProgress(), progress.getProgress());
         progressAnimation.setInterpolator(new LinearOutSlowInInterpolator());
         progressAnimation.addUpdateListener(animation -> {

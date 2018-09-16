@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient"
     tools:context=".preparing.ui.MainFragment">
 
     <ProgressBar
@@ -28,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_progress"
+        android:textColor="@color/progress_bar_text_color"
         app:layout_constraintBottom_toTopOf="@+id/main_progress_bar"
         app:layout_constraintRight_toRightOf="@+id/main_progress_bar"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,9 +37,10 @@
         android:id="@+id/main_rv_movie"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@+id/main_iv_back"
+        app:layout_constraintBottom_toTopOf="@+id/main_btn_skip"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_progress_bar" />
@@ -48,7 +49,7 @@
         android:id="@+id/main_btn_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:text="@string/have_not_seen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

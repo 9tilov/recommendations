@@ -48,7 +48,6 @@ public class YearFragment extends BaseFragment<YearViewModel> {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         initNumberPickers();
         sharedViewModel.getSelectedPeriod().observe(this, integerIntegerPair -> {
             if (integerIntegerPair == null) {

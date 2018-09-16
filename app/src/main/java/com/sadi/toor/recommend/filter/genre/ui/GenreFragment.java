@@ -48,7 +48,6 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         viewModel.getGenreList().observe(this, genres -> {
             sharedViewModel.getSelectedGenres().observe(this, selectedGenres -> {

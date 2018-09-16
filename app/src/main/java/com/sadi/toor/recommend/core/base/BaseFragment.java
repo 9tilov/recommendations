@@ -1,11 +1,9 @@
 package com.sadi.toor.recommend.core.base;
 
-import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -55,23 +53,20 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((BaseActivity) getActivity()).setActionBarTitle(getTitle());
         View view = inflater.inflate(getLayoutResId(), container, false);
         unbinder = ButterKnife.bind(this, view);
         analytics.setCurrentScreen(getActivity(), getFragmentTag());
         return view;
     }
 
-    protected abstract void onCreate(@Nullable Bundle savedInstanceState, M viewModel);
-
-    @SuppressWarnings("unchecked")
-    @SuppressLint("CheckResult")
     @Override
-    @CallSuper
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         ((BaseActivity) getActivity()).showBackButton(showBackButton());
+        ((BaseActivity) getActivity()).setActionBarTitle(getTitle());
     }
+
+    protected abstract void onCreate(@Nullable Bundle savedInstanceState, M viewModel);
 
     @Override
     public void onDestroyView() {

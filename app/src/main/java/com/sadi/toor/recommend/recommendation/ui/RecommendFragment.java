@@ -21,16 +21,16 @@ import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.core.base.BaseFragment;
 import com.sadi.toor.recommend.filter.ui.FilterFragment;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
-import com.sadi.toor.recommend.player.PlayerActivity;
 import com.sadi.toor.recommend.recommendation.ui.adapter.RecommendAdapter;
 import com.sadi.toor.recommend.recommendation.viewmodel.RecommendViewModel;
+
+import java.util.List;
 
 import butterknife.BindView;
 
 import static android.app.Activity.RESULT_OK;
 
-public class RecommendFragment extends BaseFragment<RecommendViewModel> implements RecommendAdapter.OnViewClickLister {
+public class RecommendFragment extends BaseFragment<RecommendViewModel> {
 
     public static final String TAG = "RecommendFragment";
 
@@ -48,8 +48,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     Snackbar snackbar;
 
     private RecommendViewModel viewModel;
-    private Recommendations recommendations;
-    private RecommendAdapter adapter;
 
     public static RecommendFragment newInstance() {
         return new RecommendFragment();
@@ -58,17 +56,13 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState, RecommendViewModel viewModel) {
         this.viewModel = viewModel;
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        viewModel.getRecommendationData().observe(this, recommendations1 -> {
-            this.recommendations = recommendations1;
-            this.adapter = new RecommendAdapter(recommendations.getMovies(), this);
-            initRecyclerView();
-            tvNothingFound.setVisibility(recommendations1.getMovies().isEmpty()
+        viewModel.getRecommendationData().observe(this, recommendations -> {
+            initRecyclerView(recommendations.getMovies());
+            tvNothingFound.setVisibility(recommendations.getMovies().isEmpty()
                     ? View.VISIBLE
                     : View.GONE);
 
@@ -109,7 +103,8 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
 
     }
 
-    private void initRecyclerView() {
+    private void initRecyclerView(List<Movie> movieList) {
+        RecommendAdapter adapter = new RecommendAdapter(movieList);
         rvRec.setAdapter(adapter);
         ((SimpleItemAnimator) rvRec.getItemAnimator()).setSupportsChangeAnimations(false);
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -142,11 +137,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> implemen
     @Override
     protected int getLayoutResId() {
         return R.layout.recommend_fragment;
-    }
-
-    @Override
-    public void showTrailer(Movie movie) {
-        startActivity(new Intent(getActivity(), PlayerActivity.class));
     }
 
     @Override

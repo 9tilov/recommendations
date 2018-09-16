@@ -10,17 +10,30 @@
 
     <style name="BaseActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="buttonStyle">@style/bg_buttons</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:windowBackground">@color/background</item>
     </style>
 
     <style name="bg_buttons" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/sel_btn</item>
+        <item name="android:textColor">@color/button_round_text_color</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
     </style>
 
-    <style name="PlayerTheme" parent="Theme.AppCompat.Light">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/black</item>
+    <!-- ActionBar styles -->
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@color/colorPrimary</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+
+    <style name="MyActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/background</item>
     </style>
 
     <style name="TextRegular" parent="TextAppearance.AppCompat">
