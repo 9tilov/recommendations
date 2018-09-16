@@ -3,17 +3,12 @@ package com.sadi.toor.recommend.filter.interactor;
 import android.util.Pair;
 
 import com.sadi.toor.recommend.model.data.Wish;
-import com.sadi.toor.recommend.model.data.genre.Genre2;
+import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
-import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 import com.sadi.toor.recommend.model.repo.DataRepository;
 import com.sadi.toor.recommend.preparing.interactor.FavoriteMovieController;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,14 +34,12 @@ public class FilterInteractor {
         filter.setYearPeriod(period);
     }
 
-    public void setFilterGenres(List<Genre2> genres) {
+    public void setFilterGenres(List<Genre> genres) {
         filter.setGenres(genres);
     }
 
-    public Observable<Recommendations> getRecommendations() {
-        Movies movies = new Movies();
-        movies.setMovies(favoriteMovieController.getFavoritesMovies());
-        return dataRepository.sendUserWish(new Wish(movies.toString()));
+    public Observable<List<Movie>> getRecommendations() {
+        return dataRepository.sendUserWish(new Wish(favoriteMovieController.getFavoritesMovies().toString()));
     }
 
     public boolean isInYearPeriod(Movie movie) {

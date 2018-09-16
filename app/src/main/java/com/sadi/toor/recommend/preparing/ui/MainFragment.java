@@ -23,11 +23,12 @@ import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.core.base.BaseFragment;
 import com.sadi.toor.recommend.preparing.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.preparing.ui.adapter.CustomLayoutManager;
 import com.sadi.toor.recommend.preparing.ui.adapter.MovieAdapter;
 import com.sadi.toor.recommend.preparing.viewmodel.MainViewModel;
 import com.sadi.toor.recommend.recommendation.ui.RecommendFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -108,7 +109,7 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
         rvMovie.setLayoutManager(linearLayoutManager);
     }
 
-    private void initAdapter(Movies movies) {
+    private void initAdapter(List<Movie> movies) {
         adapter = new MovieAdapter(movies, this);
         rvMovie.setAdapter(adapter);
     }

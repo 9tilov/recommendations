@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.sadi.toor.recommend.R;
-import com.sadi.toor.recommend.model.data.genre.Genre2;
+import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 
 import java.util.List;
@@ -70,7 +70,7 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
                     .into(ivPoster);
             tvTitle.setText(itemView.getResources().getString(R.string.rec_title_with_year, data.getName(), data.getYear()));
             StringBuilder sb = new StringBuilder();
-            for (Genre2 genre : data.getGenres()) {
+            for (Genre genre : data.getGenres()) {
                 if (sb.length() > 0) {
                     sb.append(", ");
                 }

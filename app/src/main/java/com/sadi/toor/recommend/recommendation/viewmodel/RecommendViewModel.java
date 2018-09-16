@@ -6,7 +6,6 @@ import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.core.base.Status;
 import com.sadi.toor.recommend.filter.interactor.FilterInteractor;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,15 +14,13 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class RecommendViewModel extends BaseViewModel {
 
     private final FilterInteractor filterInteractor;
-    private final MutableLiveData<Recommendations> recommendationData = new MutableLiveData<>();
-    private Recommendations recommendations = new Recommendations(new ArrayList<>());
+    private final MutableLiveData<List<Movie>> recommendationData = new MutableLiveData<>();
+    private List<Movie> recommendations = new ArrayList<>();
 
     @Inject
     RecommendViewModel(FilterInteractor filterInteractor) {
@@ -49,30 +46,17 @@ public class RecommendViewModel extends BaseViewModel {
     }
 
     public void getFilteredRecommendations() {
-        Observable.just(recommendations)
-                .flatMap(recommendations1 -> Observable.fromIterable(recommendations1.getMovies()))
-                .filter(new Predicate<Movie>() {
-                    @Override
-                    public boolean test(Movie movie) throws Exception {
-                        Timber.d("moggot year = " + filterInteractor.isInYearPeriod(movie));
-                        return filterInteractor.isInYearPeriod(movie);
-                    }
-                })
-                .filter(new Predicate<Movie>() {
-                    @Override
-                    public boolean test(Movie movie) throws Exception {
-                        Timber.d("moggot genre = " + filterInteractor.hasGenres(movie));
-                        return filterInteractor.hasGenres(movie);
-                    }
-                })
+        Observable.fromIterable(recommendations)
+                .filter(filterInteractor::isInYearPeriod)
+                .filter(filterInteractor::hasGenres)
                 .toList()
                 .toObservable()
                 .subscribe(movies -> {
-                    recommendationData.postValue(new Recommendations(movies));
+                    recommendationData.postValue(movies);
                 });
     }
 
-    public MutableLiveData<Recommendations> getRecommendationData() {
+    public MutableLiveData<List<Movie>> getRecommendationData() {
         return recommendationData;
     }
 }

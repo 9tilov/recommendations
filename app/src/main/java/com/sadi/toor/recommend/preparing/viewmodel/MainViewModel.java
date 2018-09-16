@@ -7,7 +7,8 @@ import com.sadi.toor.recommend.core.base.Status;
 import com.sadi.toor.recommend.preparing.interactor.MovieInteractor;
 import com.sadi.toor.recommend.preparing.interactor.MovieProgressStatus;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,7 +17,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MainViewModel extends BaseViewModel {
 
-    private final MutableLiveData<Movies> moviesList = new MutableLiveData<>();
+    private final MutableLiveData<List<Movie>> moviesList = new MutableLiveData<>();
     private final MovieInteractor movieInteractor;
 
     @Inject
@@ -55,7 +56,7 @@ public class MainViewModel extends BaseViewModel {
         movieInteractor.clearFavorites();
     }
 
-    public MutableLiveData<Movies> getMovieList() {
+    public MutableLiveData<List<Movie>> getMovieList() {
         return moviesList;
     }
 }

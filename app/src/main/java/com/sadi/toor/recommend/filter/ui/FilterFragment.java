@@ -16,10 +16,6 @@ import com.sadi.toor.recommend.filter.genre.ui.GenreFragment;
 import com.sadi.toor.recommend.filter.viewmodel.FilterViewModel;
 import com.sadi.toor.recommend.filter.year.ui.YearFragment;
 import com.sadi.toor.recommend.model.data.genre.Genre;
-import com.sadi.toor.recommend.model.data.genre.Genre2;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import timber.log.Timber;
@@ -82,11 +78,7 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
                 }
                 sb.append(genre.getGenreName());
             }
-            List<Genre2> genre2s = new ArrayList<>();
-            for (Genre genre : genres) {
-                genre2s.add(new Genre2(genre.getGenreId(), genre.getGenreName()));
-            }
-            viewModel.setGenreList(genre2s);
+            viewModel.setGenreList(genres);
             tvGenre.setText(sb.length() > 0 ? sb.toString() : getString(R.string.any));
         });
         sharedViewModel.getSelectedPeriod().observe(this, periodPair -> {

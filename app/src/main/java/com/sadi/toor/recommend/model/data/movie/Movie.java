@@ -2,7 +2,7 @@ package com.sadi.toor.recommend.model.data.movie;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.sadi.toor.recommend.model.data.genre.Genre2;
+import com.sadi.toor.recommend.model.data.genre.Genre;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class Movie {
     private String description;
     @SerializedName("genres")
     @Expose
-    private List<Genre2> genres;
+    private List<Genre> genres;
     private float rating;
 
     public long getMovieId() {
@@ -59,7 +59,7 @@ public class Movie {
         this.rating = rating;
     }
 
-    public List<Genre2> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 

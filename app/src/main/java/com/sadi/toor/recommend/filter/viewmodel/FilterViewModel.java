@@ -4,7 +4,7 @@ import android.util.Pair;
 
 import com.sadi.toor.recommend.core.base.BaseViewModel;
 import com.sadi.toor.recommend.filter.interactor.FilterInteractor;
-import com.sadi.toor.recommend.model.data.genre.Genre2;
+import com.sadi.toor.recommend.model.data.genre.Genre;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class FilterViewModel extends BaseViewModel {
         filterInteractor.setFilterPeriod(period);
     }
 
-    public void setGenreList(List<Genre2> genreList) {
+    public void setGenreList(List<Genre> genreList) {
         filterInteractor.setFilterGenres(genreList);
     }
 }

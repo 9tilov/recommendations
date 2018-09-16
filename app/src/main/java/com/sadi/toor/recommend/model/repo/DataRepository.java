@@ -2,9 +2,10 @@ package com.sadi.toor.recommend.model.repo;
 
 import com.sadi.toor.recommend.model.api.Api;
 import com.sadi.toor.recommend.model.data.Wish;
-import com.sadi.toor.recommend.model.data.genre.Genres;
-import com.sadi.toor.recommend.model.data.movie.Movies;
-import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
+import com.sadi.toor.recommend.model.data.genre.Genre;
+import com.sadi.toor.recommend.model.data.movie.Movie;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,21 +24,21 @@ public class DataRepository {
         this.api = api;
     }
 
-    public Observable<Movies> getMovieLiveList() {
+    public Observable<List<Movie>> getMovieLiveList() {
         return getFromNetwork().toObservable();
     }
 
-    private Single<Movies> getFromNetwork() {
+    private Single<List<Movie>> getFromNetwork() {
         return api.getMovies()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 
-    public Observable<Genres> getGenresList() {
+    public Observable<List<Genre>> getGenresList() {
         return api.getGenres()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 
-    public Observable<Recommendations> sendUserWish(Wish wish) {
+    public Observable<List<Movie>> sendUserWish(Wish wish) {
         return api.sendUserFavoriteWish(wish.getMovies())
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }

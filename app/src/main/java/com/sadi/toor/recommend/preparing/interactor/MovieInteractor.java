@@ -1,8 +1,9 @@
 package com.sadi.toor.recommend.preparing.interactor;
 
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
 import com.sadi.toor.recommend.model.repo.DataRepository;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -34,7 +35,7 @@ public class MovieInteractor {
         favoriteMovieController.clearMovies();
     }
 
-    public Observable<Movies> getPrepareMovieList() {
+    public Observable<List<Movie>> getPrepareMovieList() {
         return repository.getMovieLiveList();
     }
 }

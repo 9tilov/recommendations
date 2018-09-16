@@ -52,13 +52,13 @@ public class GenreFragment extends BaseFragment<GenreViewModel> implements Selec
         viewModel.getGenreList().observe(this, genres -> {
             sharedViewModel.getSelectedGenres().observe(this, selectedGenres -> {
                 Set<Genre> genreSet = new HashSet<>(selectedGenres);
-                for (Genre genre : genres.getGenres()) {
+                for (Genre genre : genres) {
                     if (genreSet.contains(genre)) {
                         genre.setSelected(true);
                     }
                 }
             });
-            adapter = new SelectableAdapter(this, genres.getGenres(), true);
+            adapter = new SelectableAdapter(this, genres, true);
             recyclerViewGenre.setAdapter(adapter);
         });
         viewModel.getStatus().observe(this, status -> {

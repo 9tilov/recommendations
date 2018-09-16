@@ -16,7 +16,6 @@ import com.hsalf.smilerating.BaseRating;
 import com.hsalf.smilerating.SmileRating;
 import com.sadi.toor.recommend.R;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +31,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @NonNull
     private List<Movie> movies = new ArrayList<>();
 
-    public MovieAdapter(@Nullable Movies movies, OnViewClickLister clickLister) {
+    public MovieAdapter(@Nullable List<Movie> movies, OnViewClickLister clickLister) {
         this.clickLister = clickLister;
         if (movies == null) {
             return;
         }
-        this.movies = movies.getMovies();
+        this.movies = movies;
     }
 
     @Override

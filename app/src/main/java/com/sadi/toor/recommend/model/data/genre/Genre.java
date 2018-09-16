@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Genre {
 
-    @SerializedName("genre_id")
+    @SerializedName("id")
     @Expose
     private long genreId;
-    @SerializedName("genre_name")
+    @SerializedName("name")
     @Expose
     private String genreName;
 

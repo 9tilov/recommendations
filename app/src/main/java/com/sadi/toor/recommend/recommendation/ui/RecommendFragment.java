@@ -61,8 +61,8 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel.getRecommendationData().observe(this, recommendations -> {
-            initRecyclerView(recommendations.getMovies());
-            tvNothingFound.setVisibility(recommendations.getMovies().isEmpty()
+            initRecyclerView(recommendations);
+            tvNothingFound.setVisibility(recommendations.isEmpty()
                     ? View.VISIBLE
                     : View.GONE);
 

@@ -9,14 +9,13 @@ import com.sadi.toor.recommend.core.utils.DateUtils;
 import com.sadi.toor.recommend.filter.interactor.Filter;
 import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.recommendations.Recommendations;
 
 import java.util.List;
 
 public class SharedViewModel extends ViewModel {
 
     private final MutableLiveData<List<Movie>> selectedMovies = new MutableLiveData<>();
-    private final MutableLiveData<Recommendations> recommendations = new MutableLiveData<>();
+    private final MutableLiveData<List<Movie>> recommendations = new MutableLiveData<>();
     private final MutableLiveData<List<Genre>> selectedGenres = new MutableLiveData<>();
     private final MutableLiveData<Pair<Integer, Integer>> selectedPeriod = new MutableLiveData<>();
     private final MutableLiveData<Filter> filterData = new MutableLiveData<>();
@@ -29,7 +28,7 @@ public class SharedViewModel extends ViewModel {
         selectedMovies.setValue(item);
     }
 
-    public void putRecommendations(Recommendations item) {
+    public void putRecommendations(List<Movie> item) {
         recommendations.setValue(item);
     }
 
@@ -49,7 +48,7 @@ public class SharedViewModel extends ViewModel {
         return selectedMovies;
     }
 
-    public LiveData<Recommendations> getRecommendations() {
+    public LiveData<List<Movie>> getRecommendations() {
         return recommendations;
     }
 

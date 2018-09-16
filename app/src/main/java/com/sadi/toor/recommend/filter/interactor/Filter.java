@@ -3,7 +3,7 @@ package com.sadi.toor.recommend.filter.interactor;
 import android.util.Pair;
 
 import com.sadi.toor.recommend.core.utils.DateUtils;
-import com.sadi.toor.recommend.model.data.genre.Genre2;
+import com.sadi.toor.recommend.model.data.genre.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import javax.inject.Inject;
 public class Filter {
 
     private Pair<Integer, Integer> yearPeriod = new Pair<>(DateUtils.MIN_YEAR, DateUtils.getCurrentYear());
-    private List<Genre2> genres = new ArrayList<>();
+    private List<Genre> genres = new ArrayList<>();
 
     @Inject
     public Filter() {
@@ -24,7 +24,7 @@ public class Filter {
         this.yearPeriod = yearPeriod;
     }
 
-    public void setGenres(List<Genre2> genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 
@@ -32,7 +32,7 @@ public class Filter {
         return yearPeriod;
     }
 
-    public List<Genre2> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 }
