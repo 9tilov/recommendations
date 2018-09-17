@@ -22,13 +22,19 @@ android {
             storePassword keystoreProperties["storePassword"]
         }
     }
+
+    def versionMajor = 1
+    def versionMinor = 0
+    def versionPatch = 1
+    def versionBuild = 2
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.sadi.toor.recommend"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 1000 * (1000 * versionMajor + 100 * versionMinor + versionPatch) + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -96,7 +96,9 @@ public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
 
     protected abstract String getFragmentTag();
 
-    protected abstract boolean showBackButton();
+    protected boolean showBackButton() {
+        return false;
+    }
 
     @LayoutRes
     protected abstract int getLayoutResId();

@@ -137,11 +137,6 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> {
     }
 
     @Override
-    protected boolean showBackButton() {
-        return false;
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.recommend_fragment;
     }

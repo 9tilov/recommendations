@@ -132,11 +132,6 @@ public class MainFragment extends BaseFragment<MainViewModel> implements MovieAd
     }
 
     @Override
-    protected boolean showBackButton() {
-        return false;
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.main_fragment;
     }
