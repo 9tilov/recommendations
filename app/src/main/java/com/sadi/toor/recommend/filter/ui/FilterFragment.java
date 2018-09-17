@@ -107,11 +107,6 @@ public class FilterFragment extends BaseFragment<FilterViewModel> {
     }
 
     @Override
-    protected boolean showBackButton() {
-        return false;
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.filter_fragment;
     }
