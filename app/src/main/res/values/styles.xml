@@ -1,11 +1,108 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="BaseActivityTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="BaseActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="buttonStyle">@style/bg_buttons</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <style name="bg_buttons" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/sel_btn</item>
+        <item name="android:textColor">@color/button_round_text_color</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@color/colorPrimary</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+
+        <!-- Support library compatibility -->
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+
+    <style name="MyActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/background</item>
+    </style>
+
+    <style name="TextRegular" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily" tools:targetApi="16">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextMedium" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily" tools:targetApi="16">@string/font_family_medium</item>
+    </style>
+
+    <style name="TextRobotoBold" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily" tools:targetApi="16">@string/font_family_regular</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextMedium.Headline">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextMedium.Headline.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextMedium.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextMedium.Title.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextMedium.Title.Left">
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextMedium.Subheader">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextMedium.Subheader.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextMedium.Subheader.Left">
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextRegular.Body1">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextRegular.Body1.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextRegular.Body1.Left">
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="TextMedium.Body2">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextMedium.Body2.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextRegular.Caption2">
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>

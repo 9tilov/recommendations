@@ -3,15 +3,15 @@ package com.sadi.toor.recommend.model.repo;
 import com.sadi.toor.recommend.model.api.Api;
 import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.genre.Genre;
-import com.sadi.toor.recommend.model.data.genre.Genres;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Flowable;
-import io.reactivex.internal.operators.flowable.FlowableAll;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import timber.log.Timber;
 
 @Singleton
@@ -24,23 +24,22 @@ public class DataRepository {
         this.api = api;
     }
 
-    public Flowable<Movies> getMovieLiveList() {
-        return getFromNetwork();
+    public Observable<List<Movie>> getMovieLiveList() {
+        return getFromNetwork().toObservable();
     }
 
-    private Flowable<Movies> getFromNetwork() {
-        return api.getMovies().toFlowable()
+    private Single<List<Movie>> getFromNetwork() {
+        return api.getMovies()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 
-    public Flowable<Genres> getGenresList() {
-        return api.getGenres().toFlowable()
+    public Observable<List<Genre>> getGenresList() {
+        return api.getGenres()
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 
-    public Flowable<Movie> sendUserWish(Wish wish) {
-        String s1 = wish.getMovies();
-        return api.sendUserFavoriteWish(wish.getMovies(), wish.getGenres()).toFlowable()
+    public Observable<List<Movie>> sendUserWish(Wish wish) {
+        return api.sendUserFavoriteWish(wish.getMovies())
                 .doOnError(throwable -> Timber.d("moggot = " + throwable.getMessage()));
     }
 }

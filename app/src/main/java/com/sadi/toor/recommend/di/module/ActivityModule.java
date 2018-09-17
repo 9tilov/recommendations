@@ -1,6 +1,6 @@
 package com.sadi.toor.recommend.di.module;
 
-import com.sadi.toor.recommend.view.ui.MainActivity;
+import com.sadi.toor.recommend.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

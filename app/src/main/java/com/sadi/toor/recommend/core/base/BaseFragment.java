@@ -1,12 +1,8 @@
 package com.sadi.toor.recommend.core.base;
 
-import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -18,56 +14,74 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sadi.toor.recommend.viewmodel.SharedViewModel;
+import com.sadi.toor.recommend.Analytics;
+import com.sadi.toor.recommend.core.common.SharedViewModel;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-import androidx.navigation.Navigation;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
 
-public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBinding> extends Fragment {
+public abstract class BaseFragment<M extends BaseViewModel> extends Fragment {
 
     @Inject
     protected ViewModelProvider.Factory viewModelFactory;
     protected SharedViewModel sharedViewModel;
+    protected Analytics analytics;
+    private M viewModel;
+    private Unbinder unbinder;
 
     @Override
     public void onAttach(Context context) {
         configureDagger();
         super.onAttach(context);
-        ((BaseActivity) getActivity()).setActionBarTitle(getString(getTitle()));
+        analytics = new Analytics(context);
     }
 
-    @SuppressWarnings("unchecked")
-    @SuppressLint("CheckResult")
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        this.viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
+        onCreate(savedInstanceState, viewModel);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        ViewDataBinding binding = DataBindingUtil.inflate(inflater, getLayoutResId(), container, false);
-        getBinding((B) binding);
-        return binding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(getLayoutResId(), container, false);
+        unbinder = ButterKnife.bind(this, view);
+        analytics.setCurrentScreen(getActivity(), getFragmentTag());
+        return view;
     }
 
-    @SuppressWarnings("unchecked")
-    @SuppressLint("CheckResult")
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
-        sharedViewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
-        onViewCreated(view, savedInstanceState, (M) viewModel);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         ((BaseActivity) getActivity()).showBackButton(showBackButton());
+        ((BaseActivity) getActivity()).setActionBarTitle(getTitle());
+    }
+
+    protected abstract void onCreate(@Nullable Bundle savedInstanceState, M viewModel);
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+        this.viewModel.unsubscribeFromDestroy(this);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Navigation.findNavController(getView()).popBackStack();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            getActivity().getSupportFragmentManager().popBackStack();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -75,17 +89,37 @@ public abstract class BaseFragment<M extends ViewModel, B extends ViewDataBindin
         AndroidSupportInjection.inject(this);
     }
 
-    protected abstract void getBinding(B binding);
-
     protected abstract Class<M> getViewModel();
-
-    protected abstract void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState, M viewModel);
 
     @StringRes
     protected abstract int getTitle();
+
+    protected abstract String getFragmentTag();
 
     protected abstract boolean showBackButton();
 
     @LayoutRes
     protected abstract int getLayoutResId();
+
+    public final boolean processBackButton() {
+        final List<Fragment> childFragments = getChildFragmentManager().getFragments();
+        if (childFragments != null) {
+
+            // Перебираем дочерние фрагменты до первого, кто поглотит событие
+            for (Fragment childFragment : childFragments) {
+                if (childFragment instanceof BaseFragment
+                        && ((BaseFragment) childFragment).processBackButton()) {
+                    return true;
+                }
+            }
+        }
+
+        // Дочерних фрагментов нет, или никто из них событие не поглотил - передаём обработку в
+        // текущий фрагмент
+        return onBackPressed();
+    }
+
+    protected boolean onBackPressed() {
+        return false;
+    }
 }

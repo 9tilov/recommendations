@@ -1,0 +1,34 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="fragment_title_choose_movies">Оцените фильмы</string>
+    <string name="fragment_title_genre">Жанры</string>
+    <string name="fragment_title_time_period">Года</string>
+    <string name="fragment_title_filter">Фильтр</string>
+
+    <string name="have_not_seen">Пропустить</string>
+    <string name="recommend_title">Ваши рекомендации</string>
+    <string name="main_progress">%1$d of %2$d</string>
+    <string name="rec_title_with_year">%1$s, %2$d</string>
+    <string name="recommend_film">Рекомендовать фильм</string>
+    <string name="rate_movies">Оценить снова</string>
+    <string name="rating_bar_terrible">Ужасно</string>
+    <string name="rating_bar_bad">Плохо</string>
+    <string name="rating_bar_normal">Обычно</string>
+    <string name="rating_bar_good">Хорошо</string>
+    <string name="rating_bar_great">Отлично</string>
+    <string name="coming_soon">Скоро</string>
+    <string name="year_from">от</string>
+    <string name="year_to">до</string>
+    <string name="time_period">от %1$d до %2$d</string>
+    <string name="any">Любой</string>
+    <string name="retry">Повторить</string>
+
+    <string name="filter_genre_title">Жанры</string>
+    <string name="filter_time_period_title">Года</string>
+    <string name="filter_rating_title">Рейтинг</string>
+
+    <string name="error_load_movies">Не удалось загрузить фильмы</string>
+    <string name="error_load_rec">Не удалось загрузить рекомендации</string>
+    <string name="error_load_genres">Не удалось загрузить жанры</string>
+
+    <string name="nothing_found">Ничего не найдено</string>
+</resources>

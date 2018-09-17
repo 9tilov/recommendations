@@ -1,8 +1,13 @@
 package com.sadi.toor.recommend.di.module;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.model.api.Api;
+import com.sadi.toor.recommend.model.network.LanguageInterceptor;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -35,18 +40,36 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttp(HttpLoggingInterceptor interceptor, StethoInterceptor stethoInterceptor) {
-        return new OkHttpClient.Builder()
+    LanguageInterceptor provideAuthInterseptor() {
+        return new LanguageInterceptor();
+    }
+
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttp(HttpLoggingInterceptor interceptor, StethoInterceptor stethoInterceptor, LanguageInterceptor languageInterceptor) {
+        return new OkHttpClient.Builder().
+                readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .addNetworkInterceptor(interceptor)
                 .addNetworkInterceptor(stethoInterceptor)
+                .addInterceptor(languageInterceptor)
                 .build();
     }
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(OkHttpClient client) {
+    Gson provideGson() {
+        return new GsonBuilder()
+                .setLenient()
+                .create();
+    }
+
+    @Provides
+    @Singleton
+    Retrofit provideRetrofit(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(Constants.BASE_URL)
                 .client(client)
@@ -59,4 +82,3 @@ public class NetworkModule {
         return retrofit.create(Api.class);
     }
 }
-

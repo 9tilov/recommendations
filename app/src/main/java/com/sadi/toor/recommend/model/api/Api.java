@@ -1,12 +1,12 @@
 package com.sadi.toor.recommend.model.api;
 
-import com.sadi.toor.recommend.model.data.Wish;
-import com.sadi.toor.recommend.model.data.genre.Genres;
+import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.data.movie.Movie;
-import com.sadi.toor.recommend.model.data.movie.Movies;
 
+import java.util.List;
+
+import io.reactivex.Observable;
 import io.reactivex.Single;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -14,11 +14,11 @@ import retrofit2.http.Query;
 public interface Api {
 
     @GET("getTopList")
-    Single<Movies> getMovies();
+    Single<List<Movie>> getMovies();
 
     @GET("getGenres")
-    Single<Genres> getGenres();
+    Observable<List<Genre>> getGenres();
 
     @POST("getRec")
-    Single<Movie> sendUserFavoriteWish(@Query("likes") String movies, @Query("genres") String genres);
+    Observable<List<Movie>> sendUserFavoriteWish(@Query("likes") String movies);
 }

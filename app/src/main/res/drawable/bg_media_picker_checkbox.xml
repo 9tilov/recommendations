@@ -1,5 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/bg_media_picked_checkbox_checked" android:state_checked="true" />
-    <item android:drawable="@drawable/bg_media_picked_checkbox_checked" android:state_pressed="true" />
-    <item android:drawable="@drawable/bg_media_picked_checkbox_unchecked" android:state_checked="false" />
-</selector>

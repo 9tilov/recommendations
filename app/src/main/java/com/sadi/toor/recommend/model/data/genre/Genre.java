@@ -5,16 +5,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class Genre {
 
-    @SerializedName("genre_id")
+    @SerializedName("id")
     @Expose
     private long genreId;
-    @SerializedName("genre_name")
+    @SerializedName("name")
     @Expose
     private String genreName;
+
+    private boolean isSelected = false;
 
     public Genre(long id, String name) {
         this.genreId = id;
         this.genreName = name;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     public long getGenreId() {
@@ -34,13 +44,33 @@ public class Genre {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Genre)) {
             return false;
+        }
 
-        if (getClass() != obj.getClass())
+        Genre genre = (Genre) o;
+
+        if (getGenreId() != genre.getGenreId()) {
             return false;
-        Genre itemCompare = (Genre) obj;
-        return itemCompare.genreId == this.genreId;
+        }
+        return getGenreName() != null ? getGenreName().equals(genre.getGenreName()) : genre.getGenreName() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getGenreId() ^ (getGenreId() >>> 32));
+        result = 31 * result + (getGenreName() != null ? getGenreName().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "genreId=" + genreId +
+                '}';
     }
 }

@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
+import com.sadi.toor.recommend.Analytics;
+import com.sadi.toor.recommend.R;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -16,11 +19,13 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+    protected Analytics analytics;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         configureDagger();
+        super.onCreate(savedInstanceState);
+        this.analytics = new Analytics(this);
     }
 
     @Override
@@ -30,11 +35,31 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     protected abstract void configureDagger();
 
-    public void setActionBarTitle(String title) {
+    public void setActionBarTitle(int title) {
         getSupportActionBar().setTitle(title);
     }
 
     public void showBackButton(boolean show) {
         getSupportActionBar().setDisplayHomeAsUpEnabled(show);
     }
+
+    @Override
+    public void onBackPressed() {
+        // Передача нажатия в текущее окно
+        final BaseFragment contentFragment = getContentFragment();
+        if (contentFragment != null && contentFragment.processBackButton()) {
+            // Обработка нажатия перехвачена во фрагменте текущего окна
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    private BaseFragment getContentFragment() {
+        final Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        if (fragment instanceof BaseFragment) {
+            return (BaseFragment) fragment;
+        }
+        return null;
+    }
+
 }

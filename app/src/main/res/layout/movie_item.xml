@@ -1,83 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
+    <ImageView
+        android:id="@+id/iv_main_movie_pic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/tv_movie_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
-        <import type="java.lang.String" />
+    <TextView
+        android:id="@+id/tv_movie_title"
+        style="@style/TextMedium.Title.Center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_color"
+        app:layout_constraintBottom_toTopOf="@+id/tv_movie_year"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="@tools:sample/cities" />
 
-        <variable
-            name="movie"
-            type="com.sadi.toor.recommend.model.data.movie.Movie" />
+    <TextView
+        android:id="@+id/tv_movie_year"
+        style="@style/TextRegular.Body1.Center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textColor="@color/text_color"
+        app:layout_constraintBottom_toTopOf="@+id/rate_fragment_bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="@tools:sample/full_names" />
 
-    </data>
+    <com.hsalf.smilerating.SmileRating
+        android:id="@+id/rate_fragment_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:drawingColor="@color/smile_eyes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:normalColor="@color/smile_face_selected"
+        app:placeHolderBackgroundColor="@color/smile_face"
+        app:placeHolderSmileColor="@color/smile_eyes"
+        app:showLine="false"
+        app:textNonSelectionColor="@color/smile_text"
+        app:textSelectionColor="@color/smile_text_selected" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_height="250dp"
-        android:layout_width="match_parent">
-
-        <ImageView
-            android:id="@+id/iv_main_movie_pic"
-            android:layout_height="0dp"
-            android:layout_width="0dp"
-            android:scaleType="centerCrop"
-            android:scaleX="@{movie.selected ? 0.95f : 1.0f}"
-            android:scaleY="@{movie.selected ? 0.95f : 1.0f}"
-            app:glideBinding="@{movie.link}"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.8"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:placeholder="@{@drawable/ic_launcher_background}"
-            tools:src="@tools:sample/avatars" />
-
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_width="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@{movie.selected ? @drawable/bg_media_picked_checkbox_checked : @drawable/bg_media_picked_checkbox_unchecked}" />
-
-        <android.support.constraint.ConstraintLayout
-            android:background="@drawable/bg_grid_description"
-            android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_width="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_main_movie_pic">
-
-            <TextView
-                android:id="@+id/tv_movie_title"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="@{movie.name}"
-                android:textColor="@color/text_grid_color"
-                app:layout_constraintBottom_toTopOf="@+id/tv_movie_year"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@tools:sample/lorem" />
-
-            <TextView
-                android:id="@+id/tv_movie_year"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="@{String.valueOf(movie.year)}"
-                android:textColor="@color/text_grid_color"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-                tools:text="@tools:sample/full_names" />
-        </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
-</layout>
+</android.support.constraint.ConstraintLayout>
