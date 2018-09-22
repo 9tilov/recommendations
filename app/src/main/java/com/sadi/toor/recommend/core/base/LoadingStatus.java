@@ -9,6 +9,10 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class LoadingStatus {
 
+    @IntDef({SUCCESS, ERROR, START_LOADING})
+    @Retention(SOURCE)
+    public @interface LoadingType {
+    }
     public static final int SUCCESS = 0;
     public static final int ERROR = 1;
     public static final int START_LOADING = 2;
@@ -16,11 +20,11 @@ public class LoadingStatus {
     private int type;
     private Throwable throwable;
 
-    public LoadingStatus(int type) {
+    public LoadingStatus(@LoadingType int type) {
         this(type, null);
     }
 
-    public LoadingStatus(int type, Throwable throwable) {
+    public LoadingStatus(@LoadingType int type, Throwable throwable) {
         this.throwable = throwable;
         this.type = type;
     }
@@ -30,12 +34,8 @@ public class LoadingStatus {
         return throwable;
     }
 
+    @LoadingType
     public int getType() {
         return type;
-    }
-
-    @IntDef({SUCCESS, ERROR, START_LOADING})
-    @Retention(SOURCE)
-    public @interface LoadingType {
     }
 }
