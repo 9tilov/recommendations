@@ -5,22 +5,34 @@ apply from: "$project.rootDir/tools/findbugs/findbugs.gradle"
 apply from: "$project.rootDir/tools/pmd/pmd.gradle"
 apply from: "$project.rootDir/tools/checkstyle/checkstyle.gradle"
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
 android {
+
     signingConfigs {
-        release {
-            keyAlias keystoreProperties["keyAlias"]
-            keyPassword keystoreProperties["keyPassword"]
-            storeFile file(keystoreProperties["storeFile"])
-            storePassword keystoreProperties["storePassword"]
+        release
+    }
+
+    Properties props = new Properties()
+    def propFile = new File('keystore.properties')
+    if (propFile.canRead()){
+        props.load(new FileInputStream(propFile))
+
+        if (props!=null && props.containsKey('storeFile') && props.containsKey('storePassword') &&
+                props.containsKey('keyAlias') && props.containsKey('keyPassword')) {
+            android.signingConfigs.release.storeFile = file(props['storeFile'])
+            android.signingConfigs.release.storePassword = props['storePassword']
+            android.signingConfigs.release.keyAlias = props['keyAlias']
+            android.signingConfigs.release.keyPassword = props['keyPassword']
+        } else {
+            println 'keystore.properties found but some entries are missing'
+            android.buildTypes.release.signingConfig = null
         }
+    }else {
+        println 'keystore.properties not found'
+        android.buildTypes.release.signingConfig = null
     }
 
     def versionMajor = 1
@@ -82,8 +94,8 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
     //Network
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -102,7 +114,7 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.15'
     annotationProcessor "com.google.dagger:dagger-android-processor:2.15"
 //    timber
-    implementation 'com.jakewharton.timber:timber:4.7.0'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 //    butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -119,8 +131,8 @@ dependencies {
 //    exoplayer
     implementation 'com.google.android.exoplayer:exoplayer:2.8.2'
     //analytics
-    implementation 'com.google.firebase:firebase-core:16.0.3'
-    implementation 'com.google.android.gms:play-services-analytics:16.0.3'
+    implementation 'com.google.firebase:firebase-core:16.0.5'
+    implementation 'com.google.android.gms:play-services-analytics:16.0.5'
 
     implementation 'com.github.sujithkanna:smileyrating:1.6.8'
 
