@@ -43,7 +43,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.sadi.toor.recommend"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1000 * (1000 * versionMajor + 100 * versionMinor + versionPatch) + versionBuild
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -61,7 +61,7 @@ android {
 
         debug {
             versionNameSuffix "-debug"
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             zipAlignEnabled true
             useProguard false
             multiDexEnabled true
@@ -70,9 +70,6 @@ android {
 
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
-    }
-    dataBinding {
-        enabled = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -106,7 +103,7 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     //Rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     //Di
     implementation 'com.google.dagger:dagger:2.15'
     annotationProcessor "com.google.dagger:dagger-compiler:2.15"
@@ -131,8 +128,10 @@ dependencies {
 //    exoplayer
     implementation 'com.google.android.exoplayer:exoplayer:2.8.2'
     //analytics
-    implementation 'com.google.firebase:firebase-core:16.0.5'
-    implementation 'com.google.android.gms:play-services-analytics:16.0.5'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.android.gms:play-services-analytics:16.0.6'
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
 
     implementation 'com.github.sujithkanna:smileyrating:1.6.8'
 

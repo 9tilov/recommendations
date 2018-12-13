@@ -1,27 +1,71 @@
 {
   "project_info": {
-    "project_number": "149664959122",
-    "firebase_url": "https://recommend-1531547037118.firebaseio.com",
-    "project_id": "recommend-1531547037118",
-    "storage_bucket": "recommend-1531547037118.appspot.com"
+    "project_number": "79745386976",
+    "firebase_url": "https://androidapps-150409.firebaseio.com",
+    "project_id": "androidapps-150409",
+    "storage_bucket": "androidapps-150409.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:149664959122:android:b1d7551ed5e771b2",
+        "mobilesdk_app_id": "1:79745386976:android:e19e43283048c9ed",
         "android_client_info": {
-          "package_name": "com.sadi.toor.recommend"
+          "package_name": "com.example.toor.moneymanager"
         }
       },
       "oauth_client": [
         {
-          "client_id": "149664959122-sp8on8quo5b8l6n56l2eqrl0ebf2vc9j.apps.googleusercontent.com",
+          "client_id": "79745386976-0tp2l9sjkj6huepbeco0knh5eqvd0l0n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.toor.moneymanager",
+            "certificate_hash": "174a66bacdeb1994ca619de313853983daef3ba6"
+          }
+        },
+        {
+          "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBxvpk5kfNl0ujHMKN2mg0osTh_tk1Q37U"
+          "current_key": "AIzaSyCcsjvfCYq8ECvSBtLjpv6toYsepEBawVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79745386976:android:7ce4a42891142ef8",
+        "android_client_info": {
+          "package_name": "com.moggot.commonalarmclock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcsjvfCYq8ECvSBtLjpv6toYsepEBawVE"
         }
       ],
       "services": {
@@ -31,6 +75,186 @@
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79745386976:android:d96b1e2c2cdd8827",
+        "android_client_info": {
+          "package_name": "com.moggot.findmycarlocation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79745386976-36s87o6sc40ufbu3d90fsm910j5m7m03.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moggot.findmycarlocation",
+            "certificate_hash": "cec90f98bc7c36b6a061f3e799cac149890c3566"
+          }
+        },
+        {
+          "client_id": "79745386976-fvcgu3cf2fbqv65aipd564vug9hba8v8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moggot.findmycarlocation",
+            "certificate_hash": "3470d5735ca9eb4d7ac7340400023351d8e53bdb"
+          }
+        },
+        {
+          "client_id": "79745386976-ndt49qjtoq2sqfmv4h1hfpnfhl43mrmh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moggot.findmycarlocation",
+            "certificate_hash": "0fae6525f9b9282cd744fd94a417879573a69b92"
+          }
+        },
+        {
+          "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcsjvfCYq8ECvSBtLjpv6toYsepEBawVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-1475613019168586~2120488559"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79745386976:android:b66706a7f7eaf10e",
+        "android_client_info": {
+          "package_name": "com.moggot.multipreter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcsjvfCYq8ECvSBtLjpv6toYsepEBawVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79745386976:android:4122d82995f5859c",
+        "android_client_info": {
+          "package_name": "com.moggot.svet_ku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79745386976-gfnkb6ukanmi3at4fv1opvtg876385eu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moggot.svet_ku",
+            "certificate_hash": "0170ba1fd575b4aba62e3c759c75992dff56d492"
+          }
+        },
+        {
+          "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcsjvfCYq8ECvSBtLjpv6toYsepEBawVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79745386976:android:b1d7551ed5e771b2",
+        "android_client_info": {
+          "package_name": "com.sadi.toor.recommend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79745386976-mc8csbub6orh0fmh4q1isv13lt1bhp6e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sadi.toor.recommend",
+            "certificate_hash": "a6de0f6d81c7d90889c5e86fa036f3ffe1c4d657"
+          }
+        },
+        {
+          "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcsjvfCYq8ECvSBtLjpv6toYsepEBawVE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79745386976-hdjfpavlf6ef6cn88io9dd72bghm90hf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
