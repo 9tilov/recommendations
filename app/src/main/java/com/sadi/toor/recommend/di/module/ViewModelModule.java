@@ -3,6 +3,7 @@ package com.sadi.toor.recommend.di.module;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
+import com.sadi.toor.recommend.auth.AuthViewModel;
 import com.sadi.toor.recommend.core.base.FactoryViewModel;
 import com.sadi.toor.recommend.di.scope.ViewModelKey;
 import com.sadi.toor.recommend.filter.genre.viewmodel.GenreViewModel;
@@ -42,6 +43,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(YearViewModel.class)
     abstract ViewModel bindYearViewModel(YearViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthViewModel.class)
+    abstract ViewModel bindAuthViewModel(AuthViewModel viewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);

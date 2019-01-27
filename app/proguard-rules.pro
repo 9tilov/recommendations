@@ -36,6 +36,7 @@
 #retrofit2
 # Retain generic type information for use by reflection by converters and adapters.
 -keepattributes Signature
+-keepattributes *Annotation*
 
 # Retain service method parameters when optimizing.
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
@@ -44,9 +45,6 @@
 
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
-
-# Ignore JSR 305 annotations for embedding nullability information.
--dontwarn javax.annotation.**
 
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule

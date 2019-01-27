@@ -20,6 +20,7 @@
     <color name="button_round">#383127</color>
     <color name="button_round_pressed">#9C8D78</color>
     <color name="button_round_text_color">#E4DBBF</color>
+    <color name="button_round_frame_text_color">#383127</color>
 
     <color name="smile_eyes">#E4DBBF</color>
     <color name="smile_face">#70AB8F</color>

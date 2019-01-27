@@ -1,10 +1,15 @@
 package com.sadi.toor.recommend.recommendation.ui.adapter;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.sadi.toor.recommend.R;
+import com.sadi.toor.recommend.core.utils.UiSizeConverter;
 import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.data.movie.Movie;
 
@@ -64,6 +70,18 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.Reco
         }
 
         void bind(Movie data) {
+            WindowManager wm = (WindowManager) itemView.getContext().getSystemService(Context.WINDOW_SERVICE);
+            Display display = wm.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int newWidth = (int) (width * 0.85);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(newWidth, FrameLayout.LayoutParams.MATCH_PARENT);
+            cardView.setLayoutParams(lp);
+            lp.setMargins(UiSizeConverter.dpToPx(itemView.getContext(), 8),
+                    UiSizeConverter.dpToPx(itemView.getContext(), 16),
+                    UiSizeConverter.dpToPx(itemView.getContext(), 8),
+                    UiSizeConverter.dpToPx(itemView.getContext(), 16));
             Glide.with(ivPoster)
                     .load(data.getLink())
                     .apply(new RequestOptions().transforms(new CenterCrop()))

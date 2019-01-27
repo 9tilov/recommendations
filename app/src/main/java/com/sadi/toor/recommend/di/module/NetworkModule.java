@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sadi.toor.recommend.core.Constants;
 import com.sadi.toor.recommend.model.api.Api;
+import com.sadi.toor.recommend.model.network.AuthInterceptor;
 import com.sadi.toor.recommend.model.network.LanguageInterceptor;
 
 import java.util.concurrent.TimeUnit;
@@ -47,13 +48,17 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkHttp(HttpLoggingInterceptor interceptor, StethoInterceptor stethoInterceptor, LanguageInterceptor languageInterceptor) {
+    OkHttpClient provideOkHttp(HttpLoggingInterceptor interceptor,
+                               StethoInterceptor stethoInterceptor,
+                               LanguageInterceptor languageInterceptor,
+                               AuthInterceptor authInterceptor) {
         return new OkHttpClient.Builder().
                 readTimeout(15, TimeUnit.SECONDS)
                 .connectTimeout(15, TimeUnit.SECONDS)
-                .addInterceptor(interceptor)
                 .addNetworkInterceptor(stethoInterceptor)
+                .addInterceptor(interceptor)
                 .addInterceptor(languageInterceptor)
+                .addInterceptor(authInterceptor)
                 .build();
     }
 

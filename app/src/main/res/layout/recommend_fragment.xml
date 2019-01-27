@@ -33,7 +33,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rec_btn_rate_again" />
+        app:layout_constraintTop_toBottomOf="@+id/rec_btn_rate_again"
+        tools:listitem="@layout/recommend_item" />
 
     <TextView
         android:id="@+id/rec_tv_nothing_found"

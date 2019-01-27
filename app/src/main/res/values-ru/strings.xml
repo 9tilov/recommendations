@@ -3,6 +3,7 @@
     <string name="fragment_title_genre">Жанры</string>
     <string name="fragment_title_time_period">Года</string>
     <string name="fragment_title_filter">Фильтр</string>
+    <string name="fragment_title_login">Войти</string>
 
     <string name="have_not_seen">Пропустить</string>
     <string name="recommend_title">Ваши рекомендации</string>
@@ -21,6 +22,8 @@
     <string name="time_period">от %1$d до %2$d</string>
     <string name="any">Любой</string>
     <string name="retry">Повторить</string>
+    <string name="skip">Пропустить</string>
+    <string name="login">Войти</string>
 
     <string name="filter_genre_title">Жанры</string>
     <string name="filter_time_period_title">Года</string>

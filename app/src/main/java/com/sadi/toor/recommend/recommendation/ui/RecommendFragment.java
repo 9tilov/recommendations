@@ -49,7 +49,7 @@ public class RecommendFragment extends BaseFragment<RecommendViewModel> {
     @BindView(R.id.progress_view)
     FrameLayout progress;
 
-    Snackbar snackbar;
+    private Snackbar snackbar;
 
     private RecommendViewModel viewModel;
 

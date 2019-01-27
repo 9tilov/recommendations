@@ -4,6 +4,7 @@ import com.sadi.toor.recommend.model.api.Api;
 import com.sadi.toor.recommend.model.data.Wish;
 import com.sadi.toor.recommend.model.data.genre.Genre;
 import com.sadi.toor.recommend.model.data.movie.Movie;
+import com.sadi.toor.recommend.model.data.user.User;
 
 import java.util.List;
 
@@ -22,6 +23,10 @@ public class DataRepository {
     @Inject
     public DataRepository(Api api) {
         this.api = api;
+    }
+
+    public Observable<User> login(String token) {
+        return api.login(token).toObservable();
     }
 
     public Observable<List<Movie>> getMovieLiveList() {

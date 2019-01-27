@@ -1,5 +1,6 @@
 package com.sadi.toor.recommend.di.module;
 
+import com.sadi.toor.recommend.auth.LoginFragment;
 import com.sadi.toor.recommend.filter.genre.ui.GenreFragment;
 import com.sadi.toor.recommend.filter.ui.FilterFragment;
 import com.sadi.toor.recommend.filter.year.ui.YearFragment;
@@ -30,5 +31,8 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract YearFragment contributeYearFragment();
+
+    @ContributesAndroidInjector
+    abstract LoginFragment contributeLoginFragment();
 
 }
